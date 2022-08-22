@@ -136,6 +136,7 @@ flutter:
     - assets/images/small_down_arrow.png
     - assets/images/plus.png
     - assets/new_plus.png
+    - assets/images/info.png
 
 
    # An image asset can refer to one or more resolution-specific "variants", see

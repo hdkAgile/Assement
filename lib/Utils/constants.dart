@@ -12,6 +12,7 @@ class AppColors {
   static Color themeBlue = const Color(0xFF3D5B97);
   static Color themeBorderGreen = const Color(0xFF1DCC8D);
   static Color themeLightGrey = const Color(0xFFF7F7F7);
+  static Color themeLightGrey1 = const Color(0xFF707070);
   static Color themeTextGrey = const Color(0xFF9D9D9D);
   static Color themeTextLightGrey = const Color(0xFF888888);
   static Color themeDarkGrey = const Color(0xFF646464);
@@ -98,6 +99,7 @@ class AppImages {
   static String heart_Fill = '${imgPath}heart_fill.png';
   static String dropDownArrow = '${imgPath}small_down_arrow.png';
   static String plus = 'assets/new_plus.png';
+  static String info = '${imgPath}info.png';
 }
 
 //Fonts
@@ -175,6 +177,12 @@ class AppTextStyle {
       color: AppColors.themeTextGrey,
       fontFamily: AppFonts.openSansSemiBold,
       letterSpacing: 0.0,
+      fontSize: 14);
+
+  static TextStyle openSans_regular_textGrey1_14 = TextStyle(
+      color: AppColors.themeLightGrey1,
+      fontFamily: AppFonts.openSansRegular,
+      letterSpacing: 1.4,
       fontSize: 14);
   static TextStyle openSans_extrabold_themeBlack_16 = TextStyle(
       fontFamily: AppFonts.openSansExtraBold,
