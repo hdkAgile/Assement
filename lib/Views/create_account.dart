@@ -1,4 +1,4 @@
-import 'package:assement/Utils/Extensions.dart';
+import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

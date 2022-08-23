@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:assement/Utils/Extensions.dart';
+import 'package:assement/Utils/extensions.dart';
 import 'package:tuple/tuple.dart';
 
 import '../app_logger.dart';

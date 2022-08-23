@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'enum_all.dart';
-import 'package:assement/Utils/Extensions.dart';
+import 'package:assement/Utils/extensions.dart';
 
 //AppColors
 class AppColors {
