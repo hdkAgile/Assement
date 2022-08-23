@@ -2,17 +2,6 @@ import 'package:flutter/foundation.dart';
 
 enum SignUpType { signUp, signIn }
 
-extension SignUpTypeExtention on SignUpType {
-  int get value {
-    switch (this) {
-      case SignUpType.signUp:
-        return 0;
-      case SignUpType.signIn:
-        return 1;
-    }
-  }
-}
-
 enum SourceType { camera, photoLibrary }
 
 enum APIType {
@@ -28,3 +17,7 @@ enum APIType {
   favouriteList,
   addRaffale
 }
+
+enum URLHost { local, live, staging }
+
+enum ConditionType { newInPackage, lightlyUsed, used }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:assement/Utils/Extensions.dart';
 import 'package:tuple/tuple.dart';
 
 import '../app_logger.dart';
@@ -18,9 +19,9 @@ class APIConstant {
 
   static const int timeoutDurationMultipartAPIs = 120000;
 
-  static String get baseDomain => AppConfig.host.baseURL;
+  static String get baseDomain => AppConstant.baseURL;
 
-  static String get prefixVersion => AppConfig.apiVersion;
+  static String get prefixVersion => AppConstant.version;
 
   static String get prefixAuth => "auth";
 

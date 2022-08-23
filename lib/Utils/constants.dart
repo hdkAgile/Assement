@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'enum_all.dart';
+import 'package:assement/Utils/Extensions.dart';
 
 //AppColors
 class AppColors {
@@ -100,6 +102,7 @@ class AppImages {
   static String dropDownArrow = '${imgPath}small_down_arrow.png';
   static String plus = 'assets/new_plus.png';
   static String info = '${imgPath}info.png';
+  static String blackArrowRight = '${imgPath}R_black_arrow.png';
 }
 
 //Fonts
@@ -363,7 +366,7 @@ class AppText {
   static String recentAdded = 'Recently Added';
   static String productName = 'Product name';
   static String amount = '100.00';
-  static String category = "Categories";
+  static String categories = "Categories";
   static String johnSmith = 'John Smith';
   static String saveUser = 'SaveUser';
   static String raffle = 'Raffles';
@@ -381,6 +384,9 @@ class AppText {
   static String detail = 'Details';
   static String cancel = 'Cancel';
   static String photos = "Photos";
+  static String condition = 'Condition';
+  static String conditions = 'Conditions';
+  static String category = 'Category';
 }
 
 class PreferenceKeys {
@@ -390,91 +396,15 @@ class PreferenceKeys {
 
 class AppConfig {
   static URLHost host = URLHost.local;
-
-  static String get firebaseKey {
-    switch (host) {
-      case URLHost.local:
-        return '';
-      case URLHost.live:
-        return '';
-      case URLHost.staging:
-        return '';
-    }
-  }
-
-  static String get apiVersion {
-    return '/v2/';
-  }
+  static String apiVersion = '/v2/';
 }
 
 class AppConstant {
   static String baseURL = AppConfig.host.baseURL;
-  static String firebaseKey = AppConfig.firebaseKey;
+  static String firebaseKey = AppConfig.host.firebaseKey;
   static String version = AppConfig.apiVersion;
   static String preFixRaffale = 'raffle';
 }
-
-enum URLHost { local, live, staging }
-
-extension URLHostExtension on URLHost {
-  String get baseURL {
-    switch (this) {
-      case URLHost.local:
-        return 'http://202.131.117.92:7066';
-      default:
-        return '';
-    }
-  }
-}
-
-enum URLPath {
-  login,
-  signUp,
-  raffle,
-  dashboard,
-  review,
-  raffaleUserList,
-  raffleDetail,
-  logout,
-  sold,
-  favouriteList,
-  addRaffale
-}
-
-extension PathExtension on URLPath {
-  String get path {
-    switch (this) {
-      case URLPath.login:
-        return 'login';
-      case URLPath.signUp:
-        return 'sign_up';
-      case URLPath.raffle:
-        return 'raffle';
-      case URLPath.dashboard:
-        return 'dashboard';
-      case URLPath.sold:
-        return 'raffle/soldList';
-      case URLPath.review:
-        return 'reviews';
-      case URLPath.raffaleUserList:
-        return 'raffle/userRaffleList';
-      case URLPath.logout:
-        return 'logout';
-      case URLPath.raffleDetail:
-        return '${AppConstant.preFixRaffale}/view/';
-      case URLPath.favouriteList:
-        return '${AppConstant.preFixRaffale}/favourite_list';
-      case URLPath.addRaffale:
-        return '${AppConstant.preFixRaffale}/create';
-    }
-  }
-
-  String get url {
-    return '${AppConstant.baseURL}/${AppConstant.version}/$path';
-  }
-}
-
-enum HTTPMethod { get, post, put, delete }
 
 class StringConstant {
   /// common strings

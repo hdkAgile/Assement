@@ -385,7 +385,7 @@ class Home extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      AppText.category,
+                                      AppText.categories,
                                       style: AppTextStyle
                                           .openSans_extrabold_themeBlack_16,
                                     ),

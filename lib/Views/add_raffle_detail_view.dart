@@ -121,6 +121,74 @@ class AddDetailView extends StatelessWidget {
                     style: AppTextStyle.openSans_regular_textGrey1_14,
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    color: AppColors.themeLightGrey,
+                    margin: EdgeInsets.only(top: 17),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppText.condition,
+                          style: AppTextStyle.openSans_bold_themeBlack_14,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Visibility(
+                                visible: true,
+                                child: Text(
+                                  AppText.condition,
+                                  style: AppTextStyle
+                                      .openSans_regular_textGrey1_14,
+                                )),
+                            SizedBox(
+                              width: 16.w,
+                            ),
+                            Image.asset(AppImages.blackArrowRight),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    color: AppColors.themeLightGrey,
+                    margin: EdgeInsets.only(top: 17),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppText.category,
+                          style: AppTextStyle.openSans_bold_themeBlack_14,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Visibility(
+                                visible: true,
+                                child: Text(
+                                  AppText.category,
+                                  style: AppTextStyle
+                                      .openSans_regular_textGrey1_14,
+                                )),
+                            SizedBox(
+                              width: 16.w,
+                            ),
+                            Image.asset(AppImages.blackArrowRight),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.only(top: 17),
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
