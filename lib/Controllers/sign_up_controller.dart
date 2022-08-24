@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:assement/Utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -20,8 +21,17 @@ import '../Views/home_tab.dart';
 import 'alert_managar_controller.dart';
 
 class SignUpController extends GetxController {
+  SignUpType type;
+
+  SignUpController({required this.type});
+
   RxBool isLoding = RxBool(false);
+  RxBool isEnable = RxBool(false);
   String _deviceId = '';
+  RxString firstName = ''.obs;
+  RxString lastName = ''.obs;
+  RxString email = ''.obs;
+  RxString password = ''.obs;
 
   @override
   void onInit() {
@@ -34,89 +44,92 @@ class SignUpController extends GetxController {
     _deviceId = await DeviceInfo.getDeviceId() ?? '';
   }
 
-  void validation(
-      String firstName, String lastName, String email, String password) async {
-    if (GetUtils.isLengthLessOrEqual(firstName, 0)) {
+  void validation() async {
+    if (GetUtils.isLengthLessOrEqual(firstName.value, 0)) {
       AlertManagerController.showSnackBar(
           'Invalid FirstName', 'Please enter first name.', Position.bottom);
-    } else if (GetUtils.isLengthLessOrEqual(lastName, 0)) {
+    } else if (GetUtils.isLengthLessOrEqual(lastName.value, 0)) {
       AlertManagerController.showSnackBar(
           'Invalid lastName', 'Please enter last name.', Position.bottom);
-    } else if (GetUtils.isLengthLessOrEqual(email, 0)) {
+    } else if (GetUtils.isLengthLessOrEqual(email.value, 0)) {
       AlertManagerController.showSnackBar(
           'Invalid email', 'Please enter email.', Position.bottom);
-    } else if (!GetUtils.isEmail(email)) {
+    } else if (!GetUtils.isEmail(email.value)) {
       AlertManagerController.showSnackBar(
           'Invalid email', 'Please enter vaild email', Position.bottom);
-    } else if (GetUtils.isLengthLessOrEqual(password, 0)) {
+    } else if (GetUtils.isLengthLessOrEqual(password.value, 0)) {
       AlertManagerController.showSnackBar(
           'Invalid Password', 'Please enter password', Position.bottom);
-    } else if (GetUtils.isLengthLessThan(password, 6)) {
+    } else if (GetUtils.isLengthLessThan(password.value, 6)) {
       AlertManagerController.showSnackBar('invalid password length',
           'Password must contains at least 6 characters.', Position.bottom);
     } else {
-      isLoding.value = true;
       final registerApiModel = RegisterAPIModel(
-          email: email,
-          password: password,
           deviceType: Platform.isIOS ? 'ios' : 'android',
           deviceId: _deviceId,
           deviceToken: '5s4dsa54d6a4d',
-          firstName: firstName,
-          lastName: lastName,
+          firstName: firstName.value,
+          lastName: lastName.value,
+          email: email.value,
+          password: password.value,
           signUpType: 1);
       final params = registerApiModel.toJson();
-      ResponseModel<UserData> responseModel = await sharedServiceManager
-          .createPostRequest(typeOfEndPoint: APIType.signUp, params: params);
-      isLoding.value = false;
-
-      if (responseModel.status == APIConstant.statusCodeSuccess) {
-        await sharedUser
-            .updateValue(responseModel.data?.toJson() ?? <String, dynamic>{});
-        await AppUser.saveIsLoginVerfied();
-        Get.offAll(const HomeTab());
-      } else {
-        AlertManagerController.showSnackBar(
-            '', responseModel.message, Position.bottom);
-      }
+      _apiCall(params);
     }
   }
 
-  void loginValidation(String email, String password) async {
-    if (GetUtils.isLengthLessOrEqual(email, 0)) {
+  void loginValidation() async {
+    if (GetUtils.isLengthLessOrEqual(email.value, 0)) {
       AlertManagerController.showSnackBar(
           'Invalid email', 'Please enter email', Position.bottom);
-    } else if (!GetUtils.isEmail(email)) {
+    } else if (!GetUtils.isEmail(email.value)) {
       AlertManagerController.showSnackBar(
           'Invalid email', 'Please enter vaild email', Position.bottom);
-    } else if (GetUtils.isLengthLessOrEqual(password, 0)) {
+    } else if (GetUtils.isLengthLessOrEqual(password.value, 0)) {
       AlertManagerController.showSnackBar(
           'Invalid Password', 'Please enter password', Position.bottom);
-    } else if (GetUtils.isLengthLessThan(password, 6)) {
+    } else if (GetUtils.isLengthLessThan(password.value, 6)) {
       AlertManagerController.showSnackBar('invalid password length',
           'Password must contains at least 6 characters.', Position.bottom);
     } else {
       final loginAPIModel = LoginApiModel(
-          email: email,
-          password: password,
+          email: email.value,
+          password: password.value,
           deviceId: _deviceId,
           deviceToken: '5s4dsa54d6a4d',
           deviceType: Platform.isIOS ? 'ios' : 'android');
       final params = loginAPIModel.toJson();
-      AlertManagerController.showLoaderDialog(Get.context!);
-      ResponseModel<UserData> responseModel = await sharedServiceManager
-          .createPostRequest(typeOfEndPoint: APIType.login, params: params);
-      AlertManagerController.hideLoaderDialog();
 
-      if (responseModel.status == APIConstant.statusCodeSuccess) {
-        await sharedUser
-            .updateValue(responseModel.data?.toJson() ?? <String, dynamic>{});
-        await AppUser.saveIsLoginVerfied();
-        Get.offAll(const HomeTab());
-      } else {
-        AlertManagerController.showSnackBar(
-            '', responseModel.message, Position.bottom);
-      }
+      _apiCall(params);
+    }
+  }
+
+  void shoudldButtonEnable() {
+    if (type == SignUpType.signIn) {
+      isEnable.value = email.value.isNotEmpty && password.value.isNotEmpty;
+    } else {
+      isEnable.value = firstName.value.isNotEmpty &&
+          lastName.value.isNotEmpty &&
+          email.value.isNotEmpty &&
+          password.value.isNotEmpty;
+    }
+    update();
+  }
+
+  void _apiCall(Map<String, dynamic> params) async {
+    AlertManagerController.showLoaderDialog(Get.context!);
+    ResponseModel<UserData> responseModel = await sharedServiceManager
+        .createPostRequest(typeOfEndPoint: type.path, params: params);
+    AlertManagerController.hideLoaderDialog();
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      await sharedUser
+          .updateValue(responseModel.data?.toJson() ?? <String, dynamic>{});
+      await AppUser.saveIsLoginVerfied();
+      Get.offAll(() => HomeTab());
+    } else {
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
     }
   }
 }

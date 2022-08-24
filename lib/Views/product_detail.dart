@@ -1,3 +1,4 @@
+import 'package:assement/Views/Custom/app_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,21 +46,15 @@ class ProductDetail extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 16.0.h),
-        child: TextButton(
-            onPressed: () {},
-            child: Container(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
+          child: AppButton(
               height: 50.h,
-              width: 0.6.sw,
-              decoration: BoxDecoration(
-                  color: AppColors.themeGreen,
-                  borderRadius: BorderRadius.circular(25.r)),
-              child: Center(
-                child: Text(
-                  "Enter Now",
-                  style: AppTextStyle.openSans_bold_themeWhite_17,
-                ),
-              ),
-            )),
+              width: double.infinity,
+              title: 'Enter Now',
+              isEnable: true),
+        ),
       ),
       body: SafeArea(
           child: Obx(

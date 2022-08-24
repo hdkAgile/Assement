@@ -138,6 +138,7 @@ flutter:
     - assets/new_plus.png
     - assets/images/info.png
     - assets/images/R_black_arrow.png
+    - assets/images/checkbox.png
 
 
    # An image asset can refer to one or more resolution-specific "variants", see

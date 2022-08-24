@@ -1,4 +1,8 @@
+import 'package:assement/Controllers/add_raafale_controller.dart';
+import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Views/Custom/app_button.dart';
+import 'package:assement/Views/condition_selection_view.dart';
+import 'package:assement/Views/product_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,12 +10,22 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../Utils/constants.dart';
 import 'Custom/image_view.dart';
+import 'add_raafle_detail_view.dart';
 
-class AddDetailView extends StatelessWidget {
-  const AddDetailView({Key? key}) : super(key: key);
+class AddRaffleView extends StatelessWidget {
+  AddRaffleView({Key? key}) : super(key: key);
+
+  AddRaffaleController controller = Get.put(AddRaffaleController());
+
+  void setupImage() {
+    if (controller.images.length < 10 || controller.images.isEmpty) {
+      controller.images.add(AppImages.addPhoto);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    setupImage();
     return Scaffold(
         backgroundColor: AppColors.themeWhite,
         appBar: AppBar(
@@ -26,10 +40,8 @@ class AddDetailView extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            child: Text(
-              AppText.cancel,
-              style: AppTextStyle.openSans_semibold_black_12,
-            ),
+            child: Text(AppText.cancel,
+                style: AppTextStyle.openSans_semibold_black_12),
           ),
         ),
         body: SafeArea(
@@ -55,7 +67,7 @@ class AddDetailView extends StatelessWidget {
                   margin: EdgeInsets.only(top: 10),
                   constraints: BoxConstraints(maxHeight: 108.h),
                   color: AppColors.themeLightGrey,
-                  child: ListView.builder(
+                  child: Obx(() => ListView.builder(
                       itemBuilder: (context, index) {
                         return Container(
                           height: 80.w,
@@ -64,19 +76,22 @@ class AddDetailView extends StatelessWidget {
                               BoxDecoration(boxShadow: kElevationToShadow[10]),
                           padding: EdgeInsets.only(
                               top: 16, left: 11, right: 0, bottom: 16),
-                          child: GestureDetector(
-                            onTap: () {
-                              print(index);
-                            },
-                            child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.r)),
-                                child: Image.asset(AppImages.addPhoto)),
-                          ),
+                          child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.r)),
+                              child: index == controller.images.length - 1
+                                  ? InkWell(
+                                      onTap: () {
+                                        controller.pickedImage(
+                                            SourceType.photoLibrary);
+                                      },
+                                      child:
+                                          Image.asset(controller.images[index]))
+                                  : Image.asset(controller.images[index])),
                         );
                       },
-                      itemCount: 3,
-                      scrollDirection: Axis.horizontal),
+                      itemCount: controller.images.length,
+                      scrollDirection: Axis.horizontal)),
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -122,7 +137,9 @@ class AddDetailView extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => ConditionSelectionView());
+                  },
                   child: Container(
                     width: double.infinity,
                     color: AppColors.themeLightGrey,
@@ -435,6 +452,9 @@ class AddDetailView extends StatelessWidget {
                       title: 'Preview Listing',
                       isEnable: true,
                       height: 50.h,
+                      onPressed: () {
+                        Get.to(() => AddRaffleDetailView());
+                      },
                     )),
               ],
             ),

@@ -8,6 +8,7 @@ class AppButton extends StatelessWidget {
   bool isEnable;
   double? height;
   double? width;
+  TextStyle? style;
   Function()? onPressed;
 
   AppButton(
@@ -15,6 +16,7 @@ class AppButton extends StatelessWidget {
       required this.isEnable,
       this.height,
       this.width,
+      this.style,
       this.onPressed,
       Key? key})
       : super(key: key);
@@ -48,7 +50,9 @@ class AppButton extends StatelessWidget {
           child: Text(title,
               style: isEnable
                   ? AppTextStyle.openSans_bold_white_17
-                  : AppTextStyle.openSans_bold_darkGrey_17),
+                  : style != null
+                      ? style
+                      : AppTextStyle.openSans_bold_darkGrey_17),
         ));
   }
 }

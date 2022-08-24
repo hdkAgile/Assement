@@ -7,11 +7,12 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../Controllers/sign_up_controller.dart';
 import '../Utils/constants.dart';
+import '../Utils/enum_all.dart';
 import 'Custom/app_button.dart';
 import 'Custom/app_textfield.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -20,11 +21,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final SignUpController signUpController = Get.put(SignUpController());
+  final SignUpController signUpController =
+      Get.put(SignUpController(type: SignUpType.signIn));
 
   bool isVaildEntry() {
-    return _emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty;
+    return signUpController.email.value.isNotEmpty &&
+        signUpController.password.value.isNotEmpty;
   }
 
   @override
@@ -52,7 +54,6 @@ class _LoginState extends State<Login> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         AppTextField(
-                            controller: _emailController,
                             isObscure: false,
                             labelText: AppText.email,
                             textInputAction: TextInputAction.next,
@@ -61,11 +62,11 @@ class _LoginState extends State<Login> {
                               LengthLimitingTextInputFormatter(60),
                             ],
                             onChanged: (value) {
-                              setState(() {});
+                              signUpController.email.value = value;
+                              signUpController.shoudldButtonEnable();
                             }),
                         SizedBox(height: 20.h),
                         AppTextField(
-                            controller: _passwordController,
                             labelText: AppText.password,
                             isObscure: true,
                             textInputAction: TextInputAction.done,
@@ -74,7 +75,8 @@ class _LoginState extends State<Login> {
                               LengthLimitingTextInputFormatter(40),
                             ],
                             onChanged: (value) {
-                              setState(() {});
+                              signUpController.password.value = value;
+                              signUpController.shoudldButtonEnable();
                             }),
                         SizedBox(height: 10.h),
                         Align(
@@ -125,43 +127,15 @@ class _LoginState extends State<Login> {
                       ),
                       Padding(
                         padding: EdgeInsets.all(16),
-                        child: Container(
-                          height: 50.h,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: isVaildEntry()
-                                    ? AppColors.themeGreen
-                                    : AppColors.themeLightGrey),
-                            color: isVaildEntry()
-                                ? AppColors.themeGreen
-                                : AppColors.themeLightGrey.withOpacity(1.0),
-                            borderRadius: BorderRadius.circular(25.r),
-                            boxShadow: [
-                              BoxShadow(
-                                color: isVaildEntry()
-                                    ? AppColors.themeGreen.withOpacity(0.5)
-                                    : AppColors.themeLightGrey.withOpacity(1.0),
-                                spreadRadius: 1.r,
-                                blurRadius: 5.r,
-                                offset:
-                                    Offset(0, 2), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: AppButton(
-                              onPressed: () {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                setState(() {});
-                                // Get.to(HomeTab());
-                                signUpController.loginValidation(
-                                    _emailController.text,
-                                    _passwordController.text);
-                              },
-                              height: 50.h,
-                              title: AppText.logIn,
-                              isEnable: isVaildEntry()),
-                        ),
+                        child: Obx(() => AppButton(
+                            onPressed: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              signUpController.loginValidation();
+                            },
+                            height: 50.h,
+                            width: double.infinity,
+                            title: AppText.logIn,
+                            isEnable: signUpController.isEnable.value)),
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 40))
                     ],

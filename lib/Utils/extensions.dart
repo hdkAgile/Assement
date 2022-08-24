@@ -9,6 +9,15 @@ extension SignUpTypeExtention on SignUpType {
         return 1;
     }
   }
+
+  APIType get path {
+    switch (this) {
+      case SignUpType.signUp:
+        return APIType.signUp;
+      case SignUpType.signIn:
+        return APIType.login;
+    }
+  }
 }
 
 extension URLHostExtension on URLHost {

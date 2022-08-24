@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../Utils/constants.dart';
 import 'Custom/search_tab.dart';
-import 'add_raffle_detail_view.dart';
+import 'add_raffle_view.dart';
 import 'favourite_view.dart';
 import 'home.dart';
 import 'notification_view.dart';
@@ -81,7 +81,7 @@ class _HomeTabState extends State<HomeTab> {
         child: FloatingActionButton(
           elevation: 5.0,
           onPressed: () {
-            Get.to(AddDetailView());
+            Get.to(AddRaffleView());
           },
           backgroundColor: AppColors.themeGreen,
           child: Center(

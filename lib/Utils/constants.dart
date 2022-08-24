@@ -296,6 +296,12 @@ class AppTextStyle {
       fontSize: 12,
       letterSpacing: 1.2,
       color: AppColors.themeBlack);
+
+  static TextStyle openSans_regular_themeBlack_14 = TextStyle(
+      fontFamily: AppFonts.openSansRegular,
+      fontSize: 14,
+      letterSpacing: 1.4,
+      color: AppColors.themeBlack);
   static TextStyle openSans_regular_themeWhite_10 = TextStyle(
       fontFamily: AppFonts.openSansRegular,
       fontSize: 10,
@@ -404,6 +410,7 @@ class AppConstant {
   static String firebaseKey = AppConfig.host.firebaseKey;
   static String version = AppConfig.apiVersion;
   static String preFixRaffale = 'raffle';
+  static int limit = 10;
 }
 
 class StringConstant {
