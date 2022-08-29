@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../Controllers/add_raafale_controller.dart';
 import '../Controllers/product_detail_controller.dart';
 import '../Models/DataModels/product_detail_models.dart';
 import '../Utils/constants.dart';
@@ -15,6 +16,7 @@ class AddRaffleDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<AddRaffaleController>();
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -44,54 +46,50 @@ class AddRaffleDetailView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 30.h),
-            // Padding(
-            //     padding: EdgeInsets.symmetric(vertical: 16.h),
-            //     child: Container(
-            //       height: 0.2.sh,
-            //       width: double.infinity,
-            //       color: AppColors.themeWhite,
-            //       child: CarouselSlider(
-            //         items:
-            //         carouselController: CarouselController(),
-            //         options: CarouselOptions(
-            //             viewportFraction: 0.85,
-            //             aspectRatio: 2.0,
-            //             enlargeCenterPage: true,
-            //             enableInfiniteScroll: false,
-            //             scrollDirection: Axis.horizontal,
-            //             autoPlay: false,
-            //             initialPage:
-            //             productDetailController.pageIndex.value,
-            //             onPageChanged: (index, reason) {
-            //               final pageIndex = index;
-            //               productDetailController
-            //                   .changePageIndex(pageIndex);
-            //             }),
-            //       ),
-            //     )),
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.h),
+                child: Container(
+                  height: 0.2.sh,
+                  width: double.infinity,
+                  color: AppColors.themeWhite,
+                  child: CarouselSlider(
+                    items: controller.imageSiders,
+                    carouselController: CarouselController(),
+                    options: CarouselOptions(
+                        viewportFraction: 0.85,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: false,
+                        scrollDirection: Axis.horizontal,
+                        autoPlay: false,
+                        initialPage: controller.pageIndex.value,
+                        onPageChanged: (index, reason) {
+                          controller.changePageIndex(index);
+                        }),
+                  ),
+                )),
             SizedBox(
               height: 10.h,
             ),
-            // Visibility(
-            //   visible: productDetailController.imageSiders.length > 1,
-            //   child: Stack(
-            //     children: [
-            //       Container(
-            //         width: productDetailController.indicatorWidth,
-            //         height: 5.0,
-            //         color: AppColors.themeLightGrey,
-            //       ),
-            //       Container(
-            //         width: (productDetailController.indicatorWidth /
-            //             productDetailController
-            //                 .imageSiders.length) *
-            //             (productDetailController.pageIndex.value + 1),
-            //         height: 5.0,
-            //         color: AppColors.themeGreen,
-            //       )
-            //     ],
-            //   ),
-            // ),
+            Visibility(
+              visible: controller.imageSiders.length > 1,
+              child: Stack(
+                children: [
+                  Container(
+                    width: controller.indicatorWidth,
+                    height: 5.0,
+                    color: AppColors.themeLightGrey,
+                  ),
+                  Container(
+                    width: (controller.indicatorWidth /
+                            controller.imageSiders.length) *
+                        (controller.pageIndex.value + 1),
+                    height: 5.0,
+                    color: AppColors.themeGreen,
+                  )
+                ],
+              ),
+            ),
             SizedBox(height: 65.h),
             Padding(
                 padding: EdgeInsets.symmetric(
@@ -132,6 +130,15 @@ class AddRaffleDetailView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
+                        Text(
+                          "John Smith",
+                          textAlign: TextAlign.right,
+                          textDirection: TextDirection.rtl,
+                          style: AppTextStyle.openSans_regular_themeBlack_10,
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
                         Container(
                           height: 19.h,
                           width: 19.h,
@@ -142,15 +149,6 @@ class AddRaffleDetailView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(19.r),
                           ),
                         ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Text(
-                          "John Smith",
-                          textAlign: TextAlign.right,
-                          textDirection: TextDirection.rtl,
-                          style: AppTextStyle.openSans_regular_themeBlack_10,
-                        )
                       ],
                     )
                   ],
@@ -252,10 +250,9 @@ class AddRaffleDetailView extends StatelessWidget {
                     SizedBox(height: 17.h),
                   ],
                 )),
-            SizedBox(height: 32.h),
+            SizedBox(height: 25.h),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 16, right: 16, bottom: 16, top: 8),
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
               child: Column(
                 children: [
                   AppButton(
@@ -271,7 +268,10 @@ class AddRaffleDetailView extends StatelessWidget {
                       width: double.infinity,
                       title: 'Edit Listing',
                       style: AppTextStyle.openSans_bold_themeBlack_18,
-                      isEnable: false)
+                      isEnable: false,
+                      onPressed: () {
+                        Get.back();
+                      })
                 ],
               ),
             ),

@@ -13,6 +13,7 @@ import '../Models/DataModels/User.dart';
 import '../Models/DataModels/app_user.dart';
 import '../Models/DataModels/response_model.dart';
 import '../Models/ParamsModels/LoginApiModel.dart';
+import '../Utils/constants.dart';
 import '../Utils/device_info.dart';
 import '../Utils/enum_all.dart';
 import '../Utils/network_manager/api_constant.dart';
@@ -21,10 +22,6 @@ import '../Views/home_tab.dart';
 import 'alert_managar_controller.dart';
 
 class SignUpController extends GetxController {
-  SignUpType type;
-
-  SignUpController({required this.type});
-
   RxBool isLoding = RxBool(false);
   RxBool isEnable = RxBool(false);
   String _deviceId = '';
@@ -105,28 +102,24 @@ class SignUpController extends GetxController {
   }
 
   void shoudldButtonEnable() {
-    if (type == SignUpType.signIn) {
-      isEnable.value = email.value.isNotEmpty && password.value.isNotEmpty;
-    } else {
-      isEnable.value = firstName.value.isNotEmpty &&
-          lastName.value.isNotEmpty &&
-          email.value.isNotEmpty &&
-          password.value.isNotEmpty;
-    }
+    isEnable.value = firstName.value.isNotEmpty &&
+        lastName.value.isNotEmpty &&
+        email.value.isNotEmpty &&
+        password.value.isNotEmpty;
     update();
   }
 
   void _apiCall(Map<String, dynamic> params) async {
     AlertManagerController.showLoaderDialog(Get.context!);
     ResponseModel<UserData> responseModel = await sharedServiceManager
-        .createPostRequest(typeOfEndPoint: type.path, params: params);
+        .createPostRequest(typeOfEndPoint: APIType.signUp, params: params);
     AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       await sharedUser
           .updateValue(responseModel.data?.toJson() ?? <String, dynamic>{});
       await AppUser.saveIsLoginVerfied();
-      Get.offAll(() => HomeTab());
+      Get.offAllNamed(ScreenRoutesConstant.homeTab);
     } else {
       AlertManagerController.showSnackBar(
           '', responseModel.message, Position.bottom);

@@ -105,7 +105,7 @@ class _WelComeViewState extends State<WelComeView> {
                     flex: 1,
                     child: TextButton(
                         onPressed: () {
-                          Get.to(() => CreateAccount(type: SignUpType.signUp));
+                          Get.toNamed(ScreenRoutesConstant.createAccount);
                         },
                         child: Container(
                           width: double.infinity,
@@ -125,7 +125,7 @@ class _WelComeViewState extends State<WelComeView> {
                     flex: 1,
                     child: TextButton(
                         onPressed: () {
-                          Get.to(() => CreateAccount(type: SignUpType.signIn));
+                          Get.toNamed(ScreenRoutesConstant.createAccount);
                         },
                         child: Container(
                           width: double.infinity,

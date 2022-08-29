@@ -16,7 +16,7 @@ import 'Custom/product_grid_cell.dart';
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
-  HomeController controller = Get.put(HomeController());
+  HomeController controller = Get.find<HomeController>();
 
   List<String> categories = [
     AppImages.category1,
@@ -220,158 +220,169 @@ class Home extends StatelessWidget {
                           SizedBox(
                             height: 30.h,
                           ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      AppText.endingSoon,
-                                      style: AppTextStyle
-                                          .openSans_extrabold_themeBlack_16,
+                          Visibility(
+                              visible: controller.endingSoon.isNotEmpty,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16.w),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          AppText.endingSoon,
+                                          style: AppTextStyle
+                                              .openSans_extrabold_themeBlack_16,
+                                        ),
+                                        TextButton(
+                                            onPressed: () {},
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  AppText.seeMore,
+                                                  style: AppTextStyle
+                                                      .openSans_semibold_textGrey_14,
+                                                ),
+                                                SizedBox(
+                                                  width: 8.0.w,
+                                                ),
+                                                Image.asset(
+                                                    AppImages.rightArrow)
+                                              ],
+                                            ))
+                                      ],
                                     ),
-                                    TextButton(
-                                        onPressed: () {},
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              AppText.seeMore,
-                                              style: AppTextStyle
-                                                  .openSans_semibold_textGrey_14,
-                                            ),
-                                            SizedBox(
-                                              width: 8.0.w,
-                                            ),
-                                            Image.asset(AppImages.rightArrow)
-                                          ],
-                                        ))
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 0.h,
-                              ),
-                              Container(
-                                height: 220.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 16,
-                                            right: 8,
-                                            top: 8,
-                                            bottom: 8),
-                                        child: AspectRatio(
-                                          aspectRatio: 144 / 208,
-                                          child: ProductGridCell(
-                                              image: controller
-                                                      .endingSoon[index]
-                                                      .images?[0] ??
-                                                  '',
-                                              title: controller
-                                                      .endingSoon[index]
-                                                      .title ??
-                                                  '',
-                                              userId: controller
-                                                      .endingSoon[index].id ??
-                                                  0,
-                                              raffleId: controller
-                                                      .endingSoon[index].id ??
-                                                  0,
-                                              price: controller
-                                                  .endingSoon[index].price
-                                                  .toString()),
-                                        ));
-                                  },
-                                  itemCount: controller.latestRaffles.length,
-                                  scrollDirection: Axis.horizontal,
-                                ),
-                              )
-                            ],
-                          ),
+                                  ),
+                                  SizedBox(
+                                    height: 0.h,
+                                  ),
+                                  Container(
+                                    height: 220.h,
+                                    child: ListView.builder(
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 16,
+                                                right: 8,
+                                                top: 8,
+                                                bottom: 8),
+                                            child: AspectRatio(
+                                              aspectRatio: 144 / 208,
+                                              child: ProductGridCell(
+                                                  image: controller
+                                                          .endingSoon[index]
+                                                          .images?[0] ??
+                                                      '',
+                                                  title: controller
+                                                          .endingSoon[index]
+                                                          .title ??
+                                                      '',
+                                                  userId: controller
+                                                          .endingSoon[index]
+                                                          .id ??
+                                                      0,
+                                                  raffleId: controller
+                                                          .endingSoon[index]
+                                                          .id ??
+                                                      0,
+                                                  price: controller
+                                                      .endingSoon[index].price
+                                                      .toString()),
+                                            ));
+                                      },
+                                      itemCount:
+                                          controller.latestRaffles.length,
+                                      scrollDirection: Axis.horizontal,
+                                    ),
+                                  )
+                                ],
+                              )),
                           SizedBox(
                             height: 30.h,
                           ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      AppText.recentAdded,
-                                      style: AppTextStyle
-                                          .openSans_extrabold_themeBlack_16,
-                                    ),
-                                    TextButton(
-                                        onPressed: () {},
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              AppText.seeMore,
-                                              style: AppTextStyle
-                                                  .openSans_semibold_textGrey_14,
-                                            ),
-                                            SizedBox(
-                                              width: 8.0.w,
-                                            ),
-                                            Image.asset(AppImages.rightArrow)
-                                          ],
-                                        ))
-                                  ],
+                          Visibility(
+                            visible: controller.latestRaffles.isNotEmpty,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        AppText.recentAdded,
+                                        style: AppTextStyle
+                                            .openSans_extrabold_themeBlack_16,
+                                      ),
+                                      TextButton(
+                                          onPressed: () {},
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                AppText.seeMore,
+                                                style: AppTextStyle
+                                                    .openSans_semibold_textGrey_14,
+                                              ),
+                                              SizedBox(
+                                                width: 8.0.w,
+                                              ),
+                                              Image.asset(AppImages.rightArrow)
+                                            ],
+                                          ))
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 0.h,
-                              ),
-                              Container(
-                                height: 220.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 16,
-                                            right: 8,
-                                            top: 8,
-                                            bottom: 8),
-                                        child: AspectRatio(
-                                          aspectRatio: 144 / 208,
-                                          child: ProductGridCell(
-                                              image: controller
-                                                      .latestRaffles[index]
-                                                      .images?[0] ??
-                                                  '',
-                                              title: controller
-                                                      .latestRaffles[index]
-                                                      .title ??
-                                                  '',
-                                              userId: controller
-                                                      .latestRaffles[index]
-                                                      .id ??
-                                                  0,
-                                              raffleId: controller
-                                                      .latestRaffles[index]
-                                                      .id ??
-                                                  0,
-                                              price: controller
-                                                  .latestRaffles[index].price
-                                                  .toString()),
-                                        ));
-                                  },
-                                  itemCount: controller.latestRaffles.length,
-                                  scrollDirection: Axis.horizontal,
+                                SizedBox(
+                                  height: 0.h,
                                 ),
-                              )
-                            ],
+                                Container(
+                                  height: 220.h,
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 16,
+                                              right: 8,
+                                              top: 8,
+                                              bottom: 8),
+                                          child: AspectRatio(
+                                            aspectRatio: 144 / 208,
+                                            child: ProductGridCell(
+                                                image: controller
+                                                        .latestRaffles[index]
+                                                        .images?[0] ??
+                                                    '',
+                                                title: controller
+                                                        .latestRaffles[index]
+                                                        .title ??
+                                                    '',
+                                                userId: controller
+                                                        .latestRaffles[index]
+                                                        .id ??
+                                                    0,
+                                                raffleId: controller
+                                                        .latestRaffles[index]
+                                                        .id ??
+                                                    0,
+                                                price: controller
+                                                    .latestRaffles[index].price
+                                                    .toString()),
+                                          ));
+                                    },
+                                    itemCount: controller.latestRaffles.length,
+                                    scrollDirection: Axis.horizontal,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 30.h,

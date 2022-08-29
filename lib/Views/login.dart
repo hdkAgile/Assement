@@ -1,3 +1,4 @@
+import 'package:assement/Controllers/login_controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,13 +22,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final SignUpController signUpController =
-      Get.put(SignUpController(type: SignUpType.signIn));
+  final LoginController loginController = Get.find<LoginController>();
 
-  bool isVaildEntry() {
-    return signUpController.email.value.isNotEmpty &&
-        signUpController.password.value.isNotEmpty;
-  }
+  // bool isVaildEntry() {
+  //   return loginController.email.value.isNotEmpty &&
+  //       loginController.password.value.isNotEmpty;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +62,8 @@ class _LoginState extends State<Login> {
                               LengthLimitingTextInputFormatter(60),
                             ],
                             onChanged: (value) {
-                              signUpController.email.value = value;
-                              signUpController.shoudldButtonEnable();
+                              loginController.email.value = value;
+                              loginController.shoudldButtonEnable();
                             }),
                         SizedBox(height: 20.h),
                         AppTextField(
@@ -75,8 +75,8 @@ class _LoginState extends State<Login> {
                               LengthLimitingTextInputFormatter(40),
                             ],
                             onChanged: (value) {
-                              signUpController.password.value = value;
-                              signUpController.shoudldButtonEnable();
+                              loginController.password.value = value;
+                              loginController.shoudldButtonEnable();
                             }),
                         SizedBox(height: 10.h),
                         Align(
@@ -130,12 +130,12 @@ class _LoginState extends State<Login> {
                         child: Obx(() => AppButton(
                             onPressed: () {
                               FocusManager.instance.primaryFocus?.unfocus();
-                              signUpController.loginValidation();
+                              loginController.loginValidation();
                             },
                             height: 50.h,
                             width: double.infinity,
                             title: AppText.logIn,
-                            isEnable: signUpController.isEnable.value)),
+                            isEnable: loginController.isEnable.value)),
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 40))
                     ],

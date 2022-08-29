@@ -105,6 +105,21 @@ class AppImages {
   static String blackArrowRight = '${imgPath}R_black_arrow.png';
 }
 
+class ScreenRoutesConstant {
+  // common screens
+  static const String splashScreen = "/splashScreen";
+  static const String welcomeScreen = '/welcomeScreen';
+  static const String homeScreen = "/homeScreen";
+  static const String searchScreen = '/searchScreen';
+
+// auth related screens
+  static const String createAccount = "/createAccount";
+  static const String homeTab = "/homeTab";
+
+// profile related screens
+  static const String profileScreen = "/profileScreen";
+}
+
 //Fonts
 class AppFonts {
   static String openSansBold = 'OpenSansBold';

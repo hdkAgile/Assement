@@ -18,8 +18,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final SignUpController signUpController =
-      Get.put(SignUpController(type: SignUpType.signUp));
+  final SignUpController signUpController = Get.find<SignUpController>();
 
   final TextEditingController _firstNameController = TextEditingController();
 
@@ -29,12 +28,12 @@ class _SignUpState extends State<SignUp> {
 
   final TextEditingController _passwordController = TextEditingController();
 
-  bool isVaildEntry() {
-    return _firstNameController.text.isNotEmpty &&
-        _lastNameController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty;
-  }
+  // bool isVaildEntry() {
+  //   return _firstNameController.text.isNotEmpty &&
+  //       _lastNameController.text.isNotEmpty &&
+  //       _emailController.text.isNotEmpty &&
+  //       _passwordController.text.isNotEmpty;
+  // }
 
   @override
   Widget build(BuildContext context) {

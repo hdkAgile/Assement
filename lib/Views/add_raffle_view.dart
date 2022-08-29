@@ -1,5 +1,6 @@
 import 'package:assement/Controllers/add_raafale_controller.dart';
 import 'package:assement/Utils/enum_all.dart';
+import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:assement/Views/condition_selection_view.dart';
 import 'package:assement/Views/product_detail.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../Utils/constants.dart';
 import 'Custom/image_view.dart';
@@ -17,15 +19,8 @@ class AddRaffleView extends StatelessWidget {
 
   AddRaffaleController controller = Get.put(AddRaffaleController());
 
-  void setupImage() {
-    if (controller.images.length < 10 || controller.images.isEmpty) {
-      controller.images.add(AppImages.addPhoto);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    setupImage();
     return Scaffold(
         backgroundColor: AppColors.themeWhite,
         appBar: AppBar(
@@ -69,6 +64,7 @@ class AddRaffleView extends StatelessWidget {
                   color: AppColors.themeLightGrey,
                   child: Obx(() => ListView.builder(
                       itemBuilder: (context, index) {
+                        print(controller.images.length);
                         return Container(
                           height: 80.w,
                           width: 80.w,
@@ -79,15 +75,20 @@ class AddRaffleView extends StatelessWidget {
                           child: ClipRRect(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.r)),
-                              child: index == controller.images.length - 1
-                                  ? InkWell(
-                                      onTap: () {
-                                        controller.pickedImage(
-                                            SourceType.photoLibrary);
-                                      },
-                                      child:
-                                          Image.asset(controller.images[index]))
-                                  : Image.asset(controller.images[index])),
+                              child: index == controller.images.value.length - 1
+                                  ? Visibility(
+                                      visible:
+                                          !(controller.images.length > 10) ||
+                                              controller.images.length == 1,
+                                      child: InkWell(
+                                          onTap: () {
+                                            controller.pickedImage(
+                                                ImageSource.gallery);
+                                          },
+                                          child:
+                                              Image.asset(AppImages.addPhoto)))
+                                  : ImageView(
+                                      image: controller.images.value[index])),
                         );
                       },
                       itemCount: controller.images.length,
@@ -138,7 +139,7 @@ class AddRaffleView extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => ConditionSelectionView());
+                    // Get.to(() => ConditionSelectionView());
                   },
                   child: Container(
                     width: double.infinity,
@@ -156,12 +157,13 @@ class AddRaffleView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Visibility(
-                                visible: true,
-                                child: Text(
-                                  AppText.condition,
-                                  style: AppTextStyle
-                                      .openSans_regular_textGrey1_14,
-                                )),
+                              visible: true,
+                              child: Text(
+                                controller.title ?? AppText.condition,
+                                style:
+                                    AppTextStyle.openSans_regular_textGrey1_14,
+                              ),
+                            ),
                             SizedBox(
                               width: 16.w,
                             ),

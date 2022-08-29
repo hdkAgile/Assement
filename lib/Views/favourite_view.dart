@@ -192,15 +192,16 @@ class _FavouriteViewState extends State<FavouriteView> {
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio: 144 / 208,
-                                        crossAxisSpacing: 25.w,
-                                        crossAxisCount: 2),
+                                  childAspectRatio: 144 / 208,
+                                  crossAxisSpacing: 25.w,
+                                  crossAxisCount: 2,
+                                ),
                                 itemBuilder: (context, index) {
                                   return Center(
                                       child: Container(
                                     margin: EdgeInsets.only(
-                                        top: 16, left: 8, bottom: 8, right: 8),
-                                    padding: EdgeInsets.only(top: 0, bottom: 8),
+                                        top: 8, left: 8, bottom: 8, right: 8),
+                                    padding: EdgeInsets.only(top: 8, bottom: 8),
                                     child: ProductGridCell(
                                       userId:
                                           controller.items[index].user?.id ?? 0,

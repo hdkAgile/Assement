@@ -8,7 +8,7 @@ import '../Utils/constants.dart';
 class Splash extends StatelessWidget {
   Splash({Key? key}) : super(key: key);
 
-  SplashController controller = Get.put(SplashController());
+  final SplashController controller = Get.find<SplashController>();
 
   @override
   Widget build(BuildContext context) {

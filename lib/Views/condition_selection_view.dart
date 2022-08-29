@@ -1,3 +1,4 @@
+import 'package:assement/Controllers/add_raafale_controller.dart';
 import 'package:assement/Models/DataModels/condition_selection_model.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/selection_view.dart';
@@ -17,14 +18,9 @@ class ConditionSelectionView extends StatefulWidget {
 }
 
 class _ConditionSelectionViewState extends State<ConditionSelectionView> {
-  List<ConditionSelectionModel> items = [
-    ConditionSelectionModel(type: ConditionType.newInPackage, isSelected: true),
-    ConditionSelectionModel(type: ConditionType.lightlyUsed, isSelected: false),
-    ConditionSelectionModel(type: ConditionType.used, isSelected: false),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<AddRaffaleController>();
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -53,24 +49,28 @@ class _ConditionSelectionViewState extends State<ConditionSelectionView> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  for (int i = 0; i < items.length; i++) {
+                  for (int i = 0; i < controller.items.value.length; i++) {
                     if (i == index) {
-                      items[i].isSelected = true;
+                      controller.items.value[i].isSelected = true;
                     } else {
-                      items[i].isSelected = false;
+                      controller.items.value[i].isSelected = false;
                     }
                     setState(() {});
+                    controller.updateSelectedContition(
+                        controller.items[i].isSelected
+                            ? controller.items[i]
+                            : null);
                   }
                 },
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: SelectionView(
-                      title: items[index].type.title,
-                      isSelected: items[index].isSelected),
+                      title: controller.items[index].type.title,
+                      isSelected: controller.items[index].isSelected),
                 ),
               );
             },
-            itemCount: items.length),
+            itemCount: controller.items.length),
       ),
     );
   }
