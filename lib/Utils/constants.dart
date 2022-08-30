@@ -53,7 +53,7 @@ class AppImages {
   static String close = '${imgPath}close.png';
   static String closeWhite = '${imgPath}close_white.png';
   static String contactUs = '${imgPath}contactus.png';
-  static String doneImage = '${imgPath}done_images.png';
+  static String doneImage = '${imgPath}done_image.png';
   static String elipseBack = '${imgPath}elipse_back.png';
   static String elipseGreen = '${imgPath}elipse_green.png';
   static String email = '${imgPath}email.png';
@@ -252,6 +252,12 @@ class AppTextStyle {
       letterSpacing: 1.6,
       color: AppColors.themeGreen);
 
+  static TextStyle openSans_regular_themeBlack_16 = TextStyle(
+      fontFamily: AppFonts.openSansRegular,
+      fontSize: 16,
+      letterSpacing: 1.6,
+      color: AppColors.themeBlack);
+
   static TextStyle openSans_light_themeBlack_12 = TextStyle(
       fontFamily: AppFonts.openSansLight,
       fontSize: 12,
@@ -278,6 +284,12 @@ class AppTextStyle {
       fontFamily: AppFonts.openSansBold,
       fontSize: 12,
       letterSpacing: 1.2,
+      color: AppColors.themeBlack);
+
+  static TextStyle openSans_bold_themeBlack_29 = TextStyle(
+      fontFamily: AppFonts.openSansBold,
+      fontSize: 29,
+      letterSpacing: 2.9,
       color: AppColors.themeBlack);
   static TextStyle openSans_semibold_themeBlack_15_ = TextStyle(
       fontFamily: AppFonts.openSansSemiBold,
@@ -408,6 +420,8 @@ class AppText {
   static String condition = 'Condition';
   static String conditions = 'Conditions';
   static String category = 'Category';
+  static String congratualtion = 'Congratulations!';
+  static String raffaleListed = 'Your raffle has been listed!';
 }
 
 class PreferenceKeys {

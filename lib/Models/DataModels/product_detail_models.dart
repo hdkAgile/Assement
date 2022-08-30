@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:assement/Models/DataModels/raffale_list.dart';
+
 import 'Dashboard.dart';
 
 ProductDetailModel welcomeFromJson(String str) =>

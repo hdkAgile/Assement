@@ -54,6 +54,7 @@ class ProductListCell extends StatelessWidget {
                               image: (raffale!.images!.isNotEmpty
                                   ? raffale!.images![0]
                                   : ''),
+                              imageType: ImageType.networkImage,
                               fit: BoxFit.cover)),
                     ),
                     Positioned(
@@ -117,6 +118,7 @@ class ProductListCell extends StatelessWidget {
                             ClipRRect(
                               child: ImageView(
                                   image: raffale?.user?.image ?? '',
+                                  imageType: ImageType.networkImage,
                                   height: 19.w,
                                   width: 19.w),
                               borderRadius: BorderRadius.circular(19.r),

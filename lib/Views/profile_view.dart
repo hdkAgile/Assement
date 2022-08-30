@@ -143,7 +143,10 @@ class _ProfileViewState extends State<ProfileView> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(55.r),
                         child: Container(
-                          child: ImageView(image: sharedUser.user.image),
+                          child: ImageView(
+                            image: sharedUser.user.image,
+                            imageType: ImageType.networkImage,
+                          ),
                           height: 110.h,
                           width: 110.h,
                         ),
@@ -296,21 +299,8 @@ class _ProfileViewState extends State<ProfileView> {
                                       top: 8, left: 8, bottom: 8, right: 8),
                                   padding: EdgeInsets.only(top: 8, bottom: 8),
                                   child: ProductGridCell(
-                                      userId: controller
-                                              .userRaffleList[index].user?.id ??
-                                          0,
-                                      raffleId:
-                                          controller.userRaffleList[index].id ??
-                                              0,
-                                      price: controller
-                                          .userRaffleList[index].price
-                                          .toString(),
-                                      title: controller
-                                              .userRaffleList[index].title ??
-                                          'ProductName',
-                                      image: controller.userRaffleList[index]
-                                              .images?[0] ??
-                                          AppImages.filterIcon),
+                                      raffale: controller
+                                          .userRaffleList.value[index]),
                                 ));
                               })
                           : Container(

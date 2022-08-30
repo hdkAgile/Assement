@@ -5,6 +5,7 @@ import '../Models/DataModels/raffale_list.dart';
 import '../Models/DataModels/response_model.dart';
 import '../Models/DataModels/user_reviews.dart';
 import '../Models/ParamsModels/user_raffle_api_model.dart';
+import '../Utils/device_info.dart';
 import '../Utils/enum_all.dart';
 import '../Utils/network_manager/api_constant.dart';
 import '../Utils/network_manager/remote_services.dart';
@@ -20,14 +21,19 @@ class ProfileController extends GetxController {
   SingleUser user = sharedUser.user;
   RxList<Raffale> userRaffleList = <Raffale>[].obs;
   RxList<ReviewList> userReviewList = <ReviewList>[].obs;
+  String _deviceId = '';
 
   ProfileController({required this.offset, required this.limit});
 
   @override
   void onInit() {
     super.onInit();
-
+    _fetchDeviceID();
     _callAPI();
+  }
+
+  void _fetchDeviceID() async {
+    _deviceId = await DeviceInfo.getDeviceId() ?? '';
   }
 
   void _callAPI() {
@@ -85,7 +91,23 @@ class ProfileController extends GetxController {
   }
 
   void logout() async {
-    AppUser.clearPreferences();
-    Get.offAll(WelComeView());
+    Map<String, dynamic> params = {};
+
+    if (_deviceId.isNotEmpty) {
+      params['device_id'] = _deviceId;
+    }
+
+    AlertManagerController.showLoaderDialog(Get.context!);
+    ResponseModel<void> responseModel = await sharedServiceManager
+        .createPostRequest(typeOfEndPoint: APIType.logout, params: params);
+    AlertManagerController.hideLoaderDialog();
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      AppUser.clearPreferences();
+      Get.offAll(() => WelComeView());
+    } else {
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
+    }
   }
 }

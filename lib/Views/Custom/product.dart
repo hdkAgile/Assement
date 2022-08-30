@@ -51,6 +51,7 @@ class Product extends StatelessWidget {
                             )),
                         child: ImageView(
                             image: image,
+                            imageType: ImageType.networkImage,
                             width: 144.w,
                             height: 125.h,
                             fit: BoxFit.cover)),

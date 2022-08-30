@@ -1,4 +1,5 @@
 import 'package:assement/Views/Custom/app_button.dart';
+import 'package:assement/Views/complete_addRaffale_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,9 +15,15 @@ import 'Custom/image_view.dart';
 class AddRaffleDetailView extends StatelessWidget {
   AddRaffleDetailView({Key? key}) : super(key: key);
 
+  AddRaffaleController controller = Get.find<AddRaffaleController>();
+
+  void findController() {
+    print(controller.imageSiders.length);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AddRaffaleController>();
+    findController();
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -25,7 +32,7 @@ class AddRaffleDetailView extends StatelessWidget {
         centerTitle: true,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: EdgeInsets.only(right: 16.0),
             child: IconButton(
                 onPressed: () {}, icon: Image.asset(AppImages.more_horiz)),
           )
@@ -46,48 +53,52 @@ class AddRaffleDetailView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 30.h),
-            Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.h),
-                child: Container(
-                  height: 0.2.sh,
-                  width: double.infinity,
-                  color: AppColors.themeWhite,
-                  child: CarouselSlider(
-                    items: controller.imageSiders,
-                    carouselController: CarouselController(),
-                    options: CarouselOptions(
-                        viewportFraction: 0.85,
-                        aspectRatio: 2.0,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        scrollDirection: Axis.horizontal,
-                        autoPlay: false,
-                        initialPage: controller.pageIndex.value,
-                        onPageChanged: (index, reason) {
-                          controller.changePageIndex(index);
-                        }),
-                  ),
-                )),
+            Obx(
+              () => Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  child: Container(
+                    height: 0.2.sh,
+                    width: double.infinity,
+                    color: AppColors.themeWhite,
+                    child: CarouselSlider(
+                      items: controller.imageSiders,
+                      carouselController: CarouselController(),
+                      options: CarouselOptions(
+                          viewportFraction: 0.85,
+                          aspectRatio: 2.0,
+                          enlargeCenterPage: true,
+                          enableInfiniteScroll: false,
+                          scrollDirection: Axis.horizontal,
+                          autoPlay: false,
+                          initialPage: controller.pageIndex.value,
+                          onPageChanged: (index, reason) {
+                            controller.changePageIndex(index);
+                          }),
+                    ),
+                  )),
+            ),
             SizedBox(
               height: 10.h,
             ),
-            Visibility(
-              visible: controller.imageSiders.length > 1,
-              child: Stack(
-                children: [
-                  Container(
-                    width: controller.indicatorWidth,
-                    height: 5.0,
-                    color: AppColors.themeLightGrey,
-                  ),
-                  Container(
-                    width: (controller.indicatorWidth /
-                            controller.imageSiders.length) *
-                        (controller.pageIndex.value + 1),
-                    height: 5.0,
-                    color: AppColors.themeGreen,
-                  )
-                ],
+            Obx(
+              () => Visibility(
+                visible: controller.imageSiders.length > 1,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: controller.indicatorWidth,
+                      height: 5.0,
+                      color: AppColors.themeLightGrey,
+                    ),
+                    Container(
+                      width: (controller.indicatorWidth /
+                              controller.imageSiders.length) *
+                          (controller.pageIndex.value + 1),
+                      height: 5.0,
+                      color: AppColors.themeGreen,
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 65.h),
@@ -145,6 +156,8 @@ class AddRaffleDetailView extends StatelessWidget {
                           child: ClipRRect(
                             child: ImageView(
                               image: '',
+                              imageType: ImageType.asset,
+                              fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(19.r),
                           ),
@@ -256,6 +269,10 @@ class AddRaffleDetailView extends StatelessWidget {
               child: Column(
                 children: [
                   AppButton(
+                      onPressed: () {
+                        controller.createRaffale();
+                        Get.offAll(CompleteAddRaaflale());
+                      },
                       height: 50.h,
                       width: double.infinity,
                       title: 'Post Listing',

@@ -77,7 +77,10 @@ class _SearchState extends State<Search> {
                       child: Container(
                           height: 30.h,
                           width: 30.h,
-                          child: ImageView(image: searchController.user.image)),
+                          child: ImageView(
+                            image: searchController.user.image,
+                            imageType: ImageType.networkImage,
+                          )),
                     ),
                   )
                 ],
@@ -177,21 +180,7 @@ class _SearchState extends State<Search> {
                                       top: 8, left: 8, bottom: 8, right: 8),
                                   padding: EdgeInsets.only(top: 8, bottom: 8),
                                   child: ProductGridCell(
-                                      userId:
-                                          searchController.items[index].id ?? 0,
-                                      raffleId:
-                                          searchController.items[index].id ?? 0,
-                                      title:
-                                          searchController.items[index].title ??
-                                              '',
-                                      price: searchController.items[index].price
-                                          .toString(),
-                                      image: (searchController
-                                              .items[index].images!.isEmpty)
-                                          ? AppImages.imagePlaceholder
-                                          : searchController
-                                                  .items[index].images?[0] ??
-                                              ''),
+                                      raffale: searchController.items[index]),
                                 ));
                               })
                           : Container(

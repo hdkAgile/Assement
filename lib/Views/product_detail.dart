@@ -174,6 +174,7 @@ class ProductDetail extends StatelessWidget {
                                               .user
                                               ?.image ??
                                           '',
+                                      imageType: ImageType.networkImage,
                                     ),
                                     borderRadius: BorderRadius.circular(19.r),
                                   ),

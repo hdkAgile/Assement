@@ -214,12 +214,7 @@ class _RaffaleViewState extends State<RaffaleView> {
                           return Center(
                               child: Padding(
                             padding: const EdgeInsets.only(top: 16),
-                            child: ProductGridCell(
-                                userId: 0,
-                                raffleId: 0,
-                                price: '100',
-                                title: 'ProductName',
-                                image: AppImages.johnSmith),
+                            child: ProductGridCell(raffale: null),
                           ));
                         })
                     : Container(
@@ -229,12 +224,7 @@ class _RaffaleViewState extends State<RaffaleView> {
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              return ProductGridCell(
-                                  userId: 0,
-                                  raffleId: 0,
-                                  price: '100',
-                                  title: 'ProductName',
-                                  image: AppImages.johnSmith);
+                              return ProductGridCell(raffale: null);
                             },
                             itemCount: 20),
                       )

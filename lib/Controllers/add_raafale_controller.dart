@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:assement/Controllers/alert_managar_controller.dart';
 import 'package:assement/Models/DataModels/condition_selection_model.dart';
+import 'package:assement/Models/DataModels/response_model.dart';
 import 'package:assement/Utils/constants.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Utils/extensions.dart';
+import 'package:assement/Utils/network_manager/api_constant.dart';
+import 'package:assement/Utils/network_manager/remote_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,11 +18,11 @@ import 'package:image_picker/image_picker.dart';
 import '../Views/Custom/image_view.dart';
 
 class AddRaffaleController extends GetxController {
-  RxList<String> images = <String>[].obs;
-  Rx<ConditionSelectionModel>? selectedConditionModel;
+  RxList<File> images = <File>[].obs;
+  Rx<ConditionType>? selectedConditonType;
   RxList<Widget> imageSiders = <Widget>[].obs;
 
-  var items = <ConditionSelectionModel>[].obs;
+  var items = <ConditionType>[].obs;
   RxInt pageIndex = 0.obs;
 
   var indicatorWidth = MediaQuery.of(Get.context!).size.width / 2;
@@ -27,16 +30,13 @@ class AddRaffaleController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     items.value = [
-      ConditionSelectionModel(
-          type: ConditionType.newInPackage, isSelected: true),
-      ConditionSelectionModel(
-          type: ConditionType.lightlyUsed, isSelected: false),
-      ConditionSelectionModel(type: ConditionType.used, isSelected: false),
+      ConditionType.newInPackage,
+      ConditionType.lightlyUsed,
+      ConditionType.used
     ];
-
-    images.add(AppImages.addPhoto);
+    // File firstObject = File(AppImages.addPhoto);
+    // images.add(firstObject);
   }
 
   void addRaffale() async {}
@@ -47,20 +47,22 @@ class AddRaffaleController extends GetxController {
       final List<XFile>? multipleImages = await picker.pickMultiImage();
 
       if (multipleImages!.isNotEmpty) {
-        // images.addAll(multipleImages);
-        // print(images.length);
-
         if (multipleImages.length <= 10) {
-          for (int i = 0; i <= 10; i++) {
-            print(multipleImages[i].path);
-            images.add(multipleImages[i].path);
-          }
+          images.clear();
+          multipleImages.forEach((element) {
+            File pikcedImage = File(element.path);
+            images.add(pikcedImage);
+          });
+          // for (int i = 0; i <= 10; i++) {
+          //   if (multipleImages[i] is XFile) {
+          //
+          //   }
+          // }
+          setupImageSiders();
         } else {
           AlertManagerController.showSnackBar(
               'Maximum limit reached', '', Position.bottom);
         }
-        update();
-        setupImageSiders();
       } else {
         AlertManagerController.showSnackBar(
             '', 'Somnethig went wrong', Position.bottom);
@@ -77,41 +79,51 @@ class AddRaffaleController extends GetxController {
 
   void createRaffale() async {
     Map<String, dynamic> params = {};
-    params['title'] = 'New';
+    params['title'] = ConditionType.newInPackage.title;
     params['quantity'] = 130;
     params['value'] = 100;
     params['price'] = 100;
     params['earning'] = 100;
-    params['condition'] = 100;
+    params['condition'] = ConditionType.newInPackage.value;
     params['details'] = '';
     params['tag'] = '';
     params['ticket_price_id'] = 1;
     params['category_id'] = 2;
-    params['images'] = images;
+
+    AppMultiPartFile files =
+        AppMultiPartFile(localFiles: images, key: 'images');
+
+    AlertManagerController.showLoaderDialog(Get.context!);
+
+    ResponseModel<void> addRaafaleResponse = await sharedServiceManager
+        .uploadRequest(APIType.addRaffale, params: params, arrFile: [files]);
+    AlertManagerController.hideLoaderDialog();
+    print(addRaafaleResponse.status);
+    print(addRaafaleResponse.message);
   }
 
   onSelection(int index) {
     for (int i = 0; i < items.length; i++) {
       if (index == i) {
-        items.value[i].isSelected = true;
+        print('seletec Value: $items[i]');
       } else {
-        items.value[i].isSelected = false;
+        // items.value[i].isSelected = false;
       }
     }
     update();
   }
 
-  String? get title {
-    if (selectedConditionModel != null) {
-      return selectedConditionModel?.value.type.title;
-    }
-    return null;
-  }
+  // String? get title {
+  //   if (selectedConditionModel != null) {
+  //     return selectedConditionModel?.value.type.title;
+  //   }
+  //   return null;
+  // }
 
-  updateSelectedContition(ConditionSelectionModel? model) {
-    selectedConditionModel?.value = model!;
-    update();
-  }
+  // updateSelectedContition(ConditionSelectionModel? model) {
+  //   selectedConditionModel?.value = model!;
+  //   update();
+  // }
 
   void setupImageSiders() {
     for (int i = 0; i < images.length; i++) {
@@ -127,11 +139,13 @@ class AddRaffaleController extends GetxController {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.r),
-                child: ImageView(
-                  image: images[i] ?? '',
-                  fit: BoxFit.cover,
-                  width: MediaQuery.of(Get.context!).size.width,
-                  height: MediaQuery.of(Get.context!).size.height,
+                child: AspectRatio(
+                  aspectRatio: 323 / 169,
+                  child: ImageView(
+                    image: images[i].path,
+                    imageType: ImageType.file,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Positioned(

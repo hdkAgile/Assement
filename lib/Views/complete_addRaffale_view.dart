@@ -1,19 +1,95 @@
 import 'package:assement/Utils/constants.dart';
+import 'package:assement/Views/Custom/app_button.dart';
+import 'package:assement/Views/Custom/image_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../Controllers/add_raafale_controller.dart';
 
 class CompleteAddRaaflale extends StatelessWidget {
-  const CompleteAddRaaflale({Key? key}) : super(key: key);
+  CompleteAddRaaflale({Key? key}) : super(key: key);
+
+  AddRaffaleController controller = Get.find<AddRaffaleController>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: Image.asset(AppImages.checkBox),
-        )
-      ],
-    );
+    return Scaffold(
+        backgroundColor: AppColors.themeWhite,
+        appBar: AppBar(
+          elevation: 0.5,
+          centerTitle: true,
+          title: Text(
+            'Details',
+            style: AppTextStyle.openSans_semibold_themeBlack_15,
+          ),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              height: 80.w,
+              width: 80.w,
+              child: Image.asset(AppImages.doneImage),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  AppText.congratualtion,
+                  style: AppTextStyle.openSans_bold_themeBlack_29,
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Text(AppText.raffaleListed,
+                    style: AppTextStyle.openSans_regular_themeBlack_16)
+              ],
+            ),
+            AspectRatio(
+              aspectRatio: 340 / 190,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.r),
+                  child: ImageView(
+                    fit: BoxFit.cover,
+                    image: controller.images[0].path,
+                    imageType: ImageType.file,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.w),
+              child: Column(
+                children: [
+                  AppButton(
+                      onPressed: () {
+                        Get.to(CompleteAddRaaflale());
+                      },
+                      height: 50.h,
+                      width: double.infinity,
+                      title: 'Done',
+                      isEnable: true),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AppButton(
+                      height: 50.h,
+                      width: double.infinity,
+                      title: 'View Listing',
+                      style: AppTextStyle.openSans_bold_themeBlack_18,
+                      isEnable: false,
+                      onPressed: () {
+                        Get.back();
+                      })
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }

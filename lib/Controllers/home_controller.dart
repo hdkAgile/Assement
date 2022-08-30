@@ -1,3 +1,4 @@
+import 'package:assement/Models/DataModels/raffale_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,9 +14,9 @@ import '../Views/Custom/image_view.dart';
 
 class HomeController extends GetxController {
   RxList<Banners> banners = <Banners>[].obs;
-  RxList<EndingSoon> endingSoon = <EndingSoon>[].obs;
-  RxList<Winner> winners = <Winner>[].obs;
-  RxList<EndingSoon> latestRaffles = <EndingSoon>[].obs;
+  RxList<Raffale> endingSoon = <Raffale>[].obs;
+  RxList<Raffale> winners = <Raffale>[].obs;
+  RxList<Raffale> latestRaffles = <Raffale>[].obs;
   RxList<Banners> categories = <Banners>[].obs;
   RxBool isLoading = RxBool(false);
   RxInt pageIndex = 0.obs;
@@ -81,6 +82,7 @@ class HomeController extends GetxController {
           borderRadius: BorderRadius.circular(15.r),
           child: ImageView(
             image: banners[i].image ?? '',
+            imageType: ImageType.networkImage,
             fit: BoxFit.cover,
           ),
         ),

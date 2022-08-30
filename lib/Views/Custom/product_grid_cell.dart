@@ -3,33 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../Models/DataModels/raffale_list.dart';
 import '../../Utils/constants.dart';
 import '../product_detail.dart';
 import 'image_view.dart';
 
 class ProductGridCell extends StatelessWidget {
-  String title = '';
-  String image = '';
-  String price = '';
-  int userId = 0;
-  int raffleId = 0;
+  Raffale? raffale;
 
-  ProductGridCell(
-      {required this.price,
-      required this.title,
-      required this.image,
-      required this.userId,
-      required this.raffleId,
-      Key? key})
-      : super(key: key);
+  ProductGridCell({required this.raffale, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Get.to(ProductDetail(
-          userId: userId,
-          raffleId: raffleId,
+          userId: raffale?.user?.id ?? 0,
+          raffleId: raffale?.id ?? 0,
         ));
       },
       child: Container(
@@ -58,7 +48,10 @@ class ProductGridCell extends StatelessWidget {
                       width: double.infinity,
                       height: double.infinity,
                       child: ImageView(
-                        image: image,
+                        image: raffale?.images?.isNotEmpty ?? false
+                            ? raffale?.images?.first ?? ''
+                            : '',
+                        imageType: ImageType.networkImage,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -112,7 +105,7 @@ class ProductGridCell extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(left: 10),
               child: Text(
-                title,
+                raffale?.title ?? '',
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.openSans_bold_themeDarkGrey_12,
@@ -124,7 +117,7 @@ class ProductGridCell extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10, bottom: 10),
               child: Text(
-                "\$ $price",
+                "\$ ${raffale?.price ?? 0}",
                 textAlign: TextAlign.left,
                 style: AppTextStyle.openSans_bold_themeBlack_18,
               ),

@@ -184,48 +184,41 @@ class _FavouriteViewState extends State<FavouriteView> {
                                   })),
                         ),
                         SizedBox(height: 8.h),
-                        controller.selectedIndex.value == 0
-                            ? GridView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: controller.items.length,
-                                shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 144 / 208,
-                                  crossAxisSpacing: 25.w,
-                                  crossAxisCount: 2,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return Center(
-                                      child: Container(
-                                    margin: EdgeInsets.only(
-                                        top: 8, left: 8, bottom: 8, right: 8),
-                                    padding: EdgeInsets.only(top: 8, bottom: 8),
-                                    child: ProductGridCell(
-                                      userId:
-                                          controller.items[index].user?.id ?? 0,
-                                      raffleId: controller.items[index].id ?? 0,
-                                      title:
-                                          controller.items[index].title ?? '',
-                                      price: controller.items[index].price
-                                          .toString(),
-                                      image: controller.items[index].images![0],
-                                    ),
-                                  ));
-                                })
-                            : Container(
-                                padding: EdgeInsets.all(8.0),
-                                child: ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: controller.items.length,
-                                  itemBuilder: (context, index) {
-                                    return ProductListCell(
-                                        raffale: controller.items[index]);
-                                  },
-                                ),
-                              )
+                        if (controller.selectedIndex.value == 0)
+                          GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: controller.items.length,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: 144 / 208,
+                                crossAxisSpacing: 25.w,
+                                crossAxisCount: 2,
+                              ),
+                              itemBuilder: (context, index) {
+                                return Center(
+                                    child: Container(
+                                  margin: EdgeInsets.only(
+                                      top: 8, left: 8, bottom: 8, right: 8),
+                                  padding: EdgeInsets.only(top: 8, bottom: 8),
+                                  child: ProductGridCell(
+                                      raffale: controller.items[index]),
+                                ));
+                              })
+                        else
+                          Container(
+                            padding: EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: controller.items.length,
+                              itemBuilder: (context, index) {
+                                return ProductListCell(
+                                    raffale: controller.items[index]);
+                              },
+                            ),
+                          )
                       ],
                     ),
                   ),

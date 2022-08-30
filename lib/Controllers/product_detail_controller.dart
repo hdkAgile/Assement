@@ -66,6 +66,7 @@ class ProductDetailController extends GetxController {
                 child: ImageView(
                   image: productDetailData.value.images?[i] ?? '',
                   fit: BoxFit.cover,
+                  imageType: ImageType.networkImage,
                   width: MediaQuery.of(Get.context!).size.width,
                   height: MediaQuery.of(Get.context!).size.height,
                 ),

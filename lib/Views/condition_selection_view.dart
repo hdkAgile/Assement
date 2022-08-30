@@ -48,25 +48,11 @@ class _ConditionSelectionViewState extends State<ConditionSelectionView> {
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () {
-                  for (int i = 0; i < controller.items.value.length; i++) {
-                    if (i == index) {
-                      controller.items.value[i].isSelected = true;
-                    } else {
-                      controller.items.value[i].isSelected = false;
-                    }
-                    setState(() {});
-                    controller.updateSelectedContition(
-                        controller.items[i].isSelected
-                            ? controller.items[i]
-                            : null);
-                  }
-                },
+                onTap: () {},
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: SelectionView(
-                      title: controller.items[index].type.title,
-                      isSelected: controller.items[index].isSelected),
+                      title: controller.items[index].title, isSelected: false),
                 ),
               );
             },

@@ -1,3 +1,4 @@
+import 'package:assement/Models/DataModels/raffale_list.dart';
 import 'package:assement/Views/Custom/product_grid_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +8,7 @@ import '../../Models/DataModels/Dashboard.dart';
 class CustomWrapWidget extends StatelessWidget {
   String? title;
   String? label;
-  List<EndingSoon> items;
+  List<Raffale> items;
 
   CustomWrapWidget({
     Key? key,
@@ -41,23 +42,17 @@ class CustomWrapWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                Wrap(
-                  spacing: 10,
-                  children: [
-                    ...List.generate(
-                      items.length,
-                      (index) {
-                        return ProductGridCell(
-                          price: items[index].price.toString(),
-                          title: items[index].title ?? '',
-                          image: items[index].images?[0] ?? '',
-                          userId: items[index].user?.id ?? 0,
-                          raffleId: items[index].id ?? 0,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                // Wrap(
+                //   spacing: 10,
+                //   children: [
+                //     ...List.generate(
+                //       items.length,
+                //       (index) {
+                //         return ProductGridCell(raffale: items[index]));
+                //       },
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

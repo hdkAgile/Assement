@@ -82,7 +82,10 @@ class Home extends StatelessWidget {
                           child: Container(
                               height: 30.h,
                               width: 30.h,
-                              child: ImageView(image: controller.user.image)),
+                              child: ImageView(
+                                image: controller.user.image,
+                                imageType: ImageType.networkImage,
+                              )),
                         ),
                       )
                     ],
@@ -205,6 +208,7 @@ class Home extends StatelessWidget {
                                             image: controller.winners[index]
                                                     .images?[0] ??
                                                 '',
+                                            imageType: ImageType.networkImage,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -273,25 +277,12 @@ class Home extends StatelessWidget {
                                             child: AspectRatio(
                                               aspectRatio: 144 / 208,
                                               child: ProductGridCell(
-                                                  image: controller
-                                                          .endingSoon[index]
-                                                          .images?[0] ??
-                                                      '',
-                                                  title: controller
-                                                          .endingSoon[index]
-                                                          .title ??
-                                                      '',
-                                                  userId: controller
-                                                          .endingSoon[index]
-                                                          .id ??
-                                                      0,
-                                                  raffleId: controller
-                                                          .endingSoon[index]
-                                                          .id ??
-                                                      0,
-                                                  price: controller
-                                                      .endingSoon[index].price
-                                                      .toString()),
+                                                  raffale: controller.endingSoon
+                                                              .value !=
+                                                          null
+                                                      ? controller.endingSoon
+                                                          .value[index]
+                                                      : null),
                                             ));
                                       },
                                       itemCount:
@@ -356,28 +347,17 @@ class Home extends StatelessWidget {
                                           child: AspectRatio(
                                             aspectRatio: 144 / 208,
                                             child: ProductGridCell(
-                                                image: controller
-                                                        .latestRaffles[index]
-                                                        .images?[0] ??
-                                                    '',
-                                                title: controller
-                                                        .latestRaffles[index]
-                                                        .title ??
-                                                    '',
-                                                userId: controller
-                                                        .latestRaffles[index]
-                                                        .id ??
-                                                    0,
-                                                raffleId: controller
-                                                        .latestRaffles[index]
-                                                        .id ??
-                                                    0,
-                                                price: controller
-                                                    .latestRaffles[index].price
-                                                    .toString()),
+                                                raffale: controller
+                                                            .latestRaffles
+                                                            .value !=
+                                                        null
+                                                    ? controller.latestRaffles
+                                                        .value[index]
+                                                    : null),
                                           ));
                                     },
-                                    itemCount: controller.latestRaffles.length,
+                                    itemCount:
+                                        controller.latestRaffles.value.length,
                                     scrollDirection: Axis.horizontal,
                                   ),
                                 )

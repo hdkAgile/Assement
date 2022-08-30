@@ -62,37 +62,78 @@ class AddRaffleView extends StatelessWidget {
                   margin: EdgeInsets.only(top: 10),
                   constraints: BoxConstraints(maxHeight: 108.h),
                   color: AppColors.themeLightGrey,
-                  child: Obx(() => ListView.builder(
-                      itemBuilder: (context, index) {
-                        print(controller.images.length);
-                        return Container(
-                          height: 80.w,
-                          width: 80.w,
-                          decoration:
-                              BoxDecoration(boxShadow: kElevationToShadow[10]),
-                          padding: EdgeInsets.only(
-                              top: 16, left: 11, right: 0, bottom: 16),
-                          child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.r)),
-                              child: index == controller.images.value.length - 1
-                                  ? Visibility(
-                                      visible:
-                                          !(controller.images.length > 10) ||
-                                              controller.images.length == 1,
-                                      child: InkWell(
-                                          onTap: () {
-                                            controller.pickedImage(
-                                                ImageSource.gallery);
-                                          },
-                                          child:
-                                              Image.asset(AppImages.addPhoto)))
-                                  : ImageView(
-                                      image: controller.images.value[index])),
-                        );
-                      },
-                      itemCount: controller.images.length,
-                      scrollDirection: Axis.horizontal)),
+                  child: Obx(() => Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                                itemBuilder: (context, index) {
+                                  print(controller.images.length);
+                                  return Container(
+                                    height: 80.w,
+                                    width: 80.w,
+                                    decoration: BoxDecoration(
+                                        boxShadow: kElevationToShadow[10]),
+                                    padding: EdgeInsets.only(
+                                        top: 16,
+                                        left: 11,
+                                        right: 0,
+                                        bottom: 16),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.r)),
+                                        child: ImageView(
+                                            image: controller
+                                                .images.value[index].path,
+                                            imageType: ImageType.file)),
+                                  );
+                                },
+                                itemCount: controller.images.length,
+                                scrollDirection: Axis.horizontal),
+                          ),
+                          Visibility(
+                            visible: !(controller.images.length > 10) ||
+                                (controller.images.length == 0),
+                            child: InkWell(
+                              onTap: () {
+                                controller.pickedImage(ImageSource.gallery);
+                              },
+                              child: Container(
+                                height: 80.w,
+                                width: 80.w,
+                                decoration: BoxDecoration(
+                                    boxShadow: kElevationToShadow[10]),
+                                padding: EdgeInsets.only(
+                                    top: 16, left: 11, right: 0, bottom: 16),
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.r)),
+                                  child: ImageView(
+                                      image: AppImages.addPhoto,
+                                      imageType: ImageType.asset,
+                                      fit: BoxFit.cover),
+
+                                  // child: index == controller.images.value.length - 1
+                                  //     ? Visibility(
+                                  //         visible:
+                                  //             // !(controller.images.length > 10) ||
+                                  //             //     controller.images.length == 1,
+                                  //         child: InkWell(
+                                  //             onTap: () {
+                                  //               controller.pickedImage(
+                                  //                   ImageSource.gallery);
+                                  //             },
+                                  //             child:
+                                  //                 Image.asset(AppImages.addPhoto)))
+                                  //     : ImageView(
+                                  //         image:
+                                  //             controller.images.value[index].path)
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -139,7 +180,7 @@ class AddRaffleView extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Get.to(() => ConditionSelectionView());
+                    Get.to(() => ConditionSelectionView());
                   },
                   child: Container(
                     width: double.infinity,
@@ -159,7 +200,8 @@ class AddRaffleView extends StatelessWidget {
                             Visibility(
                               visible: true,
                               child: Text(
-                                controller.title ?? AppText.condition,
+                                controller.selectedConditonType?.value.title ??
+                                    AppText.condition,
                                 style:
                                     AppTextStyle.openSans_regular_textGrey1_14,
                               ),
