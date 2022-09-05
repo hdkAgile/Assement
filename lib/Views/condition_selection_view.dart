@@ -39,20 +39,25 @@ class _ConditionSelectionViewState extends State<ConditionSelectionView> {
                     color: AppColors.themeGreen))),
       ),
       body: Container(
-        height: 180.h,
         width: double.infinity,
         color: AppColors.themeLightGrey,
+        constraints: BoxConstraints(maxHeight: 180.h),
         margin: EdgeInsets.only(top: 30),
-        padding: EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 16),
         child: ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  controller.updateSelection(index);
+                },
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: SelectionView(
-                      title: controller.items[index].title, isSelected: false),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: Obx(
+                    () => SelectionView(
+                        title: controller.items[index].type.title,
+                        isSelected: controller.items[index].isSelected),
+                  ),
                 ),
               );
             },

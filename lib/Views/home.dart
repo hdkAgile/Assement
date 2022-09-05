@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:assement/Views/profile_view.dart';
+import 'package:assement/Views/user_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -75,7 +76,7 @@ class Home extends StatelessWidget {
                       SizedBox(width: 22.w),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => ProfileView());
+                          Get.to(CurrentUserProfile());
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.r),

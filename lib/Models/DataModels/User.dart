@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../user_address.dart';
+
 class UserData {
   UserData({
     this.user,
@@ -33,22 +35,22 @@ class UserData {
 }
 
 class User {
-  User({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.image,
-    this.signupType,
-    this.appleId,
-    this.facebookId,
-    this.isActive,
-    this.accountId,
-    this.customerId,
-    this.createdAt,
-    this.isVerify,
-    this.isVender,
-  });
+  User(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.image,
+      this.signupType,
+      this.appleId,
+      this.facebookId,
+      this.isActive,
+      this.accountId,
+      this.customerId,
+      this.createdAt,
+      this.isVerify,
+      this.isVender,
+      this.userAddress});
 
   int? id;
   String? firstName;
@@ -64,23 +66,24 @@ class User {
   String? createdAt;
   String? isVerify;
   String? isVender;
+  UserAddress? userAddress;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        image: json["image"],
-        signupType: json["signup_type"],
-        appleId: json["apple_id"],
-        facebookId: json["facebook_id"],
-        isActive: json["is_active"],
-        accountId: json["account_id"],
-        customerId: json["customer_id"],
-        createdAt: json["created_at"],
-        isVerify: json["is_verify"],
-        isVender: json["is_vender"],
-      );
+      id: json["id"],
+      firstName: json["first_name"],
+      lastName: json["last_name"],
+      email: json["email"],
+      image: json["image"],
+      signupType: json["signup_type"],
+      appleId: json["apple_id"],
+      facebookId: json["facebook_id"],
+      isActive: json["is_active"],
+      accountId: json["account_id"],
+      customerId: json["customer_id"],
+      createdAt: json["created_at"],
+      isVerify: json["is_verify"],
+      isVender: json["is_vender"],
+      userAddress: json["user_address"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -97,5 +100,6 @@ class User {
         "created_at": createdAt,
         "is_verify": isVerify,
         "is_vender": isVender,
+        "user_address": userAddress
       };
 }

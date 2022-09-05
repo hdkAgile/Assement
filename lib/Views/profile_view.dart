@@ -104,26 +104,6 @@ class _ProfileViewState extends State<ProfileView> {
                 ))
           ],
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 16.0),
-          child: TextButton(
-              onPressed: () {
-                controller.logout();
-              },
-              child: Container(
-                height: 50.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: AppColors.themeGreen,
-                    borderRadius: BorderRadius.circular(25.r)),
-                child: Center(
-                  child: Text(
-                    AppText.logout,
-                    style: AppTextStyle.openSans_bold_themeWhite_17,
-                  ),
-                ),
-              )),
-        ),
         body: SafeArea(
           top: true,
           bottom: true,

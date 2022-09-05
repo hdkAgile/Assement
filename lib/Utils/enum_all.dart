@@ -15,7 +15,10 @@ enum APIType {
   logout,
   sold,
   favouriteList,
-  addRaffale
+  addRaffale,
+  currentUser,
+  otherUser,
+  ticketPriceList
 }
 
 enum URLHost { local, live, staging }

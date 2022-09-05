@@ -14,15 +14,17 @@ class ImageView extends StatelessWidget {
   String image;
   BoxFit? fit;
   ImageType imageType;
+  Color? color;
 
-  ImageView({
-    Key? key,
-    required this.image,
-    required this.imageType,
-    this.height,
-    this.fit,
-    this.width,
-  }) : super(key: key);
+  ImageView(
+      {Key? key,
+      required this.image,
+      required this.imageType,
+      this.height,
+      this.fit,
+      this.width,
+      this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +35,16 @@ class ImageView extends StatelessWidget {
       switch (imageType) {
         case ImageType.asset:
           return Image.asset(
-              image.isNotEmpty ? image : AppImages.imagePlaceholder);
+              image.isNotEmpty ? image : AppImages.imagePlaceholder,
+              color: color);
         case ImageType.file:
-          return Image.file(File(image));
+          return Image.file(File(image), color: color);
         case ImageType.networkImage:
           return CachedNetworkImage(
             height: height,
             width: width,
             imageUrl: image,
+            color: color,
             fit: fit,
             placeholder: (context, url) =>
                 Image.asset(AppImages.imagePlaceholder, fit: fit),

@@ -1,7 +1,9 @@
 import 'package:assement/Controllers/add_raafale_controller.dart';
+import 'package:assement/Controllers/home_controller.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/Custom/app_button.dart';
+import 'package:assement/Views/category_selection_view.dart';
 import 'package:assement/Views/condition_selection_view.dart';
 import 'package:assement/Views/product_detail.dart';
 import 'package:flutter/material.dart';
@@ -60,13 +62,17 @@ class AddRaffleView extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 10),
-                  constraints: BoxConstraints(maxHeight: 108.h),
+                  constraints: BoxConstraints(
+                      maxHeight: 108.h, minWidth: double.infinity),
                   color: AppColors.themeLightGrey,
                   child: Obx(() => Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Expanded(
+                          Flexible(
+                            fit: FlexFit.loose,
                             child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: AlwaysScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   print(controller.images.length);
                                   return Container(
@@ -83,6 +89,8 @@ class AddRaffleView extends StatelessWidget {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10.r)),
                                         child: ImageView(
+                                            height: 80.w,
+                                            width: 80.w,
                                             image: controller
                                                 .images.value[index].path,
                                             imageType: ImageType.file)),
@@ -147,13 +155,18 @@ class AddRaffleView extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 5),
-                  constraints: BoxConstraints(minHeight: 70.h),
+                  constraints: BoxConstraints(minHeight: 75.h),
                   width: double.infinity,
                   color: AppColors.themeLightGrey,
-                  padding: EdgeInsets.only(top: 16, left: 16),
-                  child: Text(
-                    'What are you raffling?',
-                    style: AppTextStyle.openSans_regular_textGrey1_14,
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: AppTextStyle.openSans_regular_textGrey1_14,
+                        hintText: 'What are you raffling?'),
+                    onChanged: (value) {
+                      controller.title.value = value;
+                    },
                   ),
                 ),
                 Container(
@@ -161,23 +174,32 @@ class AddRaffleView extends StatelessWidget {
                   constraints: BoxConstraints(minHeight: 155.h),
                   width: double.infinity,
                   color: AppColors.themeLightGrey,
-                  padding: EdgeInsets.only(top: 16, left: 16),
-                  child: Text(
-                    'Describe your item',
-                    style: AppTextStyle.openSans_regular_textGrey1_14,
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: AppTextStyle.openSans_regular_textGrey1_14,
+                        hintText: 'Describe your item'),
+                    onChanged: (value) {
+                      controller.decribeItem.value = value;
+                    },
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 17),
-                  constraints: BoxConstraints(minHeight: 90.h),
-                  width: double.infinity,
-                  color: AppColors.themeLightGrey,
-                  padding: EdgeInsets.only(top: 16, left: 16),
-                  child: Text(
-                    'Add Tags',
-                    style: AppTextStyle.openSans_regular_textGrey1_14,
-                  ),
-                ),
+                    margin: EdgeInsets.only(top: 17),
+                    constraints: BoxConstraints(minHeight: 90.h),
+                    width: double.infinity,
+                    color: AppColors.themeLightGrey,
+                    padding: EdgeInsets.only(left: 16, right: 16),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintStyle: AppTextStyle.openSans_regular_textGrey1_14,
+                          hintText: 'Add Tags'),
+                      onChanged: (value) {
+                        controller.tag.value = value;
+                      },
+                    )),
                 GestureDetector(
                   onTap: () {
                     Get.to(() => ConditionSelectionView());
@@ -197,10 +219,10 @@ class AddRaffleView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Visibility(
-                              visible: true,
-                              child: Text(
-                                controller.selectedConditonType?.value.title ??
+                            Obx(
+                              () => Text(
+                                controller.selectedConditonType?.value.type
+                                        .title ??
                                     AppText.condition,
                                 style:
                                     AppTextStyle.openSans_regular_textGrey1_14,
@@ -217,7 +239,9 @@ class AddRaffleView extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(CategorySelectionView());
+                  },
                   child: Container(
                     width: double.infinity,
                     color: AppColors.themeLightGrey,
@@ -233,13 +257,15 @@ class AddRaffleView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Visibility(
-                                visible: true,
-                                child: Text(
-                                  AppText.category,
-                                  style: AppTextStyle
-                                      .openSans_regular_textGrey1_14,
-                                )),
+                            Obx(
+                              () => Text(
+                                controller
+                                        .selectedCategory.value.category.name ??
+                                    AppText.category,
+                                style:
+                                    AppTextStyle.openSans_regular_textGrey1_14,
+                              ),
+                            ),
                             SizedBox(
                               width: 16.w,
                             ),
@@ -273,7 +299,7 @@ class AddRaffleView extends StatelessWidget {
                                           .openSans_regular_textGrey1_14,
                                     ),
                                     Text(
-                                      '\$ 200',
+                                      '\$ ${controller.productValue.value}',
                                       style: AppTextStyle
                                           .openSans_bold_themeBlack_14,
                                     )
@@ -307,7 +333,7 @@ class AddRaffleView extends StatelessWidget {
                                           .openSans_regular_textGrey1_14,
                                     ),
                                     Text(
-                                      '\$ 200',
+                                      '  \$ 100',
                                       style: AppTextStyle
                                           .openSans_bold_themeBlack_14,
                                     )
@@ -325,8 +351,10 @@ class AddRaffleView extends StatelessWidget {
                       ),
                       Container(
                           width: double.infinity,
+                          height: 20.h,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 'Ticket Price',
@@ -334,58 +362,22 @@ class AddRaffleView extends StatelessWidget {
                                 style:
                                     AppTextStyle.openSans_regular_textGrey1_14,
                               ),
-                              SizedBox(
-                                width: 40.w,
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '\$ 1',
-                                      textAlign: TextAlign.left,
-                                      style: AppTextStyle
-                                          .openSans_bold_themeBlack_14,
-                                    ),
-                                    SizedBox(
-                                      width: 14.w,
-                                    ),
-                                    Text(
-                                      '\$ 5',
-                                      textAlign: TextAlign.left,
-                                      style: AppTextStyle
-                                          .openSans_bold_themeBlack_14,
-                                    ),
-                                    SizedBox(
-                                      width: 14.w,
-                                    ),
-                                    Text(
-                                      '\$ 20',
-                                      textAlign: TextAlign.left,
-                                      style: AppTextStyle
-                                          .openSans_bold_themeBlack_14,
-                                    ),
-                                    SizedBox(
-                                      width: 14.w,
-                                    ),
-                                    Text(
-                                      '\$ 50',
-                                      textAlign: TextAlign.left,
-                                      style: AppTextStyle
-                                          .openSans_bold_themeBlack_14,
-                                    ),
-                                    SizedBox(
-                                      width: 14.w,
-                                    ),
-                                    Text(
-                                      '\$ 100',
-                                      textAlign: TextAlign.left,
-                                      style: AppTextStyle
-                                          .openSans_bold_themeBlack_14,
-                                    ),
-                                  ],
-                                ),
+                              Obx(
+                                () => ListView.separated(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return Text(
+                                        controller.priceList[index].title,
+                                        style: AppTextStyle
+                                            .openSans_bold_themeBlack_14,
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) {
+                                      return Text("    ");
+                                    },
+                                    itemCount: controller.priceList.length),
                               ),
                             ],
                           )),
@@ -409,11 +401,12 @@ class AddRaffleView extends StatelessWidget {
                                   children: [
                                     Text(
                                       'No. Of Tickets',
+                                      textAlign: TextAlign.start,
                                       style: AppTextStyle
                                           .openSans_regular_textGrey1_14,
                                     ),
                                     Text(
-                                      '\$ 200',
+                                      '200',
                                       style: AppTextStyle
                                           .openSans_bold_themeBlack_14,
                                     )

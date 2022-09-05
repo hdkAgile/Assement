@@ -136,3 +136,9 @@ class SingleUser {
         "is_vender": isVender,
       };
 }
+
+extension UserExtension on SingleUser {
+  String get fullName {
+    return '${this.firstName} ${this.lastName}';
+  }
+}

@@ -225,8 +225,14 @@ class RemoteServices {
         return ResponseModel<T>.fromJson(
             json.decode(response.data.toString()), response.statusCode);
       } on DioError catch (error) {
-        return createErrorResponse(
-            status: APIConstant.statusCodeBadGateway, message: error.message);
+        if ((error.response?.data is Map) &&
+            (error.response?.data as Map).isNotEmpty) {
+          Map<String, dynamic> data = error.response?.data;
+          return ResponseModel.fromJson(data, error.response?.statusCode);
+        } else {
+          return createErrorResponse(
+              status: APIConstant.statusCodeBadGateway, message: error.message);
+        }
       }
     } else {
       return createErrorResponse(

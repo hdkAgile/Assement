@@ -1,3 +1,4 @@
+import 'package:assement/Bindings/add_raafale_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,7 +82,7 @@ class _HomeTabState extends State<HomeTab> {
         child: FloatingActionButton(
           elevation: 5.0,
           onPressed: () {
-            Get.to(AddRaffleView());
+            Get.to(AddRaffleView(), binding: AddRaffaleBinding());
           },
           backgroundColor: AppColors.themeGreen,
           child: Center(

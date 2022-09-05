@@ -28,6 +28,8 @@ class APIConstant {
   static String get prefixApi => "api";
 
   static String preFixRaffale = 'raffle';
+  static String preFixUser = 'user-profile';
+  static String preFixTicket = 'ticket_price';
 
   static String getValue(APIType type) {
     switch (type) {
@@ -53,6 +55,12 @@ class APIConstant {
         return '${APIConstant.preFixRaffale}/favourite_list';
       case APIType.addRaffale:
         return '${APIConstant.preFixRaffale}/create';
+      case APIType.currentUser:
+        return '${APIConstant.preFixUser}/current}';
+      case APIType.otherUser:
+        return '${APIConstant.preFixUser}/other}';
+      case APIType.ticketPriceList:
+        return '${APIConstant.preFixTicket}/listTicketPriceDropDown';
     }
   }
 

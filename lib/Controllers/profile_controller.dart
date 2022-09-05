@@ -23,6 +23,8 @@ class ProfileController extends GetxController {
   RxList<ReviewList> userReviewList = <ReviewList>[].obs;
   String _deviceId = '';
 
+  Rxn<User>? currentUser = Rxn(null);
+
   ProfileController({required this.offset, required this.limit});
 
   @override
@@ -105,6 +107,18 @@ class ProfileController extends GetxController {
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       AppUser.clearPreferences();
       Get.offAll(() => WelComeView());
+    } else {
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
+    }
+  }
+
+  void getCurrentUserProfile() async {
+    ResponseModel<User> responseModel = await sharedServiceManager
+        .createGetRequest(typeOfEndPoint: APIType.currentUser);
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      currentUser?.value = responseModel.data;
     } else {
       AlertManagerController.showSnackBar(
           '', responseModel.message, Position.bottom);

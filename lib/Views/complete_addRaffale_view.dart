@@ -1,6 +1,7 @@
 import 'package:assement/Utils/constants.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:assement/Views/Custom/image_view.dart';
+import 'package:assement/Views/home_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,16 +49,19 @@ class CompleteAddRaaflale extends StatelessWidget {
                     style: AppTextStyle.openSans_regular_themeBlack_16)
               ],
             ),
-            AspectRatio(
-              aspectRatio: 340 / 190,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.r),
-                  child: ImageView(
-                    fit: BoxFit.cover,
-                    image: controller.images[0].path,
-                    imageType: ImageType.file,
+            Visibility(
+              visible: controller.images.isNotEmpty,
+              child: AspectRatio(
+                aspectRatio: 340 / 190,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.r),
+                    child: ImageView(
+                      fit: BoxFit.cover,
+                      image: controller.images[0].path,
+                      imageType: ImageType.file,
+                    ),
                   ),
                 ),
               ),
@@ -68,14 +72,14 @@ class CompleteAddRaaflale extends StatelessWidget {
                 children: [
                   AppButton(
                       onPressed: () {
-                        Get.to(CompleteAddRaaflale());
+                        Get.offAllNamed(ScreenRoutesConstant.homeTab);
                       },
                       height: 50.h,
                       width: double.infinity,
-                      title: 'Done',
+                      title: AppText.done,
                       isEnable: true),
                   SizedBox(
-                    height: 14.h,
+                    height: 34.h,
                   ),
                   AppButton(
                       height: 50.h,

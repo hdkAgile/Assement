@@ -103,6 +103,13 @@ class AppImages {
   static String plus = 'assets/new_plus.png';
   static String info = '${imgPath}info.png';
   static String blackArrowRight = '${imgPath}R_black_arrow.png';
+  static String myWallet = '${imgPath}my_wallet.png';
+  static String myReview = '${imgPath}my_reviews.png';
+  static String name = '${imgPath}name.png';
+  static String password = '${imgPath}pass.png';
+  static String notifications = '${imgPath}notifications.png';
+  static String privacyPolicy = '${imgPath}privacy_policy.png';
+  static String termOfUse = '${imgPath}termsofuse.png';
 }
 
 class ScreenRoutesConstant {
@@ -118,6 +125,7 @@ class ScreenRoutesConstant {
 
 // profile related screens
   static const String profileScreen = "/profileScreen";
+  static const String currentUserProfileScreen = "/currentUserProfileScreen";
 }
 
 //Fonts
@@ -245,6 +253,11 @@ class AppTextStyle {
       fontSize: 14,
       letterSpacing: 1.4,
       color: AppColors.themeDarkTextGrey);
+  static TextStyle openSans_regular_themeDarkGrey_14 = TextStyle(
+      fontFamily: AppFonts.openSansRegular,
+      fontSize: 14,
+      letterSpacing: 1.4,
+      color: AppColors.themeDarkGrey);
 
   static TextStyle openSans_regular_themeGreen_16 = TextStyle(
       fontFamily: AppFonts.openSansRegular,
@@ -317,6 +330,11 @@ class AppTextStyle {
       fontSize: 14,
       letterSpacing: 1.4,
       color: AppColors.themeBlack);
+  static TextStyle openSans_bold_themeGreen_14 = TextStyle(
+      fontFamily: AppFonts.openSansBold,
+      fontSize: 14,
+      letterSpacing: 1.4,
+      color: AppColors.themeGreen);
 
   static TextStyle openSans_regular_themeBlack_10 = TextStyle(
       fontFamily: AppFonts.openSansRegular,
@@ -422,6 +440,7 @@ class AppText {
   static String category = 'Category';
   static String congratualtion = 'Congratulations!';
   static String raffaleListed = 'Your raffle has been listed!';
+  static String done = 'Done';
 }
 
 class PreferenceKeys {

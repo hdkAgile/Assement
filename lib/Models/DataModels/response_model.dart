@@ -1,3 +1,4 @@
+import 'package:assement/Models/DataModels/PriceListModel.dart';
 import 'package:assement/Models/DataModels/product_detail_models.dart';
 import 'package:assement/Models/DataModels/raffale_list.dart';
 import 'package:assement/Models/DataModels/user_raffle.dart';
@@ -33,6 +34,16 @@ class ResponseModel<T> {
       return RaffaleList.fromJson(json) as T;
     } else if (T == ProductDetailData) {
       return ProductDetailData.fromJson(json) as T;
+    } else if (T == List<PriceList>) {
+      List<PriceList> temp = [];
+      if (json != null) {
+        for (int i = 0; i < (json.length ?? 0); i++) {
+          temp.add(PriceList.fromJson(json[i]));
+        }
+        return temp as T;
+      } else {
+        return json;
+      }
     } else {
       throw Exception('Unknown class');
     }

@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:assement/Controllers/alert_managar_controller.dart';
+import 'package:assement/Controllers/home_controller.dart';
+import 'package:assement/Models/DataModels/PriceListModel.dart';
 import 'package:assement/Models/DataModels/condition_selection_model.dart';
 import 'package:assement/Models/DataModels/response_model.dart';
+import 'package:assement/Utils/app_logger.dart';
 import 'package:assement/Utils/constants.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Utils/extensions.dart';
@@ -15,14 +18,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../Models/DataModels/Dashboard.dart';
 import '../Views/Custom/image_view.dart';
 
 class AddRaffaleController extends GetxController {
   RxList<File> images = <File>[].obs;
-  Rx<ConditionType>? selectedConditonType;
+  List<XFile> tempImages = <XFile>[];
+  Rx<ConditionSelectionModel> selectedConditonType = Rx(ConditionSelectionModel(
+      type: ConditionType.newInPackage, isSelected: true));
   RxList<Widget> imageSiders = <Widget>[].obs;
 
-  var items = <ConditionType>[].obs;
+  List<int> ticketsPrices = <int>[].obs;
+
+  RxString title = ''.obs;
+  RxString decribeItem = ''.obs;
+  RxString tag = ''.obs;
+  RxList<String> listPrices = <String>[].obs;
+  RxInt productValue = 20.obs;
+
+  Rx<CategorySelectionModel> selectedCategory = Rx(CategorySelectionModel(
+      isSelected: false,
+      category: Banners(
+          name: null, id: null, image: null, raffleId: null, state: null)));
+
+  var items = <ConditionSelectionModel>[].obs;
+  var categoryItems = <CategorySelectionModel>[].obs;
+  RxList<Banners> categories = <Banners>[].obs;
+  RxList<PriceList> priceList = <PriceList>[].obs;
   RxInt pageIndex = 0.obs;
 
   var indicatorWidth = MediaQuery.of(Get.context!).size.width / 2;
@@ -30,13 +52,18 @@ class AddRaffaleController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    categories = Get.find<HomeController>().categories;
+    getPriceList();
     items.value = [
-      ConditionType.newInPackage,
-      ConditionType.lightlyUsed,
-      ConditionType.used
+      ConditionSelectionModel(
+          type: ConditionType.newInPackage, isSelected: true),
+      ConditionSelectionModel(
+          type: ConditionType.lightlyUsed, isSelected: false),
+      ConditionSelectionModel(type: ConditionType.used, isSelected: false),
     ];
-    // File firstObject = File(AppImages.addPhoto);
-    // images.add(firstObject);
+
+    selectedConditonType.value = items.first;
+    setupCategoryItems();
   }
 
   void addRaffale() async {}
@@ -47,22 +74,19 @@ class AddRaffaleController extends GetxController {
       final List<XFile>? multipleImages = await picker.pickMultiImage();
 
       if (multipleImages!.isNotEmpty) {
-        if (multipleImages.length <= 10) {
-          images.clear();
-          multipleImages.forEach((element) {
-            File pikcedImage = File(element.path);
-            images.add(pikcedImage);
-          });
-          // for (int i = 0; i <= 10; i++) {
-          //   if (multipleImages[i] is XFile) {
-          //
-          //   }
-          // }
-          setupImageSiders();
+        if (tempImages.isEmpty) {
+          tempImages = multipleImages;
         } else {
-          AlertManagerController.showSnackBar(
-              'Maximum limit reached', '', Position.bottom);
+          if (tempImages.length != 10) {
+            for (int i = 0; i < multipleImages.length; i++) {
+              tempImages.add(multipleImages[i]);
+            }
+          } else {
+            AlertManagerController.showSnackBar(
+                '', 'Maximum limit rearched', Position.bottom);
+          }
         }
+        setupToFiles();
       } else {
         AlertManagerController.showSnackBar(
             '', 'Somnethig went wrong', Position.bottom);
@@ -77,53 +101,97 @@ class AddRaffaleController extends GetxController {
     pageIndex.value = index;
   }
 
-  void createRaffale() async {
-    Map<String, dynamic> params = {};
-    params['title'] = ConditionType.newInPackage.title;
-    params['quantity'] = 130;
-    params['value'] = 100;
-    params['price'] = 100;
-    params['earning'] = 100;
-    params['condition'] = ConditionType.newInPackage.value;
-    params['details'] = '';
-    params['tag'] = '';
-    params['ticket_price_id'] = 1;
-    params['category_id'] = 2;
-
-    AppMultiPartFile files =
-        AppMultiPartFile(localFiles: images, key: 'images');
-
-    AlertManagerController.showLoaderDialog(Get.context!);
-
-    ResponseModel<void> addRaafaleResponse = await sharedServiceManager
-        .uploadRequest(APIType.addRaffale, params: params, arrFile: [files]);
-    AlertManagerController.hideLoaderDialog();
-    print(addRaafaleResponse.status);
-    print(addRaafaleResponse.message);
-  }
-
-  onSelection(int index) {
-    for (int i = 0; i < items.length; i++) {
-      if (index == i) {
-        print('seletec Value: $items[i]');
+  void setupCategoryItems() {
+    for (int i = 0; i < categories.length; i++) {
+      if (i == 0) {
+        categoryItems.add(
+            CategorySelectionModel(category: categories[i], isSelected: true));
       } else {
-        // items.value[i].isSelected = false;
+        categoryItems.add(
+            CategorySelectionModel(category: categories[i], isSelected: false));
       }
     }
-    update();
+    selectedCategory.value = categoryItems.first;
   }
 
-  // String? get title {
-  //   if (selectedConditionModel != null) {
-  //     return selectedConditionModel?.value.type.title;
-  //   }
-  //   return null;
-  // }
+  void updateSelection(int index) {
+    for (int i = 0; i < items.length; i++) {
+      if (i == index) {
+        items[i].isSelected = true;
+        selectedConditonType.value = items[i];
+      } else {
+        items[i].isSelected = false;
+      }
+    }
+    items.refresh();
+  }
 
-  // updateSelectedContition(ConditionSelectionModel? model) {
-  //   selectedConditionModel?.value = model!;
-  //   update();
-  // }
+  void updateCategorySelection(int index) {
+    for (int i = 0; i < categoryItems.length; i++) {
+      if (i == index) {
+        categoryItems[i].isSelected = true;
+        selectedCategory.value = categoryItems[i];
+      } else {
+        categoryItems[i].isSelected = false;
+      }
+    }
+    categoryItems.refresh();
+  }
+
+  void getPriceList() async {
+    ResponseModel<List<PriceList>> priceListResonse = await sharedServiceManager
+        .createGetRequest(typeOfEndPoint: APIType.ticketPriceList);
+
+    if (priceListResonse.status == APIConstant.statusCodeSuccess) {
+      print(priceListResonse.message);
+      priceList.value = priceListResonse.data ?? [];
+    } else {
+      AlertManagerController.showSnackBar(
+          '', priceListResonse.message, Position.bottom);
+    }
+  }
+
+  void createRaffale() async {
+    AlertManagerController.showLoaderDialog(Get.context!);
+
+    Map<String, dynamic> params = {};
+    params['title'] = title;
+    params['quantity'] = 40;
+    params['value'] = productValue.value;
+    params['price'] = '5';
+    params['earning'] = 9.24;
+    params['condition'] = selectedConditonType?.value.type.value;
+    params['ticket_price_id'] = 1;
+
+    if (decribeItem.value.isNotEmpty) params['details'] = decribeItem;
+
+    if (tag.value.isNotEmpty) params['tag'] = tag.value;
+
+    if (selectedCategory.value.category.id != null)
+      params['category_id'] = selectedCategory.value.category.id;
+
+    List<AppMultiPartFile> files = [
+      AppMultiPartFile(localFiles: images, key: 'images')
+    ];
+
+    ResponseModel addRaafaleResponse = await sharedServiceManager
+        .uploadRequest(APIType.addRaffale, params: params, arrFile: files);
+    AlertManagerController.hideLoaderDialog();
+
+    if (addRaafaleResponse.status == APIConstant.statusCodeSuccess) {
+      print(addRaafaleResponse.message);
+    } else {
+      AlertManagerController.showSnackBar(
+          '', addRaafaleResponse.message, Position.bottom);
+    }
+  }
+
+  void setupToFiles() {
+    tempImages.forEach((element) {
+      images.add(File(element.path));
+    });
+    setupImageSiders();
+  }
 
   void setupImageSiders() {
     for (int i = 0; i < images.length; i++) {

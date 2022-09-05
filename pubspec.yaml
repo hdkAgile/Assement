@@ -140,6 +140,17 @@ flutter:
     - assets/images/R_black_arrow.png
     - assets/images/checkbox.png
     - assets/images/done_image.png
+    - assets/images/my_wallet.png
+    - assets/images/my_reviews.png
+    - assets/images/name.png
+    - assets/images/email.png
+    - assets/images/location.png
+    - assets/images/pass.png
+    - assets/images/notifications.png
+    - assets/images/privacy_policy.png
+    - assets/images/termsofuse.png
+    - assets/images/contactus.png
+
 
 
    # An image asset can refer to one or more resolution-specific "variants", see
@@ -172,3 +183,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+my_reviews:
+  png:

@@ -1,3 +1,5 @@
+import 'package:assement/Models/DataModels/app_user.dart';
+import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:assement/Views/complete_addRaffale_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -109,10 +111,10 @@ class AddRaffleDetailView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Volvo S  90",
-                      style: AppTextStyle.openSans_extraBold_themeBlack_22,
-                    ),
+                    Obx(() => Text(
+                          controller.selectedConditonType.value.type.title,
+                          style: AppTextStyle.openSans_extraBold_themeBlack_22,
+                        )),
                     IconButton(
                         onPressed: () {}, icon: Image.asset(AppImages.heart)),
                   ],
@@ -142,7 +144,7 @@ class AddRaffleDetailView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          "John Smith",
+                          sharedUser.user.fullName,
                           textAlign: TextAlign.right,
                           textDirection: TextDirection.rtl,
                           style: AppTextStyle.openSans_regular_themeBlack_10,
@@ -155,8 +157,8 @@ class AddRaffleDetailView extends StatelessWidget {
                           width: 19.h,
                           child: ClipRRect(
                             child: ImageView(
-                              image: '',
-                              imageType: ImageType.asset,
+                              image: sharedUser.user.image,
+                              imageType: ImageType.networkImage,
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(19.r),
@@ -184,14 +186,16 @@ class AddRaffleDetailView extends StatelessWidget {
                   SizedBox(
                     height: 5.h,
                   ),
-                  Container(
-                    width: double.infinity,
-                    color: AppColors.themeLightGrey,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 16.h),
-                    child: Text(
-                      "Like New",
-                      style: AppTextStyle.openSans_bold_themeBlack_14,
+                  Obx(
+                    () => Container(
+                      width: double.infinity,
+                      color: AppColors.themeLightGrey,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30.w, vertical: 16.h),
+                      child: Text(
+                        controller.selectedConditonType.value.type.title,
+                        style: AppTextStyle.openSans_bold_themeBlack_14,
+                      ),
                     ),
                   ),
                   SizedBox(height: 28.h),
@@ -221,12 +225,13 @@ class AddRaffleDetailView extends StatelessWidget {
                       color: AppColors.themeLightGrey,
                       padding: EdgeInsets.symmetric(
                           horizontal: 30.w, vertical: 16.h),
-                      child: Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing\n elit, sed do eiusmod tempor incididunt ut labore et \ndolore magna aliqua. Ut enim ad minim veniam, quis\n nostrud exercitation ullamco laboris nisi ut aliquip ex \nea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                        style: AppTextStyle.openSans_regular_themeBlack_12,
-                        textAlign: TextAlign.justify,
-                        maxLines: null,
-                      ),
+                      child: Obx(() => Text(
+                            controller.decribeItem.value ??
+                                "Lorem ipsum dolor sit amet, consectetur adipiscing\n elit, sed do eiusmod tempor incididunt ut labore et \ndolore magna aliqua. Ut enim ad minim veniam, quis\n nostrud exercitation ullamco laboris nisi ut aliquip ex \nea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                            style: AppTextStyle.openSans_regular_themeBlack_12,
+                            textAlign: TextAlign.justify,
+                            maxLines: null,
+                          )),
                     ),
                     SizedBox(height: 28.h),
                   ],
@@ -254,11 +259,11 @@ class AddRaffleDetailView extends StatelessWidget {
                       color: AppColors.themeLightGrey,
                       padding: EdgeInsets.symmetric(
                           horizontal: 30.w, vertical: 16.h),
-                      child: Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing\n elit, sed do eiusmod tempor incididunt ut labore et \ndolore magna aliqua. Ut enim ad minim veniam, quis\n nostrud exercitation ullamco laboris nisi ut aliquip ex \nea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                        style: AppTextStyle.openSans_regular_themeBlack_12,
-                        textAlign: TextAlign.justify,
-                      ),
+                      child: Obx(() => Text(
+                            controller.tag.value,
+                            style: AppTextStyle.openSans_regular_themeBlack_12,
+                            textAlign: TextAlign.justify,
+                          )),
                     ),
                     SizedBox(height: 17.h),
                   ],
