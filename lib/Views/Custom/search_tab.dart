@@ -1,5 +1,6 @@
 import 'package:assement/Views/Custom/product_grid_cell.dart';
 import 'package:assement/Views/Custom/product_list_cell.dart';
+import 'package:assement/Views/user_profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -70,7 +71,7 @@ class _SearchState extends State<Search> {
                   SizedBox(width: 22.w),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => ProfileView());
+                      Get.to(() => CurrentUserProfile());
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.r),

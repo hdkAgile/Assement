@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:assement/Controllers/alert_managar_controller.dart';
 import 'package:assement/Controllers/home_controller.dart';
-import 'package:assement/Models/DataModels/PriceListModel.dart';
+import 'package:assement/Models/DataModels/category.dart';
+import 'package:assement/Models/DataModels/price_list.dart';
 import 'package:assement/Models/DataModels/condition_selection_model.dart';
 import 'package:assement/Models/DataModels/response_model.dart';
 import 'package:assement/Utils/app_logger.dart';
@@ -18,7 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../Models/DataModels/Dashboard.dart';
+import '../Models/DataModels/dashboard.dart';
 import '../Views/Custom/image_view.dart';
 
 class AddRaffaleController extends GetxController {
@@ -38,8 +39,7 @@ class AddRaffaleController extends GetxController {
 
   Rx<CategorySelectionModel> selectedCategory = Rx(CategorySelectionModel(
       isSelected: false,
-      category: Banners(
-          name: null, id: null, image: null, raffleId: null, state: null)));
+      category: Banners(id: 0, name: '', image: '', state: '', raffleId: 0)));
 
   var items = <ConditionSelectionModel>[].obs;
   var categoryItems = <CategorySelectionModel>[].obs;

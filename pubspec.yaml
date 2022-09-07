@@ -150,6 +150,9 @@ flutter:
     - assets/images/privacy_policy.png
     - assets/images/termsofuse.png
     - assets/images/contactus.png
+    - assets/images/label_Mwhite.png
+    - assets/images/plus.png
+    - assets/images/minus.png
 
 
 

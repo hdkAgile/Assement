@@ -65,3 +65,15 @@ extension Condition on ConditionType {
     }
   }
 }
+
+extension UserTypeExtension on UserType {
+
+  APIType get apiType {
+    switch(this) {
+      case UserType.current:
+        return APIType.currentUser;
+      case UserType.other:
+        return APIType.otherUser;
+    }
+  }
+}

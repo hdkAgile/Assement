@@ -18,9 +18,12 @@ enum APIType {
   addRaffale,
   currentUser,
   otherUser,
-  ticketPriceList
+  ticketPriceList,
+  listCategoryDropDown
 }
 
 enum URLHost { local, live, staging }
 
 enum ConditionType { newInPackage, lightlyUsed, used }
+
+enum UserType { current, other }

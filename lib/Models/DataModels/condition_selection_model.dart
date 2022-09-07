@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '../../Utils/enum_all.dart';
-import 'Dashboard.dart';
+import 'dashboard.dart';
 
 class ConditionSelectionModel {
   ConditionType type;

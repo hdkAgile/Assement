@@ -1,3 +1,4 @@
+import 'package:assement/Utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../Models/DataModels/app_user.dart';
@@ -16,22 +17,27 @@ import 'alert_managar_controller.dart';
 class ProfileController extends GetxController {
   int offset;
   int limit;
+  UserType userType = UserType.current;
   RxInt selectedIndex = 0.obs;
-  RxInt? groupValue = 0.obs;
+  RxInt groupValue = 0.obs;
   SingleUser user = sharedUser.user;
   RxList<Raffale> userRaffleList = <Raffale>[].obs;
   RxList<ReviewList> userReviewList = <ReviewList>[].obs;
   String _deviceId = '';
+  int id = 0;
 
-  Rxn<User>? currentUser = Rxn(null);
+  Rxn<SingleUser>? currentUser = Rxn(null);
 
-  ProfileController({required this.offset, required this.limit});
+  ProfileController(
+      {required this.offset,
+      required this.limit,
+      required this.id,
+      required this.userType});
 
   @override
   void onInit() {
     super.onInit();
     _fetchDeviceID();
-    _callAPI();
   }
 
   void _fetchDeviceID() async {
@@ -44,11 +50,13 @@ class ProfileController extends GetxController {
   }
 
   fetchRaffleList() async {
+    if (currentUser?.value == null) return;
+
     final userRaffleAPIModel = UserAPIModel(
         limit: limit,
         offset: offset,
         createdAt: '',
-        userId: user.id,
+        userId: currentUser?.value?.id ?? 0,
         forUser: 0,
         status: 0);
     final params = userRaffleAPIModel.toJson();
@@ -69,10 +77,12 @@ class ProfileController extends GetxController {
   }
 
   fetchReviewList() async {
+    if (currentUser?.value == null) return;
+
     final userRaffleAPIModel = UserAPIModel(
         limit: limit,
         offset: offset,
-        userId: user.id,
+        userId: currentUser?.value?.id ?? 0,
         createdAt: '',
         status: 0,
         forUser: 0);
@@ -113,9 +123,19 @@ class ProfileController extends GetxController {
     }
   }
 
-  void getCurrentUserProfile() async {
-    ResponseModel<User> responseModel = await sharedServiceManager
-        .createGetRequest(typeOfEndPoint: APIType.currentUser);
+  void getUserProfile() async {
+    ResponseModel<SingleUser> responseModel;
+
+    if (userType == UserType.current) {
+      responseModel = await sharedServiceManager.createGetRequest(
+          typeOfEndPoint: userType.apiType);
+    } else {
+      if (id == 0) return;
+      Map<String, dynamic> params = {};
+      params['user_id'] = id;
+      responseModel = await sharedServiceManager.createPostRequest(
+          typeOfEndPoint: userType.apiType, params: params);
+    }
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       currentUser?.value = responseModel.data;
@@ -123,5 +143,18 @@ class ProfileController extends GetxController {
       AlertManagerController.showSnackBar(
           '', responseModel.message, Position.bottom);
     }
+
+    if (userType == UserType.other) {
+      await fetchRaffleList();
+      await fetchReviewList();
+    }
+  }
+
+  void changeSelectedIndex(int index) {
+    selectedIndex.value = index;
+  }
+
+  void changeGroupIndex(int index) {
+    groupValue.value = index;
   }
 }

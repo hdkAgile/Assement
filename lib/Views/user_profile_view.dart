@@ -1,4 +1,5 @@
 import 'package:assement/Utils/constants.dart';
+import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,11 +13,12 @@ import 'Custom/image_view.dart';
 class CurrentUserProfile extends StatelessWidget {
   CurrentUserProfile({Key? key}) : super(key: key);
 
-  ProfileController controller =
-      Get.put(ProfileController(offset: 0, limit: 10));
+  ProfileController controller = Get.put(ProfileController(
+      offset: 0, limit: 10, id: 0, userType: UserType.current));
 
   @override
   Widget build(BuildContext context) {
+    controller.getUserProfile();
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(

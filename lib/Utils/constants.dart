@@ -110,6 +110,9 @@ class AppImages {
   static String notifications = '${imgPath}notifications.png';
   static String privacyPolicy = '${imgPath}privacy_policy.png';
   static String termOfUse = '${imgPath}termsofuse.png';
+  static String ticket = '${imgPath}label_Mwhite.png';
+  static String buttonPlus = '${imgPath}plus.png';
+  static String buttonMinus = '${imgPath}minus.png';
 }
 
 class ScreenRoutesConstant {
@@ -120,7 +123,8 @@ class ScreenRoutesConstant {
   static const String searchScreen = '/searchScreen';
 
 // auth related screens
-  static const String createAccount = "/createAccount";
+  static const String signUpAccount = "/signUpAccount";
+  static const String loginAccount = "/loginAccount";
   static const String homeTab = "/homeTab";
 
 // profile related screens
@@ -205,6 +209,12 @@ class AppTextStyle {
       letterSpacing: 0.0,
       fontSize: 14);
 
+  static TextStyle openSans_semibold_themeBlack_14 = TextStyle(
+      color: AppColors.themeBlack,
+      fontFamily: AppFonts.openSansSemiBold,
+      letterSpacing: 0.0,
+      fontSize: 14);
+
   static TextStyle openSans_regular_textGrey1_14 = TextStyle(
       color: AppColors.themeLightGrey1,
       fontFamily: AppFonts.openSansRegular,
@@ -230,6 +240,12 @@ class AppTextStyle {
       fontFamily: AppFonts.openSansBold,
       fontSize: 18,
       letterSpacing: 1.8,
+      color: AppColors.themeBlack);
+
+  static TextStyle openSans_bold_themeBlack_60 = TextStyle(
+      fontFamily: AppFonts.openSansBold,
+      fontSize: 60,
+      // letterSpacing: 6.0,
       color: AppColors.themeBlack);
   static TextStyle openSans_bold_themeTextGrey_12 = TextStyle(
       fontFamily: AppFonts.openSansBold,
@@ -424,6 +440,11 @@ class AppText {
   static String sold = 'Sold';
   static String reviews = 'Reviews';
   static String profile = 'Profile';
+  static String checkOut = 'Checkout';
+  static String creditCard = 'Credit Card';
+  static String applePay = 'Apple Pay';
+  static String paypal = 'Paypal';
+  static String paymentMethod = 'PAYMENT METHOD';
   static String logout = 'Logout';
   static String tickets = 'Tickets';
   static String listings = 'Listings';

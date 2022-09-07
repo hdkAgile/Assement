@@ -1,9 +1,11 @@
-import 'package:assement/Models/DataModels/PriceListModel.dart';
+import 'package:assement/Models/DataModels/price_list.dart';
 import 'package:assement/Models/DataModels/product_detail_models.dart';
 import 'package:assement/Models/DataModels/raffale_list.dart';
 import 'package:assement/Models/DataModels/user_raffle.dart';
+import 'package:flutter/foundation.dart';
 
-import 'Dashboard.dart';
+import 'category.dart';
+import 'dashboard.dart';
 import 'User.dart';
 
 class ResponseModel<T> {
@@ -39,6 +41,16 @@ class ResponseModel<T> {
       if (json != null) {
         for (int i = 0; i < (json.length ?? 0); i++) {
           temp.add(PriceList.fromJson(json[i]));
+        }
+        return temp as T;
+      } else {
+        return json;
+      }
+    } else if (T == List<CategoryData>) {
+      List<CategoryData> temp = [];
+      if (json != null) {
+        for (int i = 0; i < (json.length ?? 0); i++) {
+          temp.add(CategoryData.fromJson(json[i]));
         }
         return temp as T;
       } else {

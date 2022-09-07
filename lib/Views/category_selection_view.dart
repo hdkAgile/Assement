@@ -36,7 +36,7 @@ class _CategorySelectionViewState extends State<CategorySelectionView> {
       ),
       body: Container(
         width: double.infinity,
-        constraints: BoxConstraints(maxHeight: 480.h),
+        constraints: BoxConstraints(maxHeight: 216.h),
         color: AppColors.themeLightGrey,
         margin: EdgeInsets.only(top: 30),
         padding: EdgeInsets.symmetric(horizontal: 14, vertical: 16),

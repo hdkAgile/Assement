@@ -1,3 +1,4 @@
+import 'package:assement/Views/profile_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class ProductListCell extends StatelessWidget {
         onTap: () {
           Get.to(ProductDetail(
             userId: raffale?.user?.id ?? 0,
-            raffleId: raffale?.id ?? 0,
+            raffleId: raffale?.user?.id ?? 0,
           ));
         },
         child: Padding(
@@ -113,23 +114,30 @@ class ProductListCell extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Padding(padding: EdgeInsets.symmetric(vertical: 8.h)),
-                        Row(
-                          children: [
-                            ClipRRect(
-                              child: ImageView(
-                                  image: raffale?.user?.image ?? '',
-                                  imageType: ImageType.networkImage,
-                                  height: 19.w,
-                                  width: 19.w),
-                              borderRadius: BorderRadius.circular(19.r),
-                            ),
-                            SizedBox(width: 8.w),
-                            Text(
-                              raffale?.user?.name ?? 'John Smith',
-                              style:
-                                  AppTextStyle.openSans_regular_themeBlack_12,
-                            )
-                          ],
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => ProfileView(
+                                  id: raffale?.user?.id ?? 0,
+                                ));
+                          },
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                child: ImageView(
+                                    image: raffale?.user?.image ?? '',
+                                    imageType: ImageType.networkImage,
+                                    height: 19.w,
+                                    width: 19.w),
+                                borderRadius: BorderRadius.circular(19.r),
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                raffale?.user?.name ?? 'John Smith',
+                                style:
+                                    AppTextStyle.openSans_regular_themeBlack_12,
+                              )
+                            ],
+                          ),
                         ),
                         Padding(padding: EdgeInsets.symmetric(vertical: 8.h)),
                         Padding(

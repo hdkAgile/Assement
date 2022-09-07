@@ -3,7 +3,7 @@ import 'package:assement/Views/Custom/product_grid_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../Models/DataModels/Dashboard.dart';
+import '../../Models/DataModels/dashboard.dart';
 
 class CustomWrapWidget extends StatelessWidget {
   String? title;

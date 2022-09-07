@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:assement/Bindings/login_binding.dart';
+import 'package:assement/Bindings/signUp_binding.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +29,6 @@ class _WelComeViewState extends State<WelComeView> {
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              // flex: 1,
               child: Align(
                 alignment: Alignment.center,
                 child: Center(
@@ -105,7 +106,7 @@ class _WelComeViewState extends State<WelComeView> {
                     flex: 1,
                     child: TextButton(
                         onPressed: () {
-                          Get.toNamed(ScreenRoutesConstant.createAccount);
+                          Get.toNamed(ScreenRoutesConstant.signUpAccount);
                         },
                         child: Container(
                           width: double.infinity,
@@ -125,7 +126,7 @@ class _WelComeViewState extends State<WelComeView> {
                     flex: 1,
                     child: TextButton(
                         onPressed: () {
-                          Get.toNamed(ScreenRoutesConstant.createAccount);
+                          Get.toNamed(ScreenRoutesConstant.loginAccount);
                         },
                         child: Container(
                           width: double.infinity,

@@ -1,4 +1,6 @@
+import 'package:assement/Bindings/check_out_binding.dart';
 import 'package:assement/Views/Custom/app_button.dart';
+import 'package:assement/Views/check_out_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,6 +55,9 @@ class ProductDetail extends StatelessWidget {
               height: 50.h,
               width: double.infinity,
               title: 'Enter Now',
+              onPressed: () {
+                Get.to(CheckOutView(), binding: CheckOutBinding());
+              },
               isEnable: true),
         ),
       ),

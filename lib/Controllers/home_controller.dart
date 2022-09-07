@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../Models/DataModels/Dashboard.dart';
+import '../Models/DataModels/dashboard.dart';
 import '../Models/DataModels/app_user.dart';
 import '../Models/DataModels/response_model.dart';
 import '../Models/ParamsModels/LoginApiModel.dart';
