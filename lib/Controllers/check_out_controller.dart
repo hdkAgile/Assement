@@ -9,11 +9,14 @@ class CheckOutController extends GetxController {
   RxInt total = 5.obs;
   ProductDetailData productDetailData = ProductDetailData();
   RxString fullName = ''.obs;
+  RxString cardNumber = ''.obs;
   RxString street = ''.obs;
   RxString anotherStreet = ''.obs;
   RxString city = ''.obs;
   RxString state = ''.obs;
   RxString zipCode = ''.obs;
+  RxBool isAllVaildEntries = RxBool(false);
+  RxBool isSameAsShippingAddress = RxBool(false);
 
   @override
   void onInit() {
@@ -46,33 +49,20 @@ class CheckOutController extends GetxController {
   }
 
   void checkValidation() {
-    if (GetUtils.isLengthLessOrEqual(fullName, 0)) {
-      AlertManagerController.showSnackBar(
-          'Invalid full name', 'Please enter full name', Position.bottom);
-    }
-    if (GetUtils.isLengthLessOrEqual(street, 0)) {
-      AlertManagerController.showSnackBar(
-          'Invalid Address', 'Please enter address', Position.bottom);
-    }
-
-    if (GetUtils.isLengthLessOrEqual(anotherStreet, 0)) {
-      AlertManagerController.showSnackBar(
-          'Invalid Address', 'Please enter address', Position.bottom);
-    }
-
-    if (GetUtils.isLengthLessOrEqual(city, 0)) {
-      AlertManagerController.showSnackBar(
-          'Invalid City', 'Please enter city', Position.bottom);
-    }
-
-    if (GetUtils.isLengthLessOrEqual(state, 0)) {
-      AlertManagerController.showSnackBar(
-          'Invalid State', 'Please enter state', Position.bottom);
-    }
-
-    if (GetUtils.isLengthLessOrEqual(zipCode, 0)) {
-      AlertManagerController.showSnackBar(
-          'Invalid zip code', 'Please enter zipcode', Position.bottom);
+    if (GetUtils.isLengthLessOrEqual(fullName.value, 0)) {
+      isAllVaildEntries.value = false;
+    } else if (GetUtils.isLengthLessOrEqual(street.value, 0)) {
+      isAllVaildEntries.value = false;
+    } else if (GetUtils.isLengthLessOrEqual(anotherStreet.value, 0)) {
+      isAllVaildEntries.value = false;
+    } else if (GetUtils.isLengthLessOrEqual(city.value, 0)) {
+      isAllVaildEntries.value = false;
+    } else if (GetUtils.isLengthLessOrEqual(state.value, 0)) {
+      isAllVaildEntries.value = false;
+    } else if (GetUtils.isLengthLessOrEqual(zipCode.value, 0)) {
+      isAllVaildEntries.value = false;
+    } else {
+      isAllVaildEntries.value = true;
     }
   }
 }

@@ -469,6 +469,7 @@ class AppText {
   static String congratualtion = 'Congratulations!';
   static String raffaleListed = 'Your raffle has been listed!';
   static String done = 'Done';
+  static String billingAddress = 'BILLING ADDRESS';
 }
 
 class PreferenceKeys {

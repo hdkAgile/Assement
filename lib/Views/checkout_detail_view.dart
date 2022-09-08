@@ -120,9 +120,10 @@ class CheckOutDetailView extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: AppColors.themeWhite,
-                  borderRadius: BorderRadius.circular(10.r),
-                  boxShadow: kElevationToShadow[8]),
+                color: AppColors.themeWhite,
+                borderRadius: BorderRadius.circular(10.r),
+                border: Border.all(color: Colors.grey.shade100, width: 2.0),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

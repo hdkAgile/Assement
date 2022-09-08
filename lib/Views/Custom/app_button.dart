@@ -46,7 +46,7 @@ class AppButton extends StatelessWidget {
           ],
         ),
         child: TextButton(
-          onPressed: onPressed,
+          onPressed: isEnable ? onPressed : null,
           child: Text(title,
               style: isEnable
                   ? AppTextStyle.openSans_bold_white_17
