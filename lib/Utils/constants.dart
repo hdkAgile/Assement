@@ -354,8 +354,14 @@ class AppTextStyle {
 
   static TextStyle openSans_regular_themeBlack_10 = TextStyle(
       fontFamily: AppFonts.openSansRegular,
-      fontSize: 12,
-      letterSpacing: 1.2,
+      fontSize: 10,
+      letterSpacing: 1.0,
+      color: AppColors.themeBlack);
+
+  static TextStyle openSans_regular_themeBlack_9 = TextStyle(
+      fontFamily: AppFonts.openSansRegular,
+      fontSize: 9.0,
+      letterSpacing: 0.9,
       color: AppColors.themeBlack);
 
   static TextStyle openSans_regular_themeBlack_14 = TextStyle(
@@ -441,6 +447,7 @@ class AppText {
   static String reviews = 'Reviews';
   static String profile = 'Profile';
   static String checkOut = 'Checkout';
+  static String shippingAddress = 'Shipping Address';
   static String creditCard = 'Credit Card';
   static String applePay = 'Apple Pay';
   static String paypal = 'Paypal';

@@ -1,5 +1,6 @@
 import 'package:assement/Controllers/check_out_controller.dart';
 import 'package:assement/Views/Custom/image_view.dart';
+import 'package:assement/Views/add_shiping_address_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -144,7 +145,7 @@ class CheckOutDetailView extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      print('Tapped...');
+                      Get.to(AddShippingAddressView());
                     },
                     child: Padding(
                       padding:
