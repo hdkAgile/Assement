@@ -1,4 +1,5 @@
 import 'package:assement/Utils/card_month_input_formatter.dart';
+import 'package:assement/Views/final_check_out_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -315,10 +316,12 @@ class PaymentMethodView extends StatelessWidget {
                       width: double.infinity,
                       padding:
                           EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-                      child: Obx(() => AppButton(
+                      child: AppButton(
                           title: 'Next',
-                          isEnable: controller.isAllVaildEntries.value,
-                          onPressed: () {})))
+                          isEnable: true,
+                          onPressed: () {
+                            Get.to(FinalCheckOutView());
+                          }))
                 ],
               ),
             ));

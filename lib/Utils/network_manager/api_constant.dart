@@ -63,6 +63,8 @@ class APIConstant {
         return '${APIConstant.preFixTicket}/listTicketPriceDropDown';
       case APIType.listCategoryDropDown:
         return 'category/listCategoryDropDown';
+      case APIType.checkout:
+        return 'checkout';
     }
   }
 

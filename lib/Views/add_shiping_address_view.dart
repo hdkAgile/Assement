@@ -184,12 +184,12 @@ class AddShippingAddressView extends StatelessWidget {
                       width: double.infinity,
                       padding:
                           EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-                      child: Obx(() => AppButton(
+                      child: AppButton(
                           title: 'Next',
-                          isEnable: controller.isAllVaildEntries.value,
+                          isEnable: true,
                           onPressed: () {
                             Get.to(PaymentMethodView());
-                          })))
+                          }))
                 ],
               ),
             ),

@@ -306,7 +306,7 @@ class AppTextStyle {
   static TextStyle openSans_regular_themeBlack_12 = TextStyle(
       fontFamily: AppFonts.openSansRegular,
       fontSize: 12,
-      // letterSpacing: 1.2,
+      letterSpacing: 1.2,
       color: AppColors.themeBlack);
 
   static TextStyle openSans_bold_themeBlack_12 = TextStyle(
