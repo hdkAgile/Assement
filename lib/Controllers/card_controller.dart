@@ -82,6 +82,24 @@ class CardController extends GetxController {
     }
   }
 
+  void updateDefaultCard(int index) async {
+    Map<String, dynamic> params = {};
+
+    params['card_id'] = cards.value[index].id;
+
+    AlertManagerController.showLoaderDialog(Get.context!);
+    ResponseModel<Cards> responseModel = await sharedServiceManager
+        .createPostRequest(typeOfEndPoint: APIType.updateCard, params: params);
+    AlertManagerController.hideLoaderDialog();
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      print(responseModel.data);
+    } else {
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
+    }
+  }
+
   void checkValidation() {
     if (GetUtils.isLengthLessOrEqual(fullName.value, 0)) {
       isAllVaildEntries.value = false;

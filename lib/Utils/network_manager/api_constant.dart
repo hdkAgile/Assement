@@ -71,6 +71,8 @@ class APIConstant {
         return 'cards/delete';
       case APIType.addCard:
         return 'cards/create';
+      case APIType.updateCard:
+        return 'cards/default';
     }
   }
 

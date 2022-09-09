@@ -23,7 +23,8 @@ enum APIType {
   checkout,
   getCardList,
   deleteCard,
-  addCard
+  addCard,
+  updateCard
 }
 
 enum URLHost { local, live, staging }

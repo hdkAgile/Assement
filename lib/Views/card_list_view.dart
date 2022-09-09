@@ -45,7 +45,9 @@ class CardListView extends StatelessWidget {
                       itemCount: controller.cards.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            controller.updateDefaultCard(index);
+                          },
                           child: Container(
                             margin: EdgeInsets.only(top: 20),
                             padding: EdgeInsets.symmetric(
