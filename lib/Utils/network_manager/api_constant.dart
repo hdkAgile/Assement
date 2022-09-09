@@ -56,15 +56,21 @@ class APIConstant {
       case APIType.addRaffale:
         return '${APIConstant.preFixRaffale}/create';
       case APIType.currentUser:
-        return '${APIConstant.preFixUser}/current}';
+        return '${APIConstant.preFixUser}/current';
       case APIType.otherUser:
-        return '${APIConstant.preFixUser}/other}';
+        return '${APIConstant.preFixUser}/other';
       case APIType.ticketPriceList:
         return '${APIConstant.preFixTicket}/listTicketPriceDropDown';
       case APIType.listCategoryDropDown:
         return 'category/listCategoryDropDown';
       case APIType.checkout:
         return 'checkout';
+      case APIType.getCardList:
+        return 'cards';
+      case APIType.deleteCard:
+        return 'cards/delete';
+      case APIType.addCard:
+        return 'cards/create';
     }
   }
 

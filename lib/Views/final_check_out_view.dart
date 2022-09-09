@@ -1,4 +1,5 @@
 import 'package:assement/Controllers/check_out_controller.dart';
+import 'package:assement/Views/completed_check_out_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -255,7 +256,11 @@ class FinalCheckOutView extends StatelessWidget {
                       Container(
                           width: double.infinity,
                           child: AppButton(
-                              title: 'Next', isEnable: true, onPressed: () {}))
+                              title: 'Next',
+                              isEnable: true,
+                              onPressed: () {
+                                Get.offAll(() => CompleteCheckOutView());
+                              }))
                     ],
                   ),
                 ),

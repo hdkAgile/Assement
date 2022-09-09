@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Utils/constants.dart';
+import 'card_list_view.dart';
 
 class CheckOutDetailView extends StatelessWidget {
   CheckOutDetailView({Key? key}) : super(key: key);
@@ -15,7 +16,6 @@ class CheckOutDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(controller);
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -127,26 +127,9 @@ class CheckOutDetailView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppText.applePay,
-                          style: AppTextStyle.openSans_semibold_themeBlack_14,
-                        ),
-                        ImageView(
-                          image: AppImages.blackArrowRight,
-                          imageType: ImageType.asset,
-                          color: AppColors.themeGreen,
-                        )
-                      ],
-                    ),
-                  ),
                   InkWell(
                     onTap: () {
-                      Get.to(AddShippingAddressView());
+                      Get.to(CardListView());
                     },
                     child: Padding(
                       padding:
@@ -155,7 +138,7 @@ class CheckOutDetailView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            AppText.creditCard,
+                            AppText.wallet,
                             style: AppTextStyle.openSans_semibold_themeBlack_14,
                           ),
                           ImageView(
@@ -167,23 +150,6 @@ class CheckOutDetailView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          AppText.paypal,
-                          style: AppTextStyle.openSans_semibold_themeBlack_14,
-                        ),
-                        ImageView(
-                          image: AppImages.blackArrowRight,
-                          imageType: ImageType.asset,
-                          color: AppColors.themeGreen,
-                        )
-                      ],
-                    ),
-                  )
                 ],
               ),
             )

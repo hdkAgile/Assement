@@ -121,6 +121,20 @@
             </list>
           </value>
         </entry>
+        <entry key="credit_card_type_detector">
+          <value>
+            <list>
+              <option value="$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/credit_card_type_detector-2.0.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="credit_card_validator">
+          <value>
+            <list>
+              <option value="$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/credit_card_validator-2.0.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="cross_file">
           <value>
             <list>
@@ -722,6 +736,8 @@
       <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_platform_interface-1.2.1/lib" />
       <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_web-1.2.3/lib" />
       <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_plus_windows-1.2.2/lib" />
+      <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/credit_card_type_detector-2.0.0/lib" />
+      <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/credit_card_validator-2.0.1/lib" />
       <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.3+1/lib" />
       <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.2/lib" />
       <root url="file://$USER_HOME$/FlutterDev/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5/lib" />

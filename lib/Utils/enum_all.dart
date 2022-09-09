@@ -20,7 +20,10 @@ enum APIType {
   otherUser,
   ticketPriceList,
   listCategoryDropDown,
-  checkout
+  checkout,
+  getCardList,
+  deleteCard,
+  addCard
 }
 
 enum URLHost { local, live, staging }

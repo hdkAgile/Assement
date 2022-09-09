@@ -4,6 +4,7 @@ import 'package:assement/Models/DataModels/raffale_list.dart';
 import 'package:assement/Models/DataModels/user_raffle.dart';
 import 'package:flutter/foundation.dart';
 
+import 'card.dart';
 import 'category.dart';
 import 'dashboard.dart';
 import 'User.dart';
@@ -51,6 +52,16 @@ class ResponseModel<T> {
       if (json != null) {
         for (int i = 0; i < (json.length ?? 0); i++) {
           temp.add(CategoryData.fromJson(json[i]));
+        }
+        return temp as T;
+      } else {
+        return json;
+      }
+    } else if (T == List<Cards>) {
+      List<Cards> temp = [];
+      if (json != null) {
+        for (int i = 0; i < (json.length ?? 0); i++) {
+          temp.add(Cards.fromJson(json[i]));
         }
         return temp as T;
       } else {

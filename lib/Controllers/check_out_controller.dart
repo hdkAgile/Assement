@@ -5,7 +5,10 @@ import 'package:assement/Models/DataModels/response_model.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Utils/network_manager/api_constant.dart';
 import 'package:assement/Utils/network_manager/remote_services.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../Models/DataModels/card.dart';
 
 class CheckOutController extends GetxController {
   RxInt totalTickets = 1.obs;
@@ -26,10 +29,10 @@ class CheckOutController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _setupPrice();
+    _setupProductDetail();
   }
 
-  void _setupPrice() {
+  void _setupProductDetail() {
     productDetailData =
         Get.find<ProductDetailController>().productDetailData.value;
     ticketPrice = int.parse(productDetailData.ticketPrice ?? '');
@@ -80,21 +83,19 @@ class CheckOutController extends GetxController {
     params['quantity'] = totalTickets.value;
     params['paymet_method'] = 'card';
 
-    if (isSameAsShippingAddress.value) {
-      params['full_name'] = fullName.value;
-      params['street_1'] = street.value;
-      params['street_2'] = anotherStreet.value;
-      params['city'] = city.value;
-      params['state'] = state.value;
-      params['zip_code'] = zipCode.value;
-    } else {
-      params['billing_full_name'] = fullName.value;
-      params['billing_street_1'] = street.value;
-      params['billing_street_2'] = anotherStreet.value;
-      params['billing_city'] = city.value;
-      params['billing_state'] = state.value;
-      params['billing_zip_code'] = zipCode.value;
-    }
+    params['full_name'] = fullName.value;
+    params['street_1'] = street.value;
+    params['street_2'] = anotherStreet.value;
+    params['city'] = city.value;
+    params['state'] = state.value;
+    params['zip_code'] = zipCode.value;
+
+    params['billing_full_name'] = fullName.value;
+    params['billing_street_1'] = street.value;
+    params['billing_street_2'] = anotherStreet.value;
+    params['billing_city'] = city.value;
+    params['billing_state'] = state.value;
+    params['billing_zip_code'] = zipCode.value;
 
     ResponseModel responseModel = await sharedServiceManager.createPostRequest(
         typeOfEndPoint: APIType.checkout, params: params);

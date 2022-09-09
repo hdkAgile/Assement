@@ -447,8 +447,11 @@ class AppText {
   static String reviews = 'Reviews';
   static String profile = 'Profile';
   static String checkOut = 'Checkout';
+  static String paymentMethodDetail = 'Payment Method Detail';
+  static String addCard = 'Add Card';
   static String shippingAddress = 'Shipping Address';
   static String creditCard = 'Credit Card';
+  static String wallet = 'Wallet';
   static String applePay = 'Apple Pay';
   static String paypal = 'Paypal';
   static String paymentMethod = 'PAYMENT METHOD';
