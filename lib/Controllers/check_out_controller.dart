@@ -23,8 +23,25 @@ class CheckOutController extends GetxController {
   RxString state = ''.obs;
   RxString zipCode = ''.obs;
 
+  RxString billingFullName = ''.obs;
+  RxString billingCardNumber = ''.obs;
+  RxString billingStreet = ''.obs;
+  RxString billingAnotherStreet = ''.obs;
+  RxString billingcity = ''.obs;
+  RxString billingState = ''.obs;
+  RxString billingZipCode = ''.obs;
+
   RxBool isAllVaildEntries = RxBool(false);
   RxBool isSameAsShippingAddress = RxBool(false);
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController streetController = TextEditingController();
+  TextEditingController anotherStreeController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController zipCodeController = TextEditingController();
+
+  String cardId = '';
 
   @override
   void onInit() {
@@ -56,6 +73,22 @@ class CheckOutController extends GetxController {
     total.value = totalTickets.value * ticketPrice;
   }
 
+  void setupBillingAddress() {
+    nameController.text =
+        isSameAsShippingAddress.value ? fullName.value : billingFullName.value;
+    streetController.text =
+        isSameAsShippingAddress.value ? street.value : billingStreet.value;
+    anotherStreeController.text = isSameAsShippingAddress.value
+        ? anotherStreet.value
+        : billingAnotherStreet.value;
+    cityController.text =
+        isSameAsShippingAddress.value ? city.value : billingcity.value;
+    stateController.text =
+        isSameAsShippingAddress.value ? state.value : billingState.value;
+    zipCodeController.text =
+        isSameAsShippingAddress.value ? zipCode.value : billingZipCode.value;
+  }
+
   void checkValidation() {
     if (GetUtils.isLengthLessOrEqual(fullName.value, 0)) {
       isAllVaildEntries.value = false;
@@ -74,7 +107,7 @@ class CheckOutController extends GetxController {
     }
   }
 
-  Future<void> checkOut() async {
+  Future<bool> checkOut() async {
     Map<String, dynamic> params = {};
 
     if (productDetailData.id != null) {
@@ -90,20 +123,32 @@ class CheckOutController extends GetxController {
     params['state'] = state.value;
     params['zip_code'] = zipCode.value;
 
-    params['billing_full_name'] = fullName.value;
-    params['billing_street_1'] = street.value;
-    params['billing_street_2'] = anotherStreet.value;
-    params['billing_city'] = city.value;
-    params['billing_state'] = state.value;
-    params['billing_zip_code'] = zipCode.value;
+    params['billing_full_name'] = nameController.text;
+    params['billing_street_1'] = streetController.text;
+    params['billing_street_2'] = anotherStreeController.text;
+    params['billing_city'] = cityController.text;
+    params['billing_state'] = stateController.text;
+    params['billing_zip_code'] = zipCodeController.text;
+
+    params['card_id'] = cardId;
+
+    AlertManagerController.showLoaderDialog(Get.context!);
 
     ResponseModel responseModel = await sharedServiceManager.createPostRequest(
         typeOfEndPoint: APIType.checkout, params: params);
 
+    AlertManagerController.hideLoaderDialog();
+
+    print(responseModel.status);
+    print(responseModel.message);
+
+    AlertManagerController.showSnackBar(
+        '', responseModel.message, Position.bottom);
+
     if (responseModel.status == APIConstant.statusCodeSuccess) {
+      return true;
     } else {
-      AlertManagerController.showSnackBar(
-          '', responseModel.message, Position.bottom);
+      return false;
     }
   }
 }

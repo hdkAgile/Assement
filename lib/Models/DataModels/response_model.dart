@@ -67,6 +67,8 @@ class ResponseModel<T> {
       } else {
         return json;
       }
+    } else if (T == Cards) {
+      return Cards.fromJson(json) as T;
     } else {
       throw Exception('Unknown class');
     }

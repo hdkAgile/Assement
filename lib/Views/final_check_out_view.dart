@@ -1,4 +1,7 @@
+import 'package:assement/Bindings/check_out_binding.dart';
+import 'package:assement/Controllers/card_controller.dart';
 import 'package:assement/Controllers/check_out_controller.dart';
+import 'package:assement/Views/add_shiping_address_view.dart';
 import 'package:assement/Views/completed_check_out_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +17,11 @@ class FinalCheckOutView extends StatelessWidget {
   FinalCheckOutView({Key? key}) : super(key: key);
 
   CheckOutController controller = Get.find<CheckOutController>();
+  CardController cardController = Get.find<CardController>();
 
   @override
   Widget build(BuildContext context) {
+    controller.cardId = cardController.selectedDefaultCard?.id ?? '';
     return Scaffold(
       backgroundColor: AppColors.themeLightGrey,
       appBar: AppBar(
@@ -181,12 +186,12 @@ class FinalCheckOutView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                controller.street.value,
+                                cardController.selectedDefaultCard?.last4 ?? '',
                                 style:
                                     AppTextStyle.openSans_regular_themeBlack_12,
                               ),
                               Text(
-                                controller.anotherStreet.value,
+                                cardController.monthAndYear,
                                 style:
                                     AppTextStyle.openSans_regular_themeBlack_12,
                               )
@@ -258,8 +263,12 @@ class FinalCheckOutView extends StatelessWidget {
                           child: AppButton(
                               title: 'Next',
                               isEnable: true,
-                              onPressed: () {
-                                Get.offAll(() => CompleteCheckOutView());
+                              onPressed: () async {
+                                final isCheckedOut =
+                                    await controller.checkOut();
+                                if (isCheckedOut) {
+                                  Get.offAll(() => CompleteCheckOutView());
+                                }
                               }))
                     ],
                   ),

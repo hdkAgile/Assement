@@ -16,15 +16,21 @@ class CardController extends GetxController {
   RxString year = ''.obs;
   RxString cvv = ''.obs;
 
+  Cards? selectedDefaultCard;
+
   RxBool isAllVaildEntries = RxBool(false);
+
+  TextEditingController cardNumberController = TextEditingController();
+  TextEditingController monthAndYearController = TextEditingController();
+  TextEditingController cvvController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
-    getCardList();
+    getCardList(Get.context!, true);
   }
 
-  void getCardList() async {
+  void getCardList(BuildContext context, bool showLoader) async {
     ResponseModel<List<Cards>> responseModel = await sharedServiceManager
         .createGetRequest(typeOfEndPoint: APIType.getCardList);
 
@@ -48,7 +54,7 @@ class CardController extends GetxController {
     AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
-      getCardList();
+      getCardList(context, false);
       cards.refresh();
     }
     AlertManagerController.showSnackBar(
@@ -60,6 +66,16 @@ class CardController extends GetxController {
     newCardNumber.removeWhere((element) => element == null);
 
     return newCardNumber.join('');
+  }
+
+  String get monthAndYear {
+    List<String> items = [
+      selectedDefaultCard?.expMonth?.toString() ?? '',
+      selectedDefaultCard?.expYear?.toString() ?? ''
+    ];
+    items.removeWhere((element) => element == null);
+
+    return items.join('/');
   }
 
   void addCard() async {
@@ -82,21 +98,24 @@ class CardController extends GetxController {
     }
   }
 
-  void updateDefaultCard(int index) async {
+  Future<bool> updateDefaultCard(int index, BuildContext context) async {
     Map<String, dynamic> params = {};
 
     params['card_id'] = cards.value[index].id;
 
-    AlertManagerController.showLoaderDialog(Get.context!);
+    AlertManagerController.showLoaderDialog(context);
     ResponseModel<Cards> responseModel = await sharedServiceManager
         .createPostRequest(typeOfEndPoint: APIType.updateCard, params: params);
     AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
-      print(responseModel.data);
+      selectedDefaultCard = responseModel.data;
+      setupSelectedCard();
+      return true;
     } else {
       AlertManagerController.showSnackBar(
           '', responseModel.message, Position.bottom);
+      return false;
     }
   }
 
@@ -105,13 +124,23 @@ class CardController extends GetxController {
       isAllVaildEntries.value = false;
     } else if (GetUtils.isLengthLessOrEqual(cardNumber.value, 0)) {
       isAllVaildEntries.value = false;
+    } else if (GetUtils.isLengthEqualTo(cardNumber.value.length, 16)) {
+      isAllVaildEntries.value = true;
     } else if (GetUtils.isLengthLessOrEqual(cvv.value, 0)) {
       isAllVaildEntries.value = false;
+    } else if (GetUtils.isLengthEqualTo(cvv.value.length, 3)) {
+      isAllVaildEntries.value = true;
     } else if (GetUtils.isLengthLessOrEqual(month.value, 0) &&
         (GetUtils.isLengthLessOrEqual(year.value, 0))) {
       isAllVaildEntries.value = false;
     } else {
       isAllVaildEntries.value = true;
     }
+  }
+
+  void setupSelectedCard() {
+    cardNumberController.text = '.... ${selectedDefaultCard?.last4 ?? ''}';
+    monthAndYearController.text = monthAndYear;
+    cvvController.text = selectedDefaultCard?.name ?? '';
   }
 }

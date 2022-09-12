@@ -17,6 +17,7 @@ class AddCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
         elevation: 0.5,
         title: Text(AppText.addCard,

@@ -3,6 +3,7 @@ import 'package:assement/Controllers/check_out_controller.dart';
 import 'package:assement/Utils/constants.dart';
 import 'package:assement/Views/Custom/image_view.dart';
 import 'package:assement/Views/add_card_view.dart';
+import 'package:assement/Views/add_shiping_address_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,21 +33,25 @@ class CardListView extends StatelessWidget {
                     color: AppColors.themeBlack))),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Obx(
-              () => Visibility(
-                visible: controller.cards.isNotEmpty,
+          child: Column(
+        children: [
+          Obx(
+            () => Visibility(
+              visible: controller.cards.isNotEmpty,
+              child: SingleChildScrollView(
                 child: Flexible(
-                  fit: FlexFit.loose,
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: controller.cards.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {
-                            controller.updateDefaultCard(index);
+                          onTap: () async {
+                            final value = await controller.updateDefaultCard(
+                                index, context);
+                            if (value) {
+                              Get.to(AddShippingAddressView());
+                            }
                           },
                           child: Container(
                             margin: EdgeInsets.only(top: 20),
@@ -88,27 +93,27 @@ class CardListView extends StatelessWidget {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Get.to(AddCardView())
-                    ?.then((value) => controller.getCardList());
-              },
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade100, width: 2.0),
-                ),
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
-                child: Text(
-                  'Add payment Method',
-                  style: AppTextStyle.openSans_bold_themeGreen_14,
-                ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.to(AddCardView())
+                  ?.then((value) => controller.getCardList(context, true));
+            },
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade100, width: 2.0),
+              ),
+              margin: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+              child: Text(
+                'Add payment Method',
+                style: AppTextStyle.openSans_bold_themeGreen_14,
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        ],
+      )),
     );
   }
 }
