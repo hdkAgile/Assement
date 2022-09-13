@@ -27,12 +27,15 @@ class CardController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getCardList(Get.context!, true);
   }
 
   void getCardList(BuildContext context, bool showLoader) async {
+    if (showLoader) AlertManagerController.showLoaderDialog(context);
+
     ResponseModel<List<Cards>> responseModel = await sharedServiceManager
         .createGetRequest(typeOfEndPoint: APIType.getCardList);
+
+    if (showLoader) AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       cards.value = responseModel.data ?? [];
@@ -54,7 +57,7 @@ class CardController extends GetxController {
     AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
-      getCardList(context, false);
+      cards.removeAt(index);
       cards.refresh();
     }
     AlertManagerController.showSnackBar(
@@ -78,23 +81,26 @@ class CardController extends GetxController {
     return items.join('/');
   }
 
-  void addCard() async {
+  Future<bool> addCard() async {
     Map<String, dynamic> params = {};
 
     params['number'] = finalCardNumber;
     params['exp_month'] = month.value;
     params['exp_year'] = year.value;
     params['cvc'] = cvv.value;
+
     AlertManagerController.showLoaderDialog(Get.context!);
+
     ResponseModel<Cards> responseModel = await sharedServiceManager
         .createPostRequest(typeOfEndPoint: APIType.addCard, params: params);
     AlertManagerController.hideLoaderDialog();
+    AlertManagerController.showSnackBar(
+        '', responseModel.message, Position.bottom);
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
-      print(responseModel.data);
+      return true;
     } else {
-      AlertManagerController.showSnackBar(
-          '', responseModel.message, Position.bottom);
+      return false;
     }
   }
 

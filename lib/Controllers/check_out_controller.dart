@@ -49,16 +49,32 @@ class CheckOutController extends GetxController {
     _setupProductDetail();
   }
 
+  int get availableTikcets {
+    if (productDetailData == null) return 0;
+
+    if (productDetailData.quantity != null &&
+        productDetailData.soldTicket != null) {
+      return productDetailData.quantity! - productDetailData.soldTicket! ?? 0;
+    }
+    return 0;
+  }
+
   void _setupProductDetail() {
     productDetailData =
         Get.find<ProductDetailController>().productDetailData.value;
     ticketPrice = int.parse(productDetailData.ticketPrice ?? '');
+
     _calculateTotal();
   }
 
   void increaseTotalTickets() {
-    totalTickets.value++;
-    _calculateTotal();
+    if (totalTickets.value > availableTikcets) {
+      AlertManagerController.showSnackBar('', 'Limit exceed', Position.bottom);
+      return;
+    } else {
+      totalTickets.value++;
+      _calculateTotal();
+    }
   }
 
   void decreseTotalTickets() {

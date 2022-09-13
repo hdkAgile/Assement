@@ -1,4 +1,5 @@
 import 'package:assement/Controllers/card_controller.dart';
+import 'package:assement/Controllers/check_out_controller.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import '../Utils/constants.dart';
 class AddCardView extends StatelessWidget {
   AddCardView({Key? key}) : super(key: key);
   CardController controller = Get.find<CardController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,6 +129,10 @@ class AddCardView extends StatelessWidget {
                         flex: 1,
                         child: TextField(
                           obscureText: true,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(3),
+                          ],
                           decoration: InputDecoration(
                               label: Text("CVV"),
                               labelStyle:
@@ -160,8 +166,11 @@ class AddCardView extends StatelessWidget {
                   title: "Add Card",
                   isEnable: controller.isAllVaildEntries.value,
                   onPressed: controller.isAllVaildEntries.value
-                      ? () {
-                          controller.addCard();
+                      ? () async {
+                          final value = await controller.addCard();
+                          if (value) {
+                            controller.getCardList(context, false);
+                          }
                         }
                       : null,
                 ),

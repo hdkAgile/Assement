@@ -45,93 +45,100 @@ class PaymentMethodView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    constraints: BoxConstraints(maxHeight: 135.h),
-                    color: AppColors.themeLightGrey,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: 16, top: 0, bottom: 8, right: 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          TextField(
-                            decoration: InputDecoration(
-                                label: Text("CARD NUMBER"),
-                                labelStyle:
-                                    AppTextStyle.openSans_regular_themeBlack_10,
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: AppColors.themeTextGrey)),
-                                focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: AppColors.themeTextGrey))),
-                            enabled: false,
-                            controller: cardController.cardNumberController,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(16),
-                              CardNumberInputFormatter()
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: TextField(
-                                  enabled: false,
-                                  decoration: InputDecoration(
-                                      label: Text("MM/YY"),
-                                      labelStyle: AppTextStyle
-                                          .openSans_regular_themeBlack_10,
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColors.themeTextGrey)),
-                                      focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColors.themeTextGrey))),
-                                  controller:
-                                      cardController.monthAndYearController,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                    LengthLimitingTextInputFormatter(4),
-                                    CardMonthInputFormatter(),
-                                  ],
+                  Visibility(
+                    visible: false,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20),
+                      constraints: BoxConstraints(maxHeight: 135.h),
+                      color: AppColors.themeLightGrey,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: 16, top: 0, bottom: 8, right: 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextField(
+                              decoration: InputDecoration(
+                                  label: Text("CARD NUMBER"),
+                                  labelStyle: AppTextStyle
+                                      .openSans_regular_themeBlack_10,
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.themeTextGrey)),
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.themeTextGrey))),
+                              enabled: false,
+                              controller: cardController.cardNumberController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(16),
+                                CardNumberInputFormatter()
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: TextField(
+                                    enabled: false,
+                                    decoration: InputDecoration(
+                                        label: Text("MM/YY"),
+                                        labelStyle: AppTextStyle
+                                            .openSans_regular_themeBlack_10,
+                                        enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color:
+                                                    AppColors.themeTextGrey)),
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color:
+                                                    AppColors.themeTextGrey))),
+                                    controller:
+                                        cardController.monthAndYearController,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(4),
+                                      CardMonthInputFormatter(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              Container(
-                                height: 40.h,
-                                width: 0.5,
-                                color: AppColors.themeTextGrey,
-                              ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: TextField(
-                                  enabled: false,
-                                  obscureText: true,
-                                  controller: cardController.cvvController,
-                                  decoration: InputDecoration(
-                                      label: Text("CVV"),
-                                      labelStyle: AppTextStyle
-                                          .openSans_regular_themeBlack_10,
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColors.themeTextGrey)),
-                                      focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColors.themeTextGrey))),
+                                SizedBox(
+                                  width: 8.w,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                Container(
+                                  height: 40.h,
+                                  width: 0.5,
+                                  color: AppColors.themeTextGrey,
+                                ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: TextField(
+                                    enabled: false,
+                                    obscureText: true,
+                                    controller: cardController.cvvController,
+                                    decoration: InputDecoration(
+                                        label: Text("CVV"),
+                                        labelStyle: AppTextStyle
+                                            .openSans_regular_themeBlack_10,
+                                        enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color:
+                                                    AppColors.themeTextGrey)),
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color:
+                                                    AppColors.themeTextGrey))),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
