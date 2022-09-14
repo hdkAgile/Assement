@@ -16,7 +16,7 @@ class CategorySelectionView extends StatefulWidget {
 class _CategorySelectionViewState extends State<CategorySelectionView> {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AddRaffaleController>();
+    final controller = Get.put(AddRaffaleController());
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -36,29 +36,37 @@ class _CategorySelectionViewState extends State<CategorySelectionView> {
       ),
       body: Container(
         width: double.infinity,
-        constraints: BoxConstraints(maxHeight: 216.h),
-        color: AppColors.themeLightGrey,
+        constraints: BoxConstraints(minHeight: 100.h),
+        // color: AppColors.themeLightGrey,
+        color: Colors.red,
         margin: EdgeInsets.only(top: 30),
-        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-        child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  controller.updateCategorySelection(index);
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: Obx(
-                    () => SelectionView(
-                        title:
-                            controller.categoryItems[index].category.name ?? '',
-                        isSelected: controller.categoryItems[index].isSelected),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        child: Flexible(
+          fit: FlexFit.loose,
+          child: ListView.builder(
+              shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    controller.updateCategorySelection(index);
+                  },
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(top: 16, left: 8, right: 8, bottom: 16),
+                    child: Obx(
+                      () => SelectionView(
+                          title:
+                              controller.categoryItems[index].category.name ??
+                                  '',
+                          isSelected:
+                              controller.categoryItems[index].isSelected),
+                    ),
                   ),
-                ),
-              );
-            },
-            itemCount: controller.categoryItems.length),
+                );
+              },
+              itemCount: controller.categoryItems.length),
+        ),
       ),
     );
   }

@@ -5,6 +5,6 @@ import 'package:get/get.dart';
 class FavoriteBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => FavoriteController(limit: 10, offset: 0));
+    Get.lazyPut(() => FavoriteController());
   }
 }

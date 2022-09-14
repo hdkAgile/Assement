@@ -53,6 +53,8 @@ class APIConstant {
         return '${APIConstant.preFixRaffale}/view/';
       case APIType.favouriteList:
         return '${APIConstant.preFixRaffale}/favourite_list';
+      case APIType.favourite:
+        return '${APIConstant.preFixRaffale}/favourite';
       case APIType.addRaffale:
         return '${APIConstant.preFixRaffale}/create';
       case APIType.currentUser:

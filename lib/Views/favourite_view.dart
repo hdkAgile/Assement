@@ -26,8 +26,7 @@ class _FavouriteViewState extends State<FavouriteView> {
 
   @override
   Widget build(BuildContext context) {
-    FavoriteController controller =
-        Get.put(FavoriteController(limit: 10, offset: 0));
+    FavoriteController controller = Get.find<FavoriteController>();
     void selecteTab(int index) {
       controller.selectedIndex.value = index;
     }

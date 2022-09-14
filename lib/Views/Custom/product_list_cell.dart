@@ -1,3 +1,6 @@
+import 'package:assement/Controllers/favourite_controller.dart';
+import 'package:assement/Utils/enum_all.dart';
+import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/profile_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ class ProductListCell extends StatelessWidget {
   Raffale? raffale;
 
   ProductListCell({this.raffale, Key? key}) : super(key: key);
+  FavoriteController controller = Get.find<FavoriteController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class ProductListCell extends StatelessWidget {
         onTap: () {
           Get.to(ProductDetail(
             userId: raffale?.user?.id ?? 0,
-            raffleId: raffale?.user?.id ?? 0,
+            raffleId: raffale?.id ?? 0,
           ));
         },
         child: Padding(
@@ -150,10 +154,20 @@ class ProductListCell extends StatelessWidget {
                                 style: AppTextStyle.openSans_bold_themeBlack_20,
                               ),
                               InkWell(
-                                onTap: () {},
-                                child: Image.asset(raffale?.favourite ?? false
-                                    ? AppImages.heart_Fill
-                                    : AppImages.heart),
+                                onTap: () {
+                                  if (raffale != null) {
+                                    controller.favouriteUnfavouriteRaffale(
+                                        id: raffale?.id ?? 0,
+                                        raffleFavourite:
+                                            raffale?.favourite.isFavourite ??
+                                                    false
+                                                ? RaffleFavourite.unFavourite
+                                                : RaffleFavourite.favourite,
+                                        context: context);
+                                  }
+                                },
+                                child: Image.asset(
+                                    raffale?.favourite.imagePath ?? ''),
                               )
                             ],
                           ),

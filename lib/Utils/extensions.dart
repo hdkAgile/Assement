@@ -1,3 +1,8 @@
+import 'dart:ui';
+
+import 'package:assement/Utils/constants.dart';
+import 'package:assement/Views/Custom/image_view.dart';
+
 import 'enum_all.dart';
 
 extension SignUpTypeExtention on SignUpType {
@@ -67,13 +72,41 @@ extension Condition on ConditionType {
 }
 
 extension UserTypeExtension on UserType {
-
   APIType get apiType {
-    switch(this) {
+    switch (this) {
       case UserType.current:
         return APIType.currentUser;
       case UserType.other:
         return APIType.otherUser;
+    }
+  }
+}
+
+extension FavouriteUnFavouriteExtension on RaffleFavourite {
+  int get value {
+    switch (this) {
+      case RaffleFavourite.favourite:
+        return 1;
+      case RaffleFavourite.unFavourite:
+        return 0;
+    }
+  }
+
+  String get imagePath {
+    switch (this) {
+      case RaffleFavourite.favourite:
+        return AppImages.heart_Fill;
+      case RaffleFavourite.unFavourite:
+        return AppImages.heart;
+    }
+  }
+
+  bool get isFavourite {
+    switch (this) {
+      case RaffleFavourite.favourite:
+        return true;
+      case RaffleFavourite.unFavourite:
+        return false;
     }
   }
 }

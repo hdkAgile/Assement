@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:assement/Models/DataModels/raffale_list.dart';
 
+import '../../Utils/enum_all.dart';
 import 'dashboard.dart';
 
 ProductDetailModel welcomeFromJson(String str) =>
@@ -83,11 +84,11 @@ class ProductDetailData {
   // TrackingNumber? trackingNumber;
   List<String>? images;
 
-  bool get favourite {
-    if (isFavourite == "0") {
-      return false;
+  RaffleFavourite get favourite {
+    if (isFavourite == '0') {
+      return RaffleFavourite.unFavourite;
     } else {
-      return true;
+      return RaffleFavourite.favourite;
     }
   }
 

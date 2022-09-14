@@ -1,3 +1,5 @@
+import 'package:assement/Utils/extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../Models/DataModels/User.dart';
 import '../Models/DataModels/raffale_list.dart';
@@ -15,14 +17,10 @@ class FavoriteController extends GetxController {
   RxList<Raffale> items = <Raffale>[].obs;
   RxBool isLoading = RxBool(false);
   UserData? userData;
-  int limit;
-  int offset;
 
   RxString dropDownValue = 'Active'.obs;
 
   RxList<String> dropDownItems = ['Active', 'In Active'].obs;
-
-  FavoriteController({required this.limit, required this.offset});
 
   @override
   void onInit() {
@@ -42,8 +40,8 @@ class FavoriteController extends GetxController {
     final user = SharedManager.shared.fetchUser();
     userData = user;
     Map<String, dynamic> params = {};
-    params["limit"] = limit;
-    params["offset"] = offset;
+    params["limit"] = 0;
+    params["offset"] = 10;
 
     isLoading.value = true;
     ResponseModel<RaffaleList> responseModel =
@@ -58,6 +56,24 @@ class FavoriteController extends GetxController {
     } else {
       AlertManagerController.showSnackBar(
           '', responseModel.message, Position.bottom);
+    }
+  }
+
+  void favouriteUnfavouriteRaffale(
+      {required int id,
+      required RaffleFavourite raffleFavourite,
+      required BuildContext context}) async {
+    Map<String, dynamic> params = {};
+    params['raffle_id'] = id;
+    params['is_favourite'] = raffleFavourite.value;
+
+    ResponseModel responseModel = await sharedServiceManager.createPostRequest(
+        typeOfEndPoint: APIType.favourite, params: params);
+
+    AlertManagerController.showSnackBar(
+        '', responseModel.message, Position.bottom);
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      fetchFavouriteList();
     }
   }
 }

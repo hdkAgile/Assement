@@ -15,6 +15,7 @@ enum APIType {
   logout,
   sold,
   favouriteList,
+  favourite,
   addRaffale,
   currentUser,
   otherUser,
@@ -32,3 +33,5 @@ enum URLHost { local, live, staging }
 enum ConditionType { newInPackage, lightlyUsed, used }
 
 enum UserType { current, other }
+
+enum RaffleFavourite { favourite, unFavourite }

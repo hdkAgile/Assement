@@ -1,4 +1,8 @@
 import 'package:assement/Bindings/check_out_binding.dart';
+import 'package:assement/Controllers/favourite_controller.dart';
+import 'package:assement/Models/DataModels/raffale_list.dart';
+import 'package:assement/Utils/enum_all.dart';
+import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:assement/Views/check_out_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -22,6 +26,7 @@ class ProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductDetailController productDetailController =
         Get.put(ProductDetailController(id: raffleId));
+    FavoriteController controller = Get.find<FavoriteController>();
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -135,11 +140,25 @@ class ProductDetail extends StatelessWidget {
                                   AppTextStyle.openSans_extraBold_themeBlack_22,
                             ),
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  controller.favouriteUnfavouriteRaffale(
+                                      id: productDetailController
+                                              .productDetailData.value.id ??
+                                          0,
+                                      raffleFavourite: productDetailController
+                                              .productDetailData
+                                              .value
+                                              .favourite
+                                              .isFavourite
+                                          ? RaffleFavourite.unFavourite
+                                          : RaffleFavourite.favourite,
+                                      context: context);
+                                },
                                 icon: Image.asset(productDetailController
-                                        .productDetailData.value.favourite
-                                    ? AppImages.heart_Fill
-                                    : AppImages.heart)),
+                                    .productDetailData
+                                    .value
+                                    .favourite
+                                    .imagePath)),
                           ],
                         )),
                     SizedBox(height: 10.h),

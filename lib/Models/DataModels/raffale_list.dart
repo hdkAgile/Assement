@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:assement/Utils/enum_all.dart';
+
 import 'User.dart';
 
 // To parse this JSON data, do
@@ -61,11 +63,11 @@ class Raffale {
   DateTime? createdAt;
   List<String>? images;
 
-  bool get favourite {
+  RaffleFavourite get favourite {
     if (isFavourite == '0') {
-      return false;
+      return RaffleFavourite.unFavourite;
     } else {
-      return true;
+      return RaffleFavourite.favourite;
     }
   }
 
