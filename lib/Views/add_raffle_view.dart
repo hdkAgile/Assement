@@ -221,7 +221,7 @@ class AddRaffleView extends StatelessWidget {
                           children: [
                             Obx(
                               () => Text(
-                                controller.selectedConditonType?.value.type
+                                controller.selectedConditonType.value.type
                                         .title ??
                                     AppText.condition,
                                 style:
@@ -313,38 +313,33 @@ class AddRaffleView extends StatelessWidget {
                         height: 16.h,
                       ),
                       Divider(height: 0.5, color: AppColors.themeLightGrey1),
-                      SizedBox(
-                        height: 16.h,
-                      ),
                       Container(
                           width: double.infinity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'List Value',
-                                      style: AppTextStyle
-                                          .openSans_regular_textGrey1_14,
-                                    ),
-                                    Text(
-                                      '  \$ 100',
-                                      style: AppTextStyle
-                                          .openSans_bold_themeBlack_14,
-                                    )
-                                  ],
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  'List Value',
+                                  style: AppTextStyle
+                                      .openSans_regular_textGrey1_14,
                                 ),
                               ),
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  children: [
+                                    TextField(
+                                        decoration: InputDecoration(
+                                            contentPadding: EdgeInsets.zero,
+                                            border: InputBorder.none)),
+                                  ],
+                                ),
+                              )
                             ],
                           )),
-                      SizedBox(
-                        height: 16.h,
-                      ),
                       Divider(height: 0.5, color: AppColors.themeLightGrey1),
                       SizedBox(
                         height: 16.h,

@@ -17,16 +17,19 @@ import '../Utils/constants.dart';
 import 'Custom/image_view.dart';
 
 class ProductDetail extends StatelessWidget {
-  int userId;
-  int raffleId;
-  ProductDetail({Key? key, required this.userId, required this.raffleId})
-      : super(key: key);
+  int userId = 0;
+  int raffleId = 0;
+  ProductDetail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     ProductDetailController productDetailController =
-        Get.put(ProductDetailController(id: raffleId));
+        Get.find<ProductDetailController>();
     FavoriteController controller = Get.find<FavoriteController>();
+    raffleId = Get.arguments['id'] as int;
+
+    productDetailController.id = raffleId;
+    productDetailController.fetchProductDetail();
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -139,26 +142,28 @@ class ProductDetail extends StatelessWidget {
                               style:
                                   AppTextStyle.openSans_extraBold_themeBlack_22,
                             ),
-                            IconButton(
-                                onPressed: () {
-                                  controller.favouriteUnfavouriteRaffale(
-                                      id: productDetailController
-                                              .productDetailData.value.id ??
-                                          0,
-                                      raffleFavourite: productDetailController
-                                              .productDetailData
-                                              .value
-                                              .favourite
-                                              .isFavourite
-                                          ? RaffleFavourite.unFavourite
-                                          : RaffleFavourite.favourite,
-                                      context: context);
-                                },
-                                icon: Image.asset(productDetailController
-                                    .productDetailData
-                                    .value
-                                    .favourite
-                                    .imagePath)),
+                            Obx(
+                              () => IconButton(
+                                  onPressed: () {
+                                    controller.favouriteUnfavouriteRaffale(
+                                        id: productDetailController
+                                                .productDetailData.value.id ??
+                                            0,
+                                        raffleFavourite: productDetailController
+                                                .productDetailData
+                                                .value
+                                                .favourite
+                                                .isFavourite
+                                            ? RaffleFavourite.unFavourite
+                                            : RaffleFavourite.favourite,
+                                        context: context);
+                                  },
+                                  icon: Image.asset(productDetailController
+                                      .productDetailData
+                                      .value
+                                      .favourite
+                                      .imagePath)),
+                            ),
                           ],
                         )),
                     SizedBox(height: 10.h),

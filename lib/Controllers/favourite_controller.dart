@@ -40,8 +40,8 @@ class FavoriteController extends GetxController {
     final user = SharedManager.shared.fetchUser();
     userData = user;
     Map<String, dynamic> params = {};
-    params["limit"] = 0;
-    params["offset"] = 10;
+    params["limit"] = 10;
+    params["offset"] = 0;
 
     isLoading.value = true;
     ResponseModel<RaffaleList> responseModel =

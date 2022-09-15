@@ -170,6 +170,7 @@ class AddCardView extends StatelessWidget {
                           final value = await controller.addCard();
                           if (value) {
                             controller.getCardList(context, false);
+                            Get.back();
                           }
                         }
                       : null,

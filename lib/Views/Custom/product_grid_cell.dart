@@ -1,3 +1,4 @@
+import 'package:assement/Bindings/favorite_binding.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,10 +18,8 @@ class ProductGridCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(ProductDetail(
-          userId: raffale?.user?.id ?? 0,
-          raffleId: raffale?.id ?? 0,
-        ));
+        Get.toNamed(ScreenRoutesConstant.productDetail,
+            arguments: {'id': raffale?.id});
       },
       child: Container(
         decoration: BoxDecoration(

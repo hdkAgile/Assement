@@ -12,19 +12,16 @@ import 'alert_managar_controller.dart';
 
 class ProductDetailController extends GetxController {
   RxBool isLoading = RxBool(false);
-  int id;
+  int id = 0;
   Rx<ProductDetailData> productDetailData = ProductDetailData().obs;
   RxList<Widget> imageSiders = <Widget>[].obs;
   RxInt pageIndex = 0.obs;
 
   double indicatorWidth = MediaQuery.of(Get.context!).size.width / 2;
 
-  ProductDetailController({required this.id});
-
   @override
   void onInit() {
     super.onInit();
-    fetchProductDetail();
   }
 
   void fetchProductDetail() async {
@@ -55,10 +52,7 @@ class ProductDetailController extends GetxController {
         Container(
           height: 169.h,
           width: 323.w,
-          decoration: BoxDecoration(
-              border: Border.all(color: AppColors.themeLightGrey),
-              borderRadius: BorderRadius.circular(15.r),
-              boxShadow: kElevationToShadow[3]),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r)),
           child: Stack(
             children: [
               ClipRRect(

@@ -17,6 +17,7 @@ extension PositionExtention on Position {
 
 class AlertManagerController {
   static void showSnackBar(String title, String message, Position position) {
+    Get.closeAllSnackbars();
     Get.showSnackbar(GetSnackBar(
         maxWidth: double.infinity,
         messageText:

@@ -75,9 +75,7 @@ class HomeController extends GetxController {
       imageSiders.add(Container(
         height: 169.h,
         width: 323.w,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.r),
-            boxShadow: kElevationToShadow[8]),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15.r),
           child: ImageView(

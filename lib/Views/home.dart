@@ -198,13 +198,12 @@ class Home extends StatelessWidget {
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 color:
-                                                    AppColors.themeLightGrey),
-                                            boxShadow: kElevationToShadow[6]),
+                                                    AppColors.themeLightGrey)),
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(15.r),
                                           child: ImageView(
-                                            height: 145.h,
+                                            height: 145.w,
                                             width: 145.w,
                                             image: controller.winners[index]
                                                     .images?[0] ??

@@ -25,6 +25,7 @@ class AppColors {
   static Color themeDiverGrey = const Color(0xFFD8D8D8);
   static Color themeTabColor = const Color(0XFFF2F2F2);
   static Color themeDarkBackgroundGrey = const Color(0XFF707070);
+  static Color themeBorderGreyColor = const Color(0XFF00000029);
 }
 
 //Images
@@ -126,6 +127,7 @@ class ScreenRoutesConstant {
   static const String signUpAccount = "/signUpAccount";
   static const String loginAccount = "/loginAccount";
   static const String homeTab = "/homeTab";
+  static const String productDetail = "/productDetail";
 
 // profile related screens
   static const String profileScreen = "/profileScreen";

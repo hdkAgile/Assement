@@ -26,7 +26,7 @@ class _FavouriteViewState extends State<FavouriteView> {
 
   @override
   Widget build(BuildContext context) {
-    FavoriteController controller = Get.find<FavoriteController>();
+    FavoriteController controller = Get.put(FavoriteController());
     void selecteTab(int index) {
       controller.selectedIndex.value = index;
     }
@@ -183,41 +183,40 @@ class _FavouriteViewState extends State<FavouriteView> {
                                   })),
                         ),
                         SizedBox(height: 8.h),
-                        if (controller.selectedIndex.value == 0)
-                          GridView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: controller.items.length,
-                              shrinkWrap: true,
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 144 / 208,
-                                crossAxisSpacing: 25.w,
-                                crossAxisCount: 2,
-                              ),
-                              itemBuilder: (context, index) {
-                                return Center(
-                                    child: Container(
-                                  margin: EdgeInsets.only(
-                                      top: 8, left: 8, bottom: 8, right: 8),
-                                  padding: EdgeInsets.only(top: 8, bottom: 8),
-                                  child: ProductGridCell(
-                                      raffale: controller.items[index]),
-                                ));
-                              })
-                        else
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: controller.items.length,
-                              itemBuilder: (context, index) {
-                                return ProductListCell(
-                                    raffale: controller.items[index]);
-                              },
-                            ),
-                          )
+                        controller.selectedIndex.value == 0
+                            ? GridView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: controller.items.length,
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 144 / 208,
+                                  crossAxisSpacing: 25.w,
+                                  crossAxisCount: 2,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return Center(
+                                      child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: 8, left: 8, bottom: 8, right: 8),
+                                    padding: EdgeInsets.only(top: 8, bottom: 8),
+                                    child: ProductGridCell(
+                                        raffale: controller.items[index]),
+                                  ));
+                                })
+                            : Container(
+                                padding: EdgeInsets.all(8.0),
+                                child: ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: controller.items.length,
+                                  itemBuilder: (context, index) {
+                                    return ProductListCell(
+                                        raffale: controller.items[index]);
+                                  },
+                                ),
+                              )
                       ],
                     ),
                   ),
