@@ -52,55 +52,56 @@ class _CardListViewState extends State<CardListView> {
           Obx(
             () => Visibility(
               visible: controller.cards.isNotEmpty,
-              child: ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: controller.cards.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () async {
-                        final value =
-                            await controller.updateDefaultCard(index, context);
-                        if (value) {
-                          Get.to(AddShippingAddressView());
-                        }
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 20),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 0),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.grey.shade100, width: 2.0),
+              child: SingleChildScrollView(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.cards.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () async {
+                          final value = await controller.updateDefaultCard(
+                              index, context);
+                          if (value) {
+                            Get.to(AddShippingAddressView());
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(top: 20),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 25, vertical: 0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.grey.shade100, width: 2.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '..... ${controller.cards[index].last4}',
+                                style:
+                                    AppTextStyle.openSans_regular_themeBlack_14,
+                              ),
+                              Row(
+                                children: [
+                                  Center(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          controller.deleteCard(index, context);
+                                        },
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: AppColors.themeBlack,
+                                        )),
+                                  ),
+                                  Image.asset(AppImages.blackArrowRight)
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '..... ${controller.cards[index].last4}',
-                              style:
-                                  AppTextStyle.openSans_regular_themeBlack_14,
-                            ),
-                            Row(
-                              children: [
-                                Center(
-                                  child: IconButton(
-                                      onPressed: () {
-                                        controller.deleteCard(index, context);
-                                      },
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: AppColors.themeBlack,
-                                      )),
-                                ),
-                                Image.asset(AppImages.blackArrowRight)
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+              ),
             ),
           ),
           GestureDetector(

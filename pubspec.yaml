@@ -47,6 +47,7 @@ dependencies:
   tuple: ^2.0.0
   connectivity_plus: ^2.3.5
   credit_card_validator: ^2.0.1
+  google_maps_flutter: ^2.2.0
 
 dev_dependencies:
   flutter_test:

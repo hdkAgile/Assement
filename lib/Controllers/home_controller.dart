@@ -35,8 +35,9 @@ class HomeController extends GetxController {
   }
 
   void fetchDashboard() async {
-    DashboardAPIModel apiModel = DashboardAPIModel(userId: sharedUser.user.id);
-    final params = apiModel.toJson();
+    Map<String, dynamic> params = {};
+    params['user_id'] = user.id;
+
     isLoading.value = true;
     ResponseModel<Dashboard> responseModel = await sharedServiceManager
         .createPostRequest(typeOfEndPoint: APIType.dashboard, params: params);
@@ -72,16 +73,17 @@ class HomeController extends GetxController {
 
   void setupImageSiders() {
     for (int i = 0; i < banners.length; i++) {
-      imageSiders.add(Container(
-        height: 169.h,
-        width: 323.w,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r)),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(15.r),
-          child: ImageView(
-            image: banners[i].image ?? '',
-            imageType: ImageType.networkImage,
-            fit: BoxFit.cover,
+      imageSiders.add(AspectRatio(
+        aspectRatio: 323 / 169,
+        child: Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15.r),
+            child: ImageView(
+              image: banners[i].image ?? '',
+              imageType: ImageType.networkImage,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ));

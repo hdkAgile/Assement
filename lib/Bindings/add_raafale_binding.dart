@@ -5,6 +5,6 @@ import 'package:get/get.dart';
 class AddRaffaleBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AddRaffaleController());
+    Get.lazyPut(() => AddRaffaleController(), fenix: false);
   }
 }

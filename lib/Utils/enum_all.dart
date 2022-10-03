@@ -25,7 +25,13 @@ enum APIType {
   getCardList,
   deleteCard,
   addCard,
-  updateCard
+  updateCard,
+  notificationList,
+  getAddress,
+  addAddress,
+  getWalletAmount,
+  getWalletHistory,
+  addWalletAmount
 }
 
 enum URLHost { local, live, staging }
@@ -35,3 +41,5 @@ enum ConditionType { newInPackage, lightlyUsed, used }
 enum UserType { current, other }
 
 enum RaffleFavourite { favourite, unFavourite }
+
+enum NotificationType { chat, winner, ticketPurchased }

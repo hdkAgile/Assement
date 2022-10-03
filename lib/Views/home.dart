@@ -116,7 +116,7 @@ class Home extends StatelessWidget {
                                   items: controller.imageSiders,
                                   carouselController: CarouselController(),
                                   options: CarouselOptions(
-                                      viewportFraction: 0.85,
+                                      viewportFraction: 0.83,
                                       enlargeCenterPage: true,
                                       enableInfiniteScroll: false,
                                       scrollDirection: Axis.horizontal,
@@ -275,7 +275,7 @@ class Home extends StatelessWidget {
                                                 top: 8,
                                                 bottom: 8),
                                             child: AspectRatio(
-                                              aspectRatio: 144 / 208,
+                                              aspectRatio: 144.w / 208.h,
                                               child: ProductGridCell(
                                                   raffale: controller.endingSoon
                                                               .value !=
@@ -345,7 +345,7 @@ class Home extends StatelessWidget {
                                               top: 8,
                                               bottom: 8),
                                           child: AspectRatio(
-                                            aspectRatio: 144 / 208,
+                                            aspectRatio: 144.w / 208.h,
                                             child: ProductGridCell(
                                                 raffale: controller
                                                             .latestRaffles

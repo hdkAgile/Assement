@@ -54,7 +54,7 @@ class CheckOutController extends GetxController {
 
     if (productDetailData.quantity != null &&
         productDetailData.soldTicket != null) {
-      return productDetailData.quantity! - productDetailData.soldTicket! ?? 0;
+      return productDetailData.quantity! - productDetailData.soldTicket!;
     }
     return 0;
   }
@@ -81,7 +81,7 @@ class CheckOutController extends GetxController {
     totalTickets.value--;
     if (totalTickets.value < 1) {
       totalTickets.value = 1;
-    }
+    } else {}
     _calculateTotal();
   }
 

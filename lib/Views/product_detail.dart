@@ -89,7 +89,7 @@ class ProductDetail extends StatelessWidget {
                             items: productDetailController.imageSiders,
                             carouselController: CarouselController(),
                             options: CarouselOptions(
-                                viewportFraction: 0.85,
+                                viewportFraction: 0.83,
                                 aspectRatio: 2.0,
                                 enlargeCenterPage: true,
                                 enableInfiniteScroll: false,

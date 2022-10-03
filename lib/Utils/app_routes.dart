@@ -1,7 +1,9 @@
+import 'package:assement/Bindings/add_raafale_binding.dart';
 import 'package:assement/Bindings/favorite_binding.dart';
 import 'package:assement/Bindings/home_binding.dart';
 import 'package:assement/Bindings/home_tab_binding.dart';
 import 'package:assement/Bindings/login_binding.dart';
+import 'package:assement/Bindings/message_notification_binding.dart';
 import 'package:assement/Bindings/product_detail_binding.dart';
 import 'package:assement/Bindings/search_binding.dart';
 import 'package:assement/Bindings/signUp_binding.dart';
@@ -29,6 +31,7 @@ class AppRoutes {
           HomeTabBinding(),
           HomeBinding(),
           SearchBinding(),
+          MessageNotificationBinding(),
           FavoriteBinding(),
         ]),
     GetPage(

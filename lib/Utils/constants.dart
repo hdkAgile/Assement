@@ -55,7 +55,7 @@ class AppImages {
   static String closeWhite = '${imgPath}close_white.png';
   static String contactUs = '${imgPath}contactus.png';
   static String doneImage = '${imgPath}done_image.png';
-  static String elipseBack = '${imgPath}elipse_back.png';
+  static String elipseBlack = '${imgPath}elipse_back.png';
   static String elipseGreen = '${imgPath}elipse_green.png';
   static String email = '${imgPath}email.png';
   static String endingSoon1 = '${imgPath}ending_soon_image_1.png';
@@ -266,6 +266,12 @@ class AppTextStyle {
       letterSpacing: 1.2,
       color: AppColors.themeTextGrey);
 
+  static TextStyle openSans_regular_themeTextGrey_8 = TextStyle(
+      fontFamily: AppFonts.openSansRegular,
+      fontSize: 8,
+      letterSpacing: 0.8,
+      color: AppColors.themeTextGrey);
+
   static TextStyle openSans_regular_themeTextGrey_14 = TextStyle(
       fontFamily: AppFonts.openSansRegular,
       fontSize: 14,
@@ -305,6 +311,12 @@ class AppTextStyle {
       fontSize: 26,
       color: AppColors.themeBlack);
 
+  static TextStyle openSans_bold_themeBlack_51 = TextStyle(
+      fontFamily: AppFonts.openSansBold,
+      fontSize: 51,
+      letterSpacing: 5.1,
+      color: AppColors.themeBlack);
+
   static TextStyle openSans_regular_themeBlack_12 = TextStyle(
       fontFamily: AppFonts.openSansRegular,
       fontSize: 12,
@@ -315,6 +327,12 @@ class AppTextStyle {
       fontFamily: AppFonts.openSansBold,
       fontSize: 12,
       letterSpacing: 1.2,
+      color: AppColors.themeBlack);
+
+  static TextStyle openSans_bold_themeBlack_21 = TextStyle(
+      fontFamily: AppFonts.openSansBold,
+      fontSize: 21,
+      letterSpacing: 2.1,
       color: AppColors.themeBlack);
 
   static TextStyle openSans_bold_themeBlack_29 = TextStyle(

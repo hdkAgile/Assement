@@ -19,7 +19,7 @@ import 'add_raafle_detail_view.dart';
 class AddRaffleView extends StatelessWidget {
   AddRaffleView({Key? key}) : super(key: key);
 
-  AddRaffaleController controller = Get.put(AddRaffaleController());
+  AddRaffaleController controller = Get.find<AddRaffaleController>();
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/Custom/product_grid_cell.dart';
 import 'package:assement/Views/Custom/product_list_cell.dart';
 import 'package:assement/Views/user_profile_view.dart';
@@ -25,8 +26,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
-    SearchController searchController =
-        Get.put(SearchController(limit: 10, offset: 1));
+    SearchController searchController = Get.find<SearchController>();
 
     void selecteTab(int index) {
       widget.selectedIndex = index;
@@ -65,6 +65,11 @@ class _SearchState extends State<Search> {
                             hintText: AppText.searchText,
                             hintStyle:
                                 AppTextStyle.openSans_semibold_textGrey_14),
+                        onChanged: (value) {
+                          Future.delayed(Duration(seconds: 1), () {
+                            searchController.fetchRaffleList(search: value);
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -170,7 +175,7 @@ class _SearchState extends State<Search> {
                               shrinkWrap: true,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 144 / 208,
+                                childAspectRatio: 144.w / 208.h,
                                 crossAxisSpacing: 25.w,
                                 crossAxisCount: 2,
                               ),

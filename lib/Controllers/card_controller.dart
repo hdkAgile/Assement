@@ -51,14 +51,12 @@ class CardController extends GetxController {
     if (selectedCard.id != null) {
       params['card_id'] = selectedCard.id;
     }
-    AlertManagerController.showLoaderDialog(context);
+
     ResponseModel responseModel = await sharedServiceManager.createPostRequest(
         typeOfEndPoint: APIType.deleteCard, params: params);
-    AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       cards.removeAt(index);
-      cards.refresh();
     }
     AlertManagerController.showSnackBar(
         '', responseModel.message, Position.bottom);
@@ -81,7 +79,7 @@ class CardController extends GetxController {
     return items.join('/');
   }
 
-  Future<bool> addCard() async {
+  Future addCard() async {
     Map<String, dynamic> params = {};
 
     params['number'] = finalCardNumber;
@@ -94,13 +92,12 @@ class CardController extends GetxController {
     ResponseModel<Cards> responseModel = await sharedServiceManager
         .createPostRequest(typeOfEndPoint: APIType.addCard, params: params);
     AlertManagerController.hideLoaderDialog();
-    AlertManagerController.showSnackBar(
-        '', responseModel.message, Position.bottom);
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
-      return true;
+      Get.back();
     } else {
-      return false;
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
     }
   }
 

@@ -1,7 +1,10 @@
+import 'package:assement/Models/user_address.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../Models/DataModels/app_user.dart';
+import '../Models/DataModels/product_detail_models.dart';
 import '../Models/DataModels/raffale_list.dart';
 import '../Models/DataModels/response_model.dart';
 import '../Models/DataModels/user_reviews.dart';
@@ -25,6 +28,9 @@ class ProfileController extends GetxController {
   RxList<ReviewList> userReviewList = <ReviewList>[].obs;
   String _deviceId = '';
   int id = 0;
+  Rx<LatLng> latLng = Rx(LatLng(21.6356704, 69.5967292));
+
+  Rxn<Address> address = Rxn(null);
 
   Rxn<SingleUser>? currentUser = Rxn(null);
 
@@ -38,6 +44,7 @@ class ProfileController extends GetxController {
   void onInit() {
     super.onInit();
     _fetchDeviceID();
+    // getAddress();
   }
 
   void _fetchDeviceID() async {
@@ -102,11 +109,93 @@ class ProfileController extends GetxController {
     }
   }
 
+  Future<void> getAddress() async {
+    ResponseModel<Address> responseModel = await sharedServiceManager
+        .createGetRequest(typeOfEndPoint: APIType.getAddress);
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      print(responseModel);
+      address.value = responseModel.data;
+    } else {
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
+    }
+  }
+
+  Future<bool> updateAddress() async {
+    Map<String, dynamic> params = {};
+
+    if (address.value?.fullName != null) {
+      params['full_name'] = address.value?.fullName;
+    }
+
+    if (address.value?.street1 != null) {
+      params['street_1'] = address.value?.street1;
+    }
+
+    if (address.value?.street2 != null) {
+      params['street_2'] = address.value?.street2;
+    }
+
+    if (address.value?.city != null) {
+      params['city'] = address.value?.city;
+    }
+
+    if (address.value?.state != null) {
+      params['state'] = address.value?.state;
+    }
+
+    if (address.value?.zipCode != null) {
+      params['zip_code'] = address.value?.zipCode;
+    }
+
+    if (address.value?.billingFullName != null) {
+      params['billing_full_name'] = address.value?.billingFullName;
+    }
+
+    if (address.value?.billingStreet1 != null) {
+      params['billing_street_1'] = address.value?.billingStreet1;
+    }
+
+    if (address.value?.billingStreet2 != null) {
+      params['billing_street_2'] = address.value?.billingStreet2;
+    }
+
+    if (address.value?.billingCity != null) {
+      params['billing_city'] = address.value?.billingCity;
+    }
+
+    if (address.value?.billingState != null) {
+      params['billing_state'] = address.value?.billingState;
+    }
+
+    if (address.value?.billingZipCode != null) {
+      params['billing_zip_code'] = address.value?.billingZipCode;
+    }
+
+    params['latitude'] = latLng.value.latitude;
+    params['longitude'] = latLng.value.longitude;
+
+    ResponseModel<void> responseModel = await sharedServiceManager
+        .createPostRequest(typeOfEndPoint: APIType.addAddress, params: params);
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      print(responseModel);
+      return true;
+    } else {
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
+      return false;
+    }
+  }
+
   void logout() async {
     Map<String, dynamic> params = {};
 
     if (_deviceId.isNotEmpty) {
       params['device_id'] = _deviceId;
+    } else {
+      return;
     }
 
     AlertManagerController.showLoaderDialog(Get.context!);

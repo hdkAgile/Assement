@@ -1,9 +1,7 @@
-import 'package:assement/Bindings/favorite_binding.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
 import '../../Models/DataModels/raffale_list.dart';
 import '../../Utils/constants.dart';
 import '../product_detail.dart';

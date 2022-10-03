@@ -41,7 +41,7 @@ class AddRaffaleController extends GetxController {
       isSelected: false,
       category: Banners(id: 0, name: '', image: '', state: '', raffleId: 0)));
 
-  var items = <ConditionSelectionModel>[].obs;
+  RxList<ConditionSelectionModel> items = <ConditionSelectionModel>[].obs;
   var categoryItems = <CategorySelectionModel>[].obs;
   RxList<Banners> categories = <Banners>[].obs;
   RxList<PriceList> priceList = <PriceList>[].obs;
@@ -160,7 +160,7 @@ class AddRaffaleController extends GetxController {
     params['value'] = productValue.value;
     params['price'] = '5';
     params['earning'] = 9.24;
-    params['condition'] = selectedConditonType?.value.type.value;
+    params['condition'] = selectedConditonType.value.type.value;
     params['ticket_price_id'] = 1;
 
     if (decribeItem.value.isNotEmpty) params['details'] = decribeItem;
@@ -196,65 +196,66 @@ class AddRaffaleController extends GetxController {
   void setupImageSiders() {
     for (int i = 0; i < images.length; i++) {
       imageSiders.add(
-        Container(
-          height: 169.h,
-          width: 323.w,
-          decoration: BoxDecoration(
-              border: Border.all(color: AppColors.themeLightGrey),
-              borderRadius: BorderRadius.circular(15.r),
-              boxShadow: kElevationToShadow[3]),
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.r),
-                child: AspectRatio(
-                  aspectRatio: 323 / 169,
-                  child: ImageView(
-                    image: images[i].path,
-                    imageType: ImageType.file,
-                    fit: BoxFit.cover,
+        AspectRatio(
+          aspectRatio: 323.w / 169.h,
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: AppColors.themeLightGrey),
+                borderRadius: BorderRadius.circular(15.r)),
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15.r),
+                  child: AspectRatio(
+                    aspectRatio: 323.w / 169.h,
+                    child: ImageView(
+                      image: images[i].path,
+                      imageType: ImageType.file,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: Container(
-                    width: 27.w,
-                    height: 64.h,
-                    decoration: BoxDecoration(
-                        color: AppColors.themeWhite,
-                        border: Border.all(color: AppColors.themeBorderGrey),
-                        borderRadius: BorderRadius.circular(15.r),
-                        boxShadow: [
-                          BoxShadow(
-                              color: AppColors.themeBorderGrey,
-                              blurRadius: 6.sp,
-                              spreadRadius: 3.r)
-                        ]),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "23",
-                            style: AppTextStyle.openSans_bold_themeBlack_10,
-                          ),
-                          Divider(height: 0.0, color: AppColors.themeDiverGrey),
-                          Text(
-                            "23",
-                            style: AppTextStyle.openSans_bold_themeBlack_10,
-                          ),
-                          Image.asset(
-                            AppImages.profileTabActiveIcon,
-                            height: 13.h,
-                            width: 15.w,
-                          )
-                        ],
+                Positioned(
+                    bottom: 8,
+                    right: 8,
+                    child: Container(
+                      width: 27.w,
+                      height: 64.h,
+                      decoration: BoxDecoration(
+                          color: AppColors.themeWhite,
+                          border: Border.all(color: AppColors.themeBorderGrey),
+                          borderRadius: BorderRadius.circular(15.r),
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppColors.themeBorderGrey,
+                                blurRadius: 6.sp,
+                                spreadRadius: 3.r)
+                          ]),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "23",
+                              style: AppTextStyle.openSans_bold_themeBlack_10,
+                            ),
+                            Divider(
+                                height: 0.0, color: AppColors.themeDiverGrey),
+                            Text(
+                              "23",
+                              style: AppTextStyle.openSans_bold_themeBlack_10,
+                            ),
+                            Image.asset(
+                              AppImages.profileTabActiveIcon,
+                              height: 13.h,
+                              width: 15.w,
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  )),
-            ],
+                    )),
+              ],
+            ),
           ),
         ),
       );

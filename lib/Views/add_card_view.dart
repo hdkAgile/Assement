@@ -167,11 +167,7 @@ class AddCardView extends StatelessWidget {
                   isEnable: controller.isAllVaildEntries.value,
                   onPressed: controller.isAllVaildEntries.value
                       ? () async {
-                          final value = await controller.addCard();
-                          if (value) {
-                            controller.getCardList(context, false);
-                            Get.back();
-                          }
+                          await controller.addCard();
                         }
                       : null,
                 ),

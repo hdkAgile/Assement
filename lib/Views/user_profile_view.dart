@@ -1,6 +1,9 @@
+import 'package:assement/Bindings/wallet_binding.dart';
 import 'package:assement/Utils/constants.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Views/Custom/app_button.dart';
+import 'package:assement/Views/location.dart';
+import 'package:assement/Views/my_wallet_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +22,7 @@ class CurrentUserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.getUserProfile();
+    controller.getAddress();
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -123,28 +127,34 @@ class CurrentUserProfile extends StatelessWidget {
                 margin: EdgeInsets.only(top: 40),
                 padding: EdgeInsets.all(16.0),
                 color: AppColors.themeLightGrey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ImageView(
-                            image: AppImages.myWallet,
-                            imageType: ImageType.asset),
-                        SizedBox(
-                          width: 13.w,
-                        ),
-                        Text("My Wallet",
-                            style: AppTextStyle.openSans_regular_themeBlack_14)
-                      ],
-                    ),
-                    ImageView(
-                      image: AppImages.blackArrowRight,
-                      imageType: ImageType.asset,
-                      color: AppColors.themeTextGrey,
-                    )
-                  ],
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => MyWalletView(), binding: WalletBinding());
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ImageView(
+                              image: AppImages.myWallet,
+                              imageType: ImageType.asset),
+                          SizedBox(
+                            width: 13.w,
+                          ),
+                          Text("My Wallet",
+                              style:
+                                  AppTextStyle.openSans_regular_themeBlack_14)
+                        ],
+                      ),
+                      ImageView(
+                        image: AppImages.blackArrowRight,
+                        imageType: ImageType.asset,
+                        color: AppColors.themeTextGrey,
+                      )
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -263,39 +273,46 @@ class CurrentUserProfile extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(16.0),
                 color: AppColors.themeLightGrey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ImageView(
-                            image: AppImages.location,
-                            imageType: ImageType.asset),
-                        SizedBox(
-                          width: 13.w,
-                        ),
-                        Text("Location",
-                            style: AppTextStyle.openSans_regular_themeBlack_14)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Location',
-                          style: AppTextStyle.openSans_regular_themeDarkGrey_14,
-                        ),
-                        SizedBox(
-                          width: 20.h,
-                        ),
-                        ImageView(
-                          image: AppImages.blackArrowRight,
-                          imageType: ImageType.asset,
-                          color: AppColors.themeTextGrey,
-                        ),
-                      ],
-                    )
-                  ],
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => LocationView());
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ImageView(
+                              image: AppImages.location,
+                              imageType: ImageType.asset),
+                          SizedBox(
+                            width: 13.w,
+                          ),
+                          Text("Location",
+                              style:
+                                  AppTextStyle.openSans_regular_themeBlack_14)
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Location',
+                            style:
+                                AppTextStyle.openSans_regular_themeDarkGrey_14,
+                          ),
+                          SizedBox(
+                            width: 20.h,
+                          ),
+                          ImageView(
+                            image: AppImages.blackArrowRight,
+                            imageType: ImageType.asset,
+                            color: AppColors.themeTextGrey,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Container(

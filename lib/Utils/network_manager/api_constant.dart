@@ -30,6 +30,7 @@ class APIConstant {
   static String preFixRaffale = 'raffle';
   static String preFixUser = 'user-profile';
   static String preFixTicket = 'ticket_price';
+  static String preFixWallet = 'wallet';
 
   static String getValue(APIType type) {
     switch (type) {
@@ -75,6 +76,18 @@ class APIConstant {
         return 'cards/create';
       case APIType.updateCard:
         return 'cards/default';
+      case APIType.notificationList:
+        return 'notification/getNotificationSetting';
+      case APIType.getAddress:
+        return 'address/get';
+      case APIType.addAddress:
+        return 'address/add_update';
+      case APIType.getWalletAmount:
+        return '${APIConstant.preFixWallet}/amount';
+      case APIType.getWalletHistory:
+        return '${APIConstant.preFixWallet}/history';
+      case APIType.addWalletAmount:
+        return '${APIConstant.preFixWallet}/add';
     }
   }
 

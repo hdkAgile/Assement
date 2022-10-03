@@ -1,3 +1,4 @@
+import 'package:assement/Utils/constants.dart';
 import 'package:get/get.dart';
 import '../Models/DataModels/app_user.dart';
 import '../Models/DataModels/raffale_list.dart';
@@ -11,24 +12,7 @@ import 'alert_managar_controller.dart';
 class SearchController extends GetxController {
   RxList<Raffale> items = <Raffale>[].obs;
   SingleUser user = sharedUser.user;
-  String? search;
-  String? price;
-  int offset;
-  int limit;
-  int? categoryId;
-  int? ticketPriceId;
-  String? createdAt;
-  String? sort;
-
-  SearchController(
-      {this.search,
-      this.price,
-      this.categoryId,
-      this.createdAt,
-      this.sort,
-      this.ticketPriceId,
-      required this.limit,
-      required this.offset});
+  int page = 0;
 
   RxBool isLoading = RxBool(false);
 
@@ -38,10 +22,15 @@ class SearchController extends GetxController {
     fetchRaffleList();
   }
 
-  fetchRaffleList() async {
-    RaffleAPIModel apiModel = RaffleAPIModel(limit: limit, offset: offset);
+  fetchRaffleList({String? search}) async {
+    Map<String, dynamic> params = {};
 
-    final params = apiModel.toJson();
+    if (search != null) {
+      params['search'] = search;
+    }
+
+    params['limit'] = AppConstant.limit;
+    params['offset'] = page;
 
     isLoading.value = true;
     ResponseModel<RaffaleList> responseModel = await sharedServiceManager

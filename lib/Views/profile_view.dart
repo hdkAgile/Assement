@@ -19,11 +19,9 @@ class ProfileView extends StatelessWidget {
   ProfileView({Key? key, required this.id}) : super(key: key);
 
   Widget buildSegment(String text, TextStyle style) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Text(text, style: style),
-      ),
+    return Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.r)),
+      child: Text(text, style: style),
     );
   }
 
@@ -206,9 +204,12 @@ class ProfileView extends StatelessWidget {
                       padding: EdgeInsets.only(left: 5, right: 5),
                       child: Container(
                         width: double.infinity,
-                        padding: EdgeInsets.only(left: 8, right: 8),
+                        decoration: BoxDecoration(
+                            color: AppColors.themeTabColor,
+                            borderRadius: BorderRadius.circular(8.r)),
+                        padding: EdgeInsets.all(5),
                         child: CupertinoSegmentedControl(
-                            padding: EdgeInsets.all(8.0),
+                            padding: EdgeInsets.zero,
                             borderColor: AppColors.themeTabColor,
                             groupValue: controller.groupValue.value,
                             unselectedColor: AppColors.themeTabColor,

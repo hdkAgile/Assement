@@ -1,7 +1,9 @@
+import 'package:assement/Models/DataModels/notification_list.dart';
 import 'package:assement/Models/DataModels/price_list.dart';
 import 'package:assement/Models/DataModels/product_detail_models.dart';
 import 'package:assement/Models/DataModels/raffale_list.dart';
 import 'package:assement/Models/DataModels/user_raffle.dart';
+import 'package:assement/Models/DataModels/wallet.dart';
 import 'package:flutter/foundation.dart';
 
 import 'card.dart';
@@ -37,6 +39,10 @@ class ResponseModel<T> {
       return RaffaleList.fromJson(json) as T;
     } else if (T == ProductDetailData) {
       return ProductDetailData.fromJson(json) as T;
+    } else if (T == Wallet) {
+      return Wallet.fromJson(json) as T;
+    } else if (T == Address) {
+      return Address.fromJson(json) as T;
     } else if (T == List<PriceList>) {
       List<PriceList> temp = [];
       if (json != null) {
@@ -69,6 +75,16 @@ class ResponseModel<T> {
       }
     } else if (T == Cards) {
       return Cards.fromJson(json) as T;
+    } else if (T == List<NotificationList>) {
+      List<NotificationList> temp = [];
+      if (json != null) {
+        for (int i = 0; i < (json.length ?? 0); i++) {
+          temp.add(NotificationList.fromJson(json[i]));
+        }
+        return temp as T;
+      } else {
+        return json;
+      }
     } else {
       throw Exception('Unknown class');
     }

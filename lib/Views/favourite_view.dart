@@ -18,15 +18,17 @@ class FavouriteView extends StatefulWidget {
 class _FavouriteViewState extends State<FavouriteView> {
   Widget buildSegment(String text, TextStyle style) {
     return Container(
-      child: Text(text, style: style),
-    );
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.r)),
+        height: 30.h,
+        child: Center(child: Text(text, style: style)));
   }
 
   List<String> items = ['Active', 'Inactive'];
 
   @override
   Widget build(BuildContext context) {
-    FavoriteController controller = Get.put(FavoriteController());
+    FavoriteController controller = Get.find<FavoriteController>();
+
     void selecteTab(int index) {
       controller.selectedIndex.value = index;
     }
@@ -100,11 +102,13 @@ class _FavouriteViewState extends State<FavouriteView> {
                   padding: EdgeInsets.only(left: 0, right: 0, bottom: 16),
                   child: Container(
                     width: double.infinity,
-                    // padding:
-                    //     EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    decoration: BoxDecoration(
+                        color: AppColors.themeTabColor,
+                        borderRadius: BorderRadius.circular(8.r)),
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
+                    padding: EdgeInsets.all(5),
                     child: CupertinoSegmentedControl(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 10.h),
+                        padding: EdgeInsets.zero,
                         borderColor: AppColors.themeTabColor,
                         groupValue: controller.groupValue.value,
                         unselectedColor: AppColors.themeTabColor,

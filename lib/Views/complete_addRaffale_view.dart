@@ -1,3 +1,4 @@
+import 'package:assement/Controllers/home_tab_controller.dart';
 import 'package:assement/Utils/constants.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:assement/Views/Custom/image_view.dart';
@@ -88,7 +89,9 @@ class CompleteAddRaaflale extends StatelessWidget {
                       style: AppTextStyle.openSans_bold_themeBlack_18,
                       isEnable: false,
                       onPressed: () {
-                        Get.back();
+                        HomeTabController controller =
+                            Get.find<HomeTabController>();
+                        controller.onItemSelected(2);
                       })
                 ],
               ),
