@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:assement/Utils/constants.dart';
+import 'package:assement/Utils/network_manager/api_constant.dart';
 import 'package:assement/Views/Custom/image_view.dart';
 
 import 'enum_all.dart';
@@ -29,7 +30,9 @@ extension URLHostExtension on URLHost {
   String get baseURL {
     switch (this) {
       case URLHost.local:
-        return 'http://202.131.117.92:7066';
+        return APIConstant.localBaseURL;
+      case URLHost.live:
+        return '';
       default:
         return '';
     }

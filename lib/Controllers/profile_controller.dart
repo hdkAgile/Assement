@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:assement/Models/user_address.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +18,7 @@ import '../Utils/network_manager/remote_services.dart';
 import '../Views/welcome.dart';
 import 'SharedManager.dart';
 import 'alert_managar_controller.dart';
+import 'package:geocoding/geocoding.dart';
 
 class ProfileController extends GetxController {
   int offset;
@@ -29,8 +32,11 @@ class ProfileController extends GetxController {
   String _deviceId = '';
   int id = 0;
   Rx<LatLng> latLng = Rx(LatLng(21.6356704, 69.5967292));
+  RxString city = ''.obs;
 
-  Rxn<Address> address = Rxn(null);
+  Rxn<LocAddress> address = Rxn(null);
+
+  RxSet<Marker> markers = RxSet();
 
   Rxn<SingleUser>? currentUser = Rxn(null);
 
@@ -110,19 +116,42 @@ class ProfileController extends GetxController {
   }
 
   Future<void> getAddress() async {
-    ResponseModel<Address> responseModel = await sharedServiceManager
+    ResponseModel<LocAddress> responseModel = await sharedServiceManager
         .createGetRequest(typeOfEndPoint: APIType.getAddress);
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       print(responseModel);
       address.value = responseModel.data;
+      LatLng newLatlng = LatLng(
+          double.parse(responseModel.data?.latitude ?? ''),
+          double.parse(responseModel.data?.longitude ?? ''));
+      latLng.value = newLatlng;
+      setupMarker();
+      getCityName();
     } else {
       AlertManagerController.showSnackBar(
           '', responseModel.message, Position.bottom);
     }
   }
 
-  Future<bool> updateAddress() async {
+  void updateLatLng(LatLng newLatlng) {
+    latLng.value = newLatlng;
+  }
+
+  void setupMarker() {
+    markers.clear();
+    markers.add(Marker(
+        markerId: MarkerId('marker'), onTap: () {}, position: latLng.value));
+  }
+
+  void getCityName() async {
+    List<Placemark> address = await placemarkFromCoordinates(
+        latLng.value.latitude, latLng.value.longitude);
+    city.value = address.first.name ?? '';
+    print(address.first.name);
+  }
+
+  Future<bool> updateAddress(BuildContext context) async {
     Map<String, dynamic> params = {};
 
     if (address.value?.fullName != null) {
@@ -137,8 +166,8 @@ class ProfileController extends GetxController {
       params['street_2'] = address.value?.street2;
     }
 
-    if (address.value?.city != null) {
-      params['city'] = address.value?.city;
+    if (city.value.isNotEmpty) {
+      params['city'] = city.value;
     }
 
     if (address.value?.state != null) {
@@ -176,8 +205,12 @@ class ProfileController extends GetxController {
     params['latitude'] = latLng.value.latitude;
     params['longitude'] = latLng.value.longitude;
 
+    AlertManagerController.showLoaderDialog(Get.context!);
+
     ResponseModel<void> responseModel = await sharedServiceManager
         .createPostRequest(typeOfEndPoint: APIType.addAddress, params: params);
+
+    AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       print(responseModel);
@@ -228,14 +261,10 @@ class ProfileController extends GetxController {
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       currentUser?.value = responseModel.data;
+      _callAPI();
     } else {
       AlertManagerController.showSnackBar(
           '', responseModel.message, Position.bottom);
-    }
-
-    if (userType == UserType.other) {
-      await fetchRaffleList();
-      await fetchReviewList();
     }
   }
 

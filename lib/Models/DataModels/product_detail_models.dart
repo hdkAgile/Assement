@@ -162,7 +162,7 @@ class WinnerDetail {
   int? id;
   String? name;
   String? image;
-  Address? address;
+  LocAddress? address;
   DateTime? createdDate;
   TrackingNumber? review;
 
@@ -170,7 +170,7 @@ class WinnerDetail {
         id: json["id"],
         name: json["name"],
         image: json["image"],
-        address: Address.fromJson(json["address"]),
+        address: LocAddress.fromJson(json["address"]),
         createdDate: DateTime.parse(json["created_date"]),
         review: TrackingNumber.fromJson(json["review"]),
       );
@@ -185,8 +185,8 @@ class WinnerDetail {
       };
 }
 
-class Address {
-  Address({
+class LocAddress {
+  LocAddress({
     this.id,
     this.userId,
     this.fullName,
@@ -238,7 +238,7 @@ class Address {
   String? shippingState;
   String? shippingZipCode;
 
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
+  factory LocAddress.fromJson(Map<String, dynamic> json) => LocAddress(
         id: json["id"],
         userId: json["user_id"],
         fullName: json["full_name"],

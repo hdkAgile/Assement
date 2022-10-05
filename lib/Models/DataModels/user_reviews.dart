@@ -4,34 +4,6 @@
 
 import 'dart:convert';
 
-UserReview welcomeFromJson(String str) => UserReview.fromJson(json.decode(str));
-
-String welcomeToJson(UserReview data) => json.encode(data.toJson());
-
-class UserReview {
-  UserReview({
-    this.status,
-    this.message,
-    this.data,
-  });
-
-  int? status;
-  String? message;
-  UserReviewData? data;
-
-  factory UserReview.fromJson(Map<String, dynamic> json) => UserReview(
-        status: json["status"],
-        message: json["message"],
-        data: UserReviewData.fromJson(json["data"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "message": message,
-        "data": data?.toJson(),
-      };
-}
-
 class UserReviewData {
   UserReviewData({
     this.total,

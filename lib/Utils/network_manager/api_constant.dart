@@ -27,6 +27,8 @@ class APIConstant {
 
   static String get prefixApi => "api";
 
+  static String get localBaseURL => 'http://202.131.117.92:7066';
+
   static String preFixRaffale = 'raffle';
   static String preFixUser = 'user-profile';
   static String preFixTicket = 'ticket_price';

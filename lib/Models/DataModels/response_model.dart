@@ -41,8 +41,8 @@ class ResponseModel<T> {
       return ProductDetailData.fromJson(json) as T;
     } else if (T == Wallet) {
       return Wallet.fromJson(json) as T;
-    } else if (T == Address) {
-      return Address.fromJson(json) as T;
+    } else if (T == LocAddress) {
+      return LocAddress.fromJson(json) as T;
     } else if (T == List<PriceList>) {
       List<PriceList> temp = [];
       if (json != null) {

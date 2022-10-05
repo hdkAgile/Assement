@@ -152,8 +152,6 @@ class AddRaffaleController extends GetxController {
   }
 
   void createRaffale() async {
-    AlertManagerController.showLoaderDialog(Get.context!);
-
     Map<String, dynamic> params = {};
     params['title'] = title;
     params['quantity'] = 40;
@@ -173,9 +171,10 @@ class AddRaffaleController extends GetxController {
     List<AppMultiPartFile> files = [
       AppMultiPartFile(localFiles: images, key: 'images')
     ];
-
+    AlertManagerController.showLoaderDialog(Get.context!);
     ResponseModel addRaafaleResponse = await sharedServiceManager
         .uploadRequest(APIType.addRaffale, params: params, arrFile: files);
+
     AlertManagerController.hideLoaderDialog();
 
     if (addRaafaleResponse.status == APIConstant.statusCodeSuccess) {

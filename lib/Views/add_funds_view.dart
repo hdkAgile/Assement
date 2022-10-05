@@ -6,10 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../Controllers/wallet_controller.dart';
 import '../Utils/constants.dart';
 
 class AddFundsView extends StatelessWidget {
-  const AddFundsView({Key? key}) : super(key: key);
+  AddFundsView({Key? key}) : super(key: key);
+
+  WalletController controller = Get.find<WalletController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +31,15 @@ class AddFundsView extends StatelessWidget {
             icon: Image.asset(AppImages.backArrow)),
       ),
       body: SafeArea(
+        top: false,
+        bottom: false,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               color: AppColors.themeLightGrey,
               margin: EdgeInsets.only(top: 17.h),
-              padding: EdgeInsets.symmetric(horizontal: 23.w, vertical: 23.h),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -43,7 +48,7 @@ class AddFundsView extends StatelessWidget {
                     style: AppTextStyle.openSans_regular_themeBlack_12,
                   ),
                   Text(
-                    '\$20.00',
+                    '\$ ${controller.wallet.value?.amount}',
                     style: AppTextStyle.openSans_bold_themeBlack_21,
                   )
                 ],

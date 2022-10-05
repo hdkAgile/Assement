@@ -2,6 +2,7 @@ import 'package:assement/Controllers/splash_controller.dart';
 import 'package:assement/Models/DataModels/app_user.dart';
 import 'package:assement/Models/DataModels/raffale_list.dart';
 import 'package:assement/Utils/app_routes.dart';
+import 'package:assement/Views/demo.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812),
+      designSize: Size(375, 814),
       builder: (context, child) {
         return GetBuilder<SplashController>(builder: (controller) {
           return GetMaterialApp(

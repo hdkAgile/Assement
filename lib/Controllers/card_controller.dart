@@ -30,12 +30,12 @@ class CardController extends GetxController {
   }
 
   void getCardList(BuildContext context, bool showLoader) async {
-    if (showLoader) AlertManagerController.showLoaderDialog(context);
+    AlertManagerController.showLoaderDialog(Get.context!);
 
     ResponseModel<List<Cards>> responseModel = await sharedServiceManager
         .createGetRequest(typeOfEndPoint: APIType.getCardList);
 
-    if (showLoader) AlertManagerController.hideLoaderDialog();
+    AlertManagerController.hideLoaderDialog();
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       cards.value = responseModel.data ?? [];
@@ -106,7 +106,7 @@ class CardController extends GetxController {
 
     params['card_id'] = cards.value[index].id;
 
-    AlertManagerController.showLoaderDialog(context);
+    AlertManagerController.showLoaderDialog(Get.context!);
     ResponseModel<Cards> responseModel = await sharedServiceManager
         .createPostRequest(typeOfEndPoint: APIType.updateCard, params: params);
     AlertManagerController.hideLoaderDialog();

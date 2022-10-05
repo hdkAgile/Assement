@@ -45,7 +45,7 @@ class ProductDetailController extends GetxController {
     for (int i = 0; i < productDetailData.value.images!.length; i++) {
       imageSiders.add(
         AspectRatio(
-          aspectRatio: 323 / 169,
+          aspectRatio: 323.w / 170.h,
           child: Container(
             decoration:
                 BoxDecoration(borderRadius: BorderRadius.circular(15.r)),

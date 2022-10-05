@@ -34,18 +34,22 @@ class LocationView extends StatelessWidget {
             icon: Image.asset(AppImages.backArrow)),
       ),
       body: SafeArea(
+        top: false,
+        bottom: false,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
               width: double.infinity,
-              height: 35.h,
+              // height: 35.h,
               decoration: BoxDecoration(
                   color: AppColors.themeLightTextGrey,
                   borderRadius: BorderRadius.circular(4.r)),
               margin: EdgeInsets.symmetric(horizontal: 35.w, vertical: 20.h),
+              padding: EdgeInsets.symmetric(vertical: 3.h),
               child: TextField(
                 decoration: InputDecoration(
+                    enabled: false,
                     prefixIcon: Image.asset(AppImages.search),
                     border: InputBorder.none,
                     hintText: AppText.searchText,
@@ -55,12 +59,13 @@ class LocationView extends StatelessWidget {
             AspectRatio(
               aspectRatio: 300.w / 363.h,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 35.w, vertical: 35.h),
+                margin: EdgeInsets.symmetric(horizontal: 35.w, vertical: 20.h),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(23.r),
                   child: Obx(() => GoogleMap(
+                        markers: profileController.markers.value,
                         onTap: (latlng) {
-                          profileController.latLng.value = latlng;
+                          profileController.updateLatLng(latlng);
                         },
                         zoomControlsEnabled: false,
                         onMapCreated: (googleMapController) {
@@ -68,7 +73,7 @@ class LocationView extends StatelessWidget {
                         },
                         mapType: MapType.normal,
                         initialCameraPosition: CameraPosition(
-                            zoom: 14.0, target: profileController.latLng.value),
+                            zoom: 11.0, target: profileController.latLng.value),
                       )),
                 ),
               ),
@@ -80,7 +85,7 @@ class LocationView extends StatelessWidget {
                   title: 'Set Location',
                   isEnable: true,
                   onPressed: () async {
-                    if (await profileController.updateAddress()) {
+                    if (await profileController.updateAddress(context)) {
                       Get.back();
                     }
                   },

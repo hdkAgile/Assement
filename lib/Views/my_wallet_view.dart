@@ -13,12 +13,9 @@ import 'card_list_view.dart';
 
 class MyWalletView extends StatelessWidget {
   MyWalletView({Key? key}) : super(key: key);
-
   WalletController controller = Get.find<WalletController>();
-
   @override
   Widget build(BuildContext context) {
-    controller.getWalletAmount(context);
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -34,6 +31,8 @@ class MyWalletView extends StatelessWidget {
             icon: Image.asset(AppImages.backArrow)),
       ),
       body: SafeArea(
+        bottom: false,
+        top: false,
         child: Column(
           children: [
             Padding(

@@ -13,9 +13,10 @@ class WalletController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getWalletAmount();
   }
 
-  Future<void> getWalletAmount(BuildContext context) async {
+  Future<void> getWalletAmount() async {
     ResponseModel<Wallet> responseModel = await sharedServiceManager
         .createGetRequest(typeOfEndPoint: APIType.getWalletAmount);
 

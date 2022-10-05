@@ -3,11 +3,13 @@ import 'package:assement/Utils/constants.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Views/Custom/app_button.dart';
 import 'package:assement/Views/location.dart';
+import 'package:assement/Views/my_review_view.dart';
 import 'package:assement/Views/my_wallet_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../Controllers/profile_controller.dart';
 import '../Models/DataModels/app_user.dart';
@@ -157,31 +159,37 @@ class CurrentUserProfile extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(16.0),
-                color: AppColors.themeLightGrey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ImageView(
-                            image: AppImages.myReview,
-                            imageType: ImageType.asset),
-                        SizedBox(
-                          width: 13.w,
-                        ),
-                        Text("My Reviews",
-                            style: AppTextStyle.openSans_regular_themeBlack_14)
-                      ],
-                    ),
-                    ImageView(
-                      image: AppImages.blackArrowRight,
-                      imageType: ImageType.asset,
-                      color: AppColors.themeTextGrey,
-                    )
-                  ],
+              InkWell(
+                onTap: () {
+                  Get.to(() => MyReviewView());
+                },
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  color: AppColors.themeLightGrey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ImageView(
+                              image: AppImages.myReview,
+                              imageType: ImageType.asset),
+                          SizedBox(
+                            width: 13.w,
+                          ),
+                          Text("My Reviews",
+                              style:
+                                  AppTextStyle.openSans_regular_themeBlack_14)
+                        ],
+                      ),
+                      ImageView(
+                        image: AppImages.blackArrowRight,
+                        imageType: ImageType.asset,
+                        color: AppColors.themeTextGrey,
+                      )
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -217,7 +225,7 @@ class CurrentUserProfile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${sharedUser.user.firstName} ${sharedUser.user.lastName}',
+                          '${controller.user.fullName}',
                           style: AppTextStyle.openSans_regular_themeDarkGrey_14,
                         ),
                         SizedBox(
@@ -254,7 +262,7 @@ class CurrentUserProfile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${sharedUser.user.email}',
+                          '${controller.user.email}',
                           style: AppTextStyle.openSans_regular_themeDarkGrey_14,
                         ),
                         SizedBox(
@@ -275,7 +283,8 @@ class CurrentUserProfile extends StatelessWidget {
                 color: AppColors.themeLightGrey,
                 child: InkWell(
                   onTap: () {
-                    Get.to(() => LocationView());
+                    Get.to(() => LocationView())
+                        ?.then((value) => controller.getAddress());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,10 +305,12 @@ class CurrentUserProfile extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            'Location',
-                            style:
-                                AppTextStyle.openSans_regular_themeDarkGrey_14,
+                          Obx(
+                            () => Text(
+                              controller.address.value?.city ?? '',
+                              style: AppTextStyle
+                                  .openSans_regular_themeDarkGrey_14,
+                            ),
                           ),
                           SizedBox(
                             width: 20.h,
