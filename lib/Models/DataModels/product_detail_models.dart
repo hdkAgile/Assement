@@ -92,6 +92,16 @@ class ProductDetailData {
     }
   }
 
+  ConditionType get conditionType {
+    if (condition == '1') {
+      return ConditionType.newInPackage;
+    } else if (condition == '2') {
+      return ConditionType.lightlyUsed;
+    } else {
+      return ConditionType.used;
+    }
+  }
+
   factory ProductDetailData.fromJson(Map<String, dynamic> json) =>
       ProductDetailData(
         id: json["id"],

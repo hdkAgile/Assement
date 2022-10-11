@@ -1,10 +1,12 @@
 import 'dart:ffi';
 
 import 'package:assement/Models/user_address.dart';
+import 'package:assement/Utils/constants.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:tuple/tuple.dart';
 import '../Models/DataModels/app_user.dart';
 import '../Models/DataModels/product_detail_models.dart';
 import '../Models/DataModels/raffale_list.dart';
@@ -26,19 +28,20 @@ class ProfileController extends GetxController {
   UserType userType = UserType.current;
   RxInt selectedIndex = 0.obs;
   RxInt groupValue = 0.obs;
-  SingleUser user = sharedUser.user;
+  Rx<SingleUser> user = Rx(sharedUser.user);
   RxList<Raffale> userRaffleList = <Raffale>[].obs;
   RxList<ReviewList> userReviewList = <ReviewList>[].obs;
   String _deviceId = '';
   int id = 0;
   Rx<LatLng> latLng = Rx(LatLng(21.6356704, 69.5967292));
   RxString city = ''.obs;
+  TextEditingController textEditingController = TextEditingController();
+  RxString text = ''.obs;
+  RxString confirm = ''.obs;
 
   Rxn<LocAddress> address = Rxn(null);
 
   RxSet<Marker> markers = RxSet();
-
-  Rxn<SingleUser>? currentUser = Rxn(null);
 
   ProfileController(
       {required this.offset,
@@ -62,14 +65,58 @@ class ProfileController extends GetxController {
     fetchReviewList();
   }
 
-  fetchRaffleList() async {
-    if (currentUser?.value == null) return;
+  void setup(EditFieds fieds) {
+    switch (fieds) {
+      case EditFieds.name:
+        text.value = user.value.fullName;
+        break;
+      case EditFieds.email:
+        text.value = user.value.email;
+        break;
+      case EditFieds.changePassword:
+        break;
+    }
+    textEditingController.text = text.value;
+  }
 
+  bool validate(EditFieds fieds) {
+    switch (fieds) {
+      case EditFieds.name:
+        if (GetUtils.isLengthLessOrEqual(text.value, 0)) {
+          AlertManagerController.showSnackBar(
+              '', 'Please enter name', Position.bottom);
+          return false;
+        } else {
+          print(text.value);
+          return true;
+        }
+        break;
+      case EditFieds.email:
+        if (GetUtils.isLengthLessOrEqual(text.value, 0)) {
+          AlertManagerController.showSnackBar(
+              '', 'Please enter email', Position.bottom);
+          return false;
+        } else if (!GetUtils.isEmail(text.value)) {
+          AlertManagerController.showSnackBar(
+              '', 'Please enter valid email', Position.bottom);
+          return false;
+        } else {
+          return true;
+        }
+
+      case EditFieds.changePassword:
+        break;
+    }
+    print(text.value);
+    return true;
+  }
+
+  fetchRaffleList() async {
     final userRaffleAPIModel = UserAPIModel(
         limit: limit,
         offset: offset,
         createdAt: '',
-        userId: currentUser?.value?.id ?? 0,
+        userId: user.value.id,
         forUser: 0,
         status: 0);
     final params = userRaffleAPIModel.toJson();
@@ -90,12 +137,12 @@ class ProfileController extends GetxController {
   }
 
   fetchReviewList() async {
-    if (currentUser?.value == null) return;
+    // if (currentUser?.value == null) return;
 
     final userRaffleAPIModel = UserAPIModel(
         limit: limit,
         offset: offset,
-        userId: currentUser?.value?.id ?? 0,
+        userId: user.value.id,
         createdAt: '',
         status: 0,
         forUser: 0);
@@ -260,7 +307,7 @@ class ProfileController extends GetxController {
     }
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
-      currentUser?.value = responseModel.data;
+      user.value = responseModel.data!;
       _callAPI();
     } else {
       AlertManagerController.showSnackBar(
@@ -274,5 +321,41 @@ class ProfileController extends GetxController {
 
   void changeGroupIndex(int index) {
     groupValue.value = index;
+  }
+
+  Tuple2<String, String> getFirstAndLastName(EditFieds fieds) {
+    if (fieds == EditFieds.name) {
+      List<String> values = text.split(' ');
+      return Tuple2(values.first, values.last);
+    } else {
+      return Tuple2('', '');
+    }
+  }
+
+  Future<bool> updateProfile(EditFieds fieds) async {
+    Tuple2 firstAndLastName = getFirstAndLastName(fieds);
+
+    Map<String, dynamic> params = {};
+    if (fieds == EditFieds.name) {
+      params['first_name'] = firstAndLastName.item1;
+      params['last_name'] = firstAndLastName.item2;
+    } else if (fieds == EditFieds.email) {
+      params['email'] = text.value;
+    }
+
+    AlertManagerController.showLoaderDialog(Get.context!);
+    ResponseModel<SingleUser> responseModel = await sharedServiceManager
+        .createPostRequest(typeOfEndPoint: APIType.updateUser, params: params);
+    AlertManagerController.hideLoaderDialog();
+
+    AlertManagerController.showSnackBar(
+        '', responseModel.message, Position.bottom);
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      user.value = responseModel.data!;
+      return true;
+    } else {
+      return false;
+    }
   }
 }

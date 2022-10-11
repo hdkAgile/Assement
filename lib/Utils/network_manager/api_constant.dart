@@ -45,7 +45,7 @@ class APIConstant {
       case APIType.dashboard:
         return 'dashboard';
       case APIType.sold:
-        return 'raffle/soldList';
+        return '${APIConstant.preFixRaffale}/soldList';
       case APIType.review:
         return 'reviews';
       case APIType.raffaleUserList:
@@ -90,6 +90,10 @@ class APIConstant {
         return '${APIConstant.preFixWallet}/history';
       case APIType.addWalletAmount:
         return '${APIConstant.preFixWallet}/add';
+      case APIType.ticketList:
+        return '${APIConstant.preFixRaffale}/purchaseList';
+      case APIType.updateUser:
+        return '${preFixUser}/update';
     }
   }
 

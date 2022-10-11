@@ -316,23 +316,32 @@ class AddRaffleView extends StatelessWidget {
                       Container(
                           width: double.infinity,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'List Value',
-                                  style: AppTextStyle
-                                      .openSans_regular_textGrey1_14,
+                                flex: 4,
+                                child: Container(
+                                  child: Text(
+                                    'List Value',
+                                    style: AppTextStyle
+                                        .openSans_regular_textGrey1_14,
+                                  ),
                                 ),
                               ),
                               Expanded(
-                                flex: 1,
+                                flex: 5,
                                 child: Column(
                                   children: [
                                     TextField(
+                                        style: AppTextStyle
+                                            .openSans_bold_themeBlack_14,
                                         decoration: InputDecoration(
+                                            prefix: Text(
+                                              '\$ ',
+                                              style: AppTextStyle
+                                                  .openSans_bold_themeBlack_14,
+                                            ),
                                             contentPadding: EdgeInsets.zero,
                                             border: InputBorder.none)),
                                   ],
@@ -402,6 +411,7 @@ class AddRaffleView extends StatelessWidget {
                                     ),
                                     Text(
                                       '200',
+                                      textDirection: TextDirection.ltr,
                                       style: AppTextStyle
                                           .openSans_bold_themeBlack_14,
                                     )
@@ -415,39 +425,47 @@ class AddRaffleView extends StatelessWidget {
                         height: 16.h,
                       ),
                       Divider(height: 0.5, color: AppColors.themeLightGrey1),
-                      SizedBox(
-                        height: 16.h,
-                      ),
                       Container(
+                          // color: Colors.red,
                           width: double.infinity,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Your Earnings ',
-                                      style: AppTextStyle
-                                          .openSans_regular_textGrey1_14,
-                                    ),
-                                    Text(
-                                      '\$ 200',
-                                      style: AppTextStyle
-                                          .openSans_bold_themeBlack_14,
-                                    )
-                                  ],
+                              Expanded(
+                                flex: 4,
+                                child: Container(
+                                  child: Text(
+                                    'Your Earnings',
+                                    style: AppTextStyle
+                                        .openSans_regular_textGrey1_14,
+                                  ),
                                 ),
                               ),
+                              Expanded(
+                                flex: 5,
+                                child: Column(
+                                  children: [
+                                    TextField(
+                                        style: AppTextStyle
+                                            .openSans_bold_themeBlack_14,
+                                        decoration: InputDecoration(
+                                            prefix: Text(
+                                              '\$ ',
+                                              style: AppTextStyle
+                                                  .openSans_bold_themeBlack_14,
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            border: InputBorder.none)),
+                                  ],
+                                ),
+                              )
                             ],
                           )),
-                      SizedBox(
-                        height: 16.h,
-                      ),
                       Divider(height: 0.5, color: AppColors.themeLightGrey1),
+                      // SizedBox(
+                      //   height: 16.h,
+                      // ),
                     ],
                   ),
                 ),
@@ -460,13 +478,15 @@ class AddRaffleView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width / 2,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('Raffle Duration',
                                   style: AppTextStyle
                                       .openSans_regular_textGrey1_14),
+                              SizedBox(
+                                width: 40.w,
+                              ),
                               Text(
                                 '${14} Days',
                                 textAlign: TextAlign.center,

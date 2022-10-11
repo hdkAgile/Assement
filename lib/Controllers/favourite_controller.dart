@@ -1,3 +1,4 @@
+import 'package:assement/Models/DataModels/tickets_purchase_list.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class FavoriteController extends GetxController {
   RxInt selectedIndex = 0.obs;
   RxInt groupValue = 0.obs;
   RxList<Raffale> items = <Raffale>[].obs;
+  RxList<Raffale> purchaseList = <Raffale>[].obs;
   RxBool isLoading = RxBool(false);
   UserData? userData;
 
@@ -25,7 +27,8 @@ class FavoriteController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchFavouriteList();
+
+    _callAPI();
   }
 
   void changeSelectedIndex(int index) {
@@ -36,7 +39,12 @@ class FavoriteController extends GetxController {
     groupValue.value = index;
   }
 
-  void fetchFavouriteList() async {
+  void _callAPI() async {
+    await fetchPurchaseTikcets();
+    await fetchFavouriteList();
+  }
+
+  Future<void> fetchFavouriteList() async {
     final user = SharedManager.shared.fetchUser();
     userData = user;
     Map<String, dynamic> params = {};
@@ -59,7 +67,7 @@ class FavoriteController extends GetxController {
     }
   }
 
-  void favouriteUnfavouriteRaffale(
+  Future<bool> favouriteUnfavouriteRaffale(
       {required int id,
       required RaffleFavourite raffleFavourite,
       required BuildContext context}) async {
@@ -67,13 +75,39 @@ class FavoriteController extends GetxController {
     params['raffle_id'] = id;
     params['is_favourite'] = raffleFavourite.value;
 
+    AlertManagerController.showLoaderDialog(Get.context!);
+
     ResponseModel responseModel = await sharedServiceManager.createPostRequest(
         typeOfEndPoint: APIType.favourite, params: params);
 
+    AlertManagerController.hideLoaderDialog();
+
     AlertManagerController.showSnackBar(
         '', responseModel.message, Position.bottom);
+
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       fetchFavouriteList();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> fetchPurchaseTikcets() async {
+    Map<String, dynamic> params = {};
+    params['offset'] = 0;
+    params['limit'] = 10;
+
+    isLoading.value = true;
+    ResponseModel<RaffaleList> responseModel = await sharedServiceManager
+        .createPostRequest(typeOfEndPoint: APIType.ticketList, params: params);
+    isLoading.value = false;
+
+    if (responseModel.status == APIConstant.statusCodeSuccess) {
+      purchaseList.value = responseModel.data?.data ?? [];
+    } else {
+      AlertManagerController.showSnackBar(
+          '', responseModel.message, Position.bottom);
     }
   }
 }

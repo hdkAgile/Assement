@@ -26,6 +26,19 @@ extension SignUpTypeExtention on SignUpType {
   }
 }
 
+extension EditFieldExtendion on EditFieds {
+  String get title {
+    switch (this) {
+      case EditFieds.name:
+        return 'Name';
+      case EditFieds.email:
+        return 'Email';
+      case EditFieds.changePassword:
+        return 'Reset Password';
+    }
+  }
+}
+
 extension URLHostExtension on URLHost {
   String get baseURL {
     switch (this) {

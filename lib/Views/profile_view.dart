@@ -117,13 +117,12 @@ class ProfileView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(55.r),
                             child: Container(
                               child: ImageView(
-                                image:
-                                    controller.currentUser?.value?.image ?? '',
-                                imageType: controller.currentUser?.value?.image
-                                            .isNotEmpty ??
-                                        false
-                                    ? ImageType.networkImage
-                                    : ImageType.asset,
+                                image: controller.user.value.image,
+                                imageType:
+                                    controller.user.value.image.isNotEmpty ??
+                                            false
+                                        ? ImageType.networkImage
+                                        : ImageType.asset,
                               ),
                               height: 110.h,
                               width: 110.h,
@@ -135,23 +134,18 @@ class ProfileView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Visibility(
-                                visible: controller.currentUser?.value
-                                        ?.firstName?.isNotEmpty ??
-                                    false,
+                                visible:
+                                    controller.user.value.firstName.isNotEmpty,
                                 child: Text(
-                                  controller.currentUser?.value?.firstName ??
-                                      '',
+                                  controller.user.value.firstName,
                                   style: AppTextStyle
                                       .openSans_regular_themeBlack_24,
                                 ),
                               ),
                               Visibility(
-                                visible: controller.currentUser?.value?.lastName
-                                        ?.isNotEmpty ??
-                                    false,
-                                child: Text(
-                                    controller.currentUser?.value?.lastName ??
-                                        '',
+                                visible:
+                                    controller.user.value.lastName.isNotEmpty,
+                                child: Text(controller.user.value.lastName,
                                     style: AppTextStyle
                                         .openSans_bold_themeBlack_26),
                               ),

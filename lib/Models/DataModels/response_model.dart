@@ -1,7 +1,9 @@
+import 'package:assement/Models/DataModels/app_user.dart';
 import 'package:assement/Models/DataModels/notification_list.dart';
 import 'package:assement/Models/DataModels/price_list.dart';
 import 'package:assement/Models/DataModels/product_detail_models.dart';
 import 'package:assement/Models/DataModels/raffale_list.dart';
+import 'package:assement/Models/DataModels/tickets_purchase_list.dart';
 import 'package:assement/Models/DataModels/user_raffle.dart';
 import 'package:assement/Models/DataModels/wallet.dart';
 import 'package:flutter/foundation.dart';
@@ -31,6 +33,8 @@ class ResponseModel<T> {
   T _handleClasses(json) {
     if (T == UserData) {
       return UserData.fromJson(json) as T;
+    } else if (T == SingleUser) {
+      return SingleUser.fromJson(json) as T;
     } else if (T == UserRaffleData) {
       return UserRaffleData.fromJson(json) as T;
     } else if (T == Dashboard) {
@@ -48,6 +52,16 @@ class ResponseModel<T> {
       if (json != null) {
         for (int i = 0; i < (json.length ?? 0); i++) {
           temp.add(PriceList.fromJson(json[i]));
+        }
+        return temp as T;
+      } else {
+        return json;
+      }
+    } else if (T == List<TicketPurchaseList>) {
+      List<TicketPurchaseList> temp = [];
+      if (json != null) {
+        for (int i = 0; i < (json.length ?? 0); i++) {
+          temp.add(TicketPurchaseList.fromJson(json[i]));
         }
         return temp as T;
       } else {

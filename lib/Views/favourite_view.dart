@@ -24,11 +24,9 @@ class _FavouriteViewState extends State<FavouriteView> {
   }
 
   List<String> items = ['Active', 'Inactive'];
-
+  FavoriteController controller = Get.find<FavoriteController>();
   @override
   Widget build(BuildContext context) {
-    FavoriteController controller = Get.find<FavoriteController>();
-
     void selecteTab(int index) {
       controller.selectedIndex.value = index;
     }
@@ -63,7 +61,8 @@ class _FavouriteViewState extends State<FavouriteView> {
                                   ),
                                   child: IconButton(
                                       onPressed: () {
-                                        selecteTab(0);
+                                        // selecteTab(0);
+                                        controller.changeSelectedIndex(0);
                                       },
                                       icon: Image.asset(
                                           controller.selectedIndex.value == 0
@@ -82,7 +81,8 @@ class _FavouriteViewState extends State<FavouriteView> {
                                   ),
                                   child: IconButton(
                                       onPressed: () {
-                                        selecteTab(1);
+                                        // selecteTab(1);
+                                        controller.changeSelectedIndex(1);
                                       },
                                       icon: Image.asset(
                                           controller.selectedIndex.value == 1
@@ -158,44 +158,49 @@ class _FavouriteViewState extends State<FavouriteView> {
                         SizedBox(height: 16.h),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Container(
-                              height: 40.h,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: AppColors.themeWhite,
-                                  border: Border.all(
-                                      color: AppColors.themeLightGrey),
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  boxShadow: kElevationToShadow[2]),
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: DropdownButton<String>(
-                                  underline: Container(),
-                                  isExpanded: true,
-                                  style:
-                                      AppTextStyle.openSans_bold_themeBlack_12,
-                                  icon: Image.asset(AppImages.dropDownArrow),
-                                  value: controller.dropDownValue.value,
-                                  alignment: Alignment.topLeft,
-                                  items: controller.dropDownItems.value
-                                      .map<DropdownMenuItem<String>>((value) {
-                                    return DropdownMenuItem<String>(
-                                        value: value, child: Text(value));
-                                  }).toList(),
-                                  onChanged: (value) {
-                                    controller.dropDownValue.value =
-                                        value ?? '';
-                                  })),
+                          child: Visibility(
+                            visible: controller.groupValue.value == 2,
+                            child: Container(
+                                height: 40.h,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: AppColors.themeWhite,
+                                    border: Border.all(
+                                        color: AppColors.themeLightGrey),
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    boxShadow: kElevationToShadow[2]),
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: DropdownButton<String>(
+                                    underline: Container(),
+                                    isExpanded: true,
+                                    style: AppTextStyle
+                                        .openSans_bold_themeBlack_12,
+                                    icon: Image.asset(AppImages.dropDownArrow),
+                                    value: controller.dropDownValue.value,
+                                    alignment: Alignment.topLeft,
+                                    items: controller.dropDownItems.value
+                                        .map<DropdownMenuItem<String>>((value) {
+                                      return DropdownMenuItem<String>(
+                                          value: value, child: Text(value));
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      controller.dropDownValue.value =
+                                          value ?? '';
+                                    })),
+                          ),
                         ),
                         SizedBox(height: 8.h),
                         controller.selectedIndex.value == 0
                             ? GridView.builder(
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: controller.items.length,
+                                itemCount: controller.groupValue.value == 0
+                                    ? controller.purchaseList.length
+                                    : controller.items.length,
                                 shrinkWrap: true,
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 144 / 208,
+                                  childAspectRatio: 144.w / 208.h,
                                   crossAxisSpacing: 25.w,
                                   crossAxisCount: 2,
                                 ),

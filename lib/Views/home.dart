@@ -117,6 +117,7 @@ class Home extends StatelessWidget {
                                   carouselController: CarouselController(),
                                   options: CarouselOptions(
                                       viewportFraction: 0.83,
+                                      aspectRatio: 16.w / 9.h,
                                       enlargeCenterPage: true,
                                       enableInfiniteScroll: false,
                                       scrollDirection: Axis.horizontal,

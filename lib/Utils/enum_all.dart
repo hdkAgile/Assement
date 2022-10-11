@@ -16,9 +16,11 @@ enum APIType {
   sold,
   favouriteList,
   favourite,
+  ticketList,
   addRaffale,
   currentUser,
   otherUser,
+  updateUser,
   ticketPriceList,
   listCategoryDropDown,
   checkout,
@@ -35,6 +37,8 @@ enum APIType {
 }
 
 enum URLHost { local, live, staging }
+
+enum EditFieds { name, email, changePassword }
 
 enum ConditionType { newInPackage, lightlyUsed, used }
 

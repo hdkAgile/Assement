@@ -29,7 +29,7 @@ class ProductDetail extends StatelessWidget {
     raffleId = Get.arguments['id'] as int;
 
     productDetailController.id = raffleId;
-    productDetailController.fetchProductDetail();
+    productDetailController.fetchProductDetail(true);
     return Scaffold(
       backgroundColor: AppColors.themeWhite,
       appBar: AppBar(
@@ -90,7 +90,7 @@ class ProductDetail extends StatelessWidget {
                             carouselController: CarouselController(),
                             options: CarouselOptions(
                                 viewportFraction: 0.83,
-                                aspectRatio: 2.0,
+                                aspectRatio: 16.w / 9.h,
                                 enlargeCenterPage: true,
                                 enableInfiniteScroll: false,
                                 scrollDirection: Axis.horizontal,
@@ -144,19 +144,23 @@ class ProductDetail extends StatelessWidget {
                             ),
                             Obx(
                               () => IconButton(
-                                  onPressed: () {
-                                    controller.favouriteUnfavouriteRaffale(
-                                        id: productDetailController
-                                                .productDetailData.value.id ??
-                                            0,
-                                        raffleFavourite: productDetailController
-                                                .productDetailData
-                                                .value
-                                                .favourite
-                                                .isFavourite
-                                            ? RaffleFavourite.unFavourite
-                                            : RaffleFavourite.favourite,
-                                        context: context);
+                                  onPressed: () async {
+                                    if (await controller
+                                        .favouriteUnfavouriteRaffale(
+                                            id: raffleId,
+                                            raffleFavourite:
+                                                productDetailController
+                                                        .productDetailData
+                                                        .value
+                                                        .favourite
+                                                        .isFavourite
+                                                    ? RaffleFavourite
+                                                        .unFavourite
+                                                    : RaffleFavourite.favourite,
+                                            context: context)) {
+                                      productDetailController
+                                          .fetchProductDetail(false);
+                                    }
                                   },
                                   icon: Image.asset(productDetailController
                                       .productDetailData
@@ -252,8 +256,7 @@ class ProductDetail extends StatelessWidget {
                                 horizontal: 30.w, vertical: 16.h),
                             child: Text(
                               productDetailController
-                                      .productDetailData.value.condition ??
-                                  "Like New",
+                                  .productDetailData.value.conditionType.title,
                               style: AppTextStyle.openSans_bold_themeBlack_14,
                             ),
                           ),

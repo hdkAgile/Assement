@@ -19,14 +19,13 @@ class ProductDetailController extends GetxController {
 
   double indicatorWidth = MediaQuery.of(Get.context!).size.width / 2;
 
-  void fetchProductDetail() async {
-    isLoading.value = true;
+  void fetchProductDetail(bool isShow) async {
+    if (isShow) isLoading.value = true;
 
     ResponseModel<ProductDetailData> responseModel =
         await sharedServiceManager.createGetRequest(
             typeOfEndPoint: APIType.raffleDetail, urlParam: id.toString());
-
-    isLoading.value = false;
+    if (isShow) isLoading.value = false;
 
     if (responseModel.status == APIConstant.statusCodeSuccess) {
       productDetailData.value = responseModel.data ?? ProductDetailData();
@@ -42,6 +41,7 @@ class ProductDetailController extends GetxController {
   }
 
   void setupImageSiders() {
+    imageSiders.clear();
     for (int i = 0; i < productDetailData.value.images!.length; i++) {
       imageSiders.add(
         AspectRatio(

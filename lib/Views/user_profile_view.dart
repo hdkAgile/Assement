@@ -2,6 +2,7 @@ import 'package:assement/Bindings/wallet_binding.dart';
 import 'package:assement/Utils/constants.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Views/Custom/app_button.dart';
+import 'package:assement/Views/edit_profile_view.dart';
 import 'package:assement/Views/location.dart';
 import 'package:assement/Views/my_review_view.dart';
 import 'package:assement/Views/my_wallet_view.dart';
@@ -58,7 +59,7 @@ class CurrentUserProfile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(55.r),
                       child: Container(
                         child: ImageView(
-                          image: sharedUser.user.image,
+                          image: controller.user.value.image,
                           imageType: ImageType.networkImage,
                         ),
                         height: 110.h,
@@ -70,19 +71,19 @@ class CurrentUserProfile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Visibility(
-                            visible: sharedUser.user.firstName.isNotEmpty,
-                            child: Text(sharedUser.user.firstName,
+                            visible: controller.user.value.firstName.isNotEmpty,
+                            child: Text(controller.user.value.firstName,
                                 style: AppTextStyle
                                     .openSans_regular_themeBlack_24)),
                         Visibility(
-                          visible: sharedUser.user.lastName.isNotEmpty,
+                          visible: controller.user.value.lastName.isNotEmpty,
                           child: Text(
-                            sharedUser.user.lastName,
+                            controller.user.value.lastName,
                             style: AppTextStyle.openSans_bold_themeBlack_26,
                           ),
                         ),
                         Text(
-                          'Tampa, FL',
+                          '${controller.address.value?.city}',
                           style: AppTextStyle.openSans_regular_black_15,
                         ),
                         SizedBox(height: 8.h),
@@ -207,75 +208,93 @@ class CurrentUserProfile extends StatelessWidget {
                 margin: EdgeInsets.only(top: 10),
                 padding: EdgeInsets.all(16.0),
                 color: AppColors.themeLightGrey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ImageView(
-                            image: AppImages.name, imageType: ImageType.asset),
-                        SizedBox(
-                          width: 13.w,
-                        ),
-                        Text("Name",
-                            style: AppTextStyle.openSans_regular_themeBlack_14)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '${controller.user.fullName}',
-                          style: AppTextStyle.openSans_regular_themeDarkGrey_14,
-                        ),
-                        SizedBox(
-                          width: 20.h,
-                        ),
-                        ImageView(
-                          image: AppImages.blackArrowRight,
-                          imageType: ImageType.asset,
-                          color: AppColors.themeTextGrey,
-                        ),
-                      ],
-                    )
-                  ],
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => EditProfileView(field: EditFieds.name))
+                        ?.then((value) => controller.getUserProfile());
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ImageView(
+                              image: AppImages.name,
+                              imageType: ImageType.asset),
+                          SizedBox(
+                            width: 13.w,
+                          ),
+                          Text("Name",
+                              style:
+                                  AppTextStyle.openSans_regular_themeBlack_14)
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '${controller.user.value.fullName}',
+                            style:
+                                AppTextStyle.openSans_regular_themeDarkGrey_14,
+                          ),
+                          SizedBox(
+                            width: 20.h,
+                          ),
+                          ImageView(
+                            image: AppImages.blackArrowRight,
+                            imageType: ImageType.asset,
+                            color: AppColors.themeTextGrey,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(16.0),
-                color: AppColors.themeLightGrey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ImageView(
-                            image: AppImages.email, imageType: ImageType.asset),
-                        SizedBox(
-                          width: 13.w,
-                        ),
-                        Text("Email",
-                            style: AppTextStyle.openSans_regular_themeBlack_14)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '${controller.user.email}',
-                          style: AppTextStyle.openSans_regular_themeDarkGrey_14,
-                        ),
-                        SizedBox(
-                          width: 20.h,
-                        ),
-                        ImageView(
-                          image: AppImages.blackArrowRight,
-                          imageType: ImageType.asset,
-                          color: AppColors.themeTextGrey,
-                        ),
-                      ],
-                    )
-                  ],
+              InkWell(
+                onTap: () {
+                  Get.to(() => EditProfileView(field: EditFieds.email))
+                      ?.then((value) => controller.getUserProfile());
+                },
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  color: AppColors.themeLightGrey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ImageView(
+                              image: AppImages.email,
+                              imageType: ImageType.asset),
+                          SizedBox(
+                            width: 13.w,
+                          ),
+                          Text("Email",
+                              style:
+                                  AppTextStyle.openSans_regular_themeBlack_14)
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '${controller.user.value.email}',
+                            style:
+                                AppTextStyle.openSans_regular_themeDarkGrey_14,
+                          ),
+                          SizedBox(
+                            width: 20.h,
+                          ),
+                          ImageView(
+                            image: AppImages.blackArrowRight,
+                            imageType: ImageType.asset,
+                            color: AppColors.themeTextGrey,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -326,31 +345,38 @@ class CurrentUserProfile extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(16.0),
-                color: AppColors.themeLightGrey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ImageView(
-                            image: AppImages.password,
-                            imageType: ImageType.asset),
-                        SizedBox(
-                          width: 13.w,
-                        ),
-                        Text("Password",
-                            style: AppTextStyle.openSans_regular_themeBlack_14)
-                      ],
-                    ),
-                    ImageView(
-                      image: AppImages.blackArrowRight,
-                      imageType: ImageType.asset,
-                      color: AppColors.themeTextGrey,
-                    )
-                  ],
+              InkWell(
+                onTap: () {
+                  Get.to(
+                      () => EditProfileView(field: EditFieds.changePassword));
+                },
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  color: AppColors.themeLightGrey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ImageView(
+                              image: AppImages.password,
+                              imageType: ImageType.asset),
+                          SizedBox(
+                            width: 13.w,
+                          ),
+                          Text("Password",
+                              style:
+                                  AppTextStyle.openSans_regular_themeBlack_14)
+                        ],
+                      ),
+                      ImageView(
+                        image: AppImages.blackArrowRight,
+                        imageType: ImageType.asset,
+                        color: AppColors.themeTextGrey,
+                      )
+                    ],
+                  ),
                 ),
               ),
               Container(
