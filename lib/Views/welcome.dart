@@ -39,17 +39,23 @@ class _WelComeViewState extends State<WelComeView> {
             ),
             Visibility(
               visible: Platform.isIOS,
-              child: Container(
-                margin: EdgeInsets.only(left: 23, right: 23),
-                width: double.infinity,
-                height: 46.0.h,
-                decoration: BoxDecoration(
-                    color: AppColors.themeBlack,
-                    borderRadius: BorderRadius.circular(23.0.r)),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.sp),
-                  child: TextButton(
-                    onPressed: () {},
+              child: GestureDetector(
+                onTap: () async {
+                  final creds =
+                      await SignInWithApple.getAppleIDCredential(scopes: [
+                    AppleIDAuthorizationScopes.email,
+                    AppleIDAuthorizationScopes.fullName,
+                  ]);
+                },
+                child: Container(
+                  margin: EdgeInsets.only(left: 23, right: 23),
+                  width: double.infinity,
+                  height: 46.0.h,
+                  decoration: BoxDecoration(
+                      color: AppColors.themeBlack,
+                      borderRadius: BorderRadius.circular(23.0.r)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.sp),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -142,9 +148,8 @@ class _WelComeViewState extends State<WelComeView> {
                             borderRadius: BorderRadius.circular(23.r),
                           ),
                           child: Center(
-                            child: Text(AppText.logIn,
-                                style: AppTextStyle.openSans_bold_green_18),
-                          ),
+                              child: Text(AppText.logIn,
+                                  style: AppTextStyle.openSans_bold_green_18)),
                         )),
                   ),
                 ],
