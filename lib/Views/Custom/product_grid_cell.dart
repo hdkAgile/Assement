@@ -23,7 +23,7 @@ class ProductGridCell extends StatelessWidget {
         decoration: BoxDecoration(
             color: AppColors.themeWhite,
             borderRadius: BorderRadius.circular(8.r),
-            boxShadow: kElevationToShadow[3]),
+            boxShadow: kElevationToShadow[2]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

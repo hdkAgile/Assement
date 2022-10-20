@@ -1,3 +1,6 @@
+import 'dart:html';
+
+import 'package:assement/Models/DataModels/app_user.dart';
 import 'package:assement/Models/DataModels/tickets_purchase_list.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +21,7 @@ class FavoriteController extends GetxController {
   RxList<Raffale> items = <Raffale>[].obs;
   RxList<Raffale> purchaseList = <Raffale>[].obs;
   RxBool isLoading = RxBool(false);
-  UserData? userData;
+  SingleUser user = sharedUser.user;
 
   RxString dropDownValue = 'Active'.obs;
 
@@ -27,7 +30,6 @@ class FavoriteController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     _callAPI();
   }
 
@@ -37,16 +39,25 @@ class FavoriteController extends GetxController {
 
   void changeGroupIndex(int index) {
     groupValue.value = index;
+    _callAPI();
   }
 
   void _callAPI() async {
-    await fetchPurchaseTikcets();
-    await fetchFavouriteList();
+    switch (groupValue.value) {
+      case 0:
+        await fetchPurchaseTikcets();
+        break;
+      case 1:
+        await fetchFavouriteList();
+        break;
+      case 2:
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> fetchFavouriteList() async {
-    final user = SharedManager.shared.fetchUser();
-    userData = user;
     Map<String, dynamic> params = {};
     params["limit"] = 10;
     params["offset"] = 0;

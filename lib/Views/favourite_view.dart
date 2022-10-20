@@ -27,10 +27,6 @@ class _FavouriteViewState extends State<FavouriteView> {
   FavoriteController controller = Get.find<FavoriteController>();
   @override
   Widget build(BuildContext context) {
-    void selecteTab(int index) {
-      controller.selectedIndex.value = index;
-    }
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.themeWhite,
