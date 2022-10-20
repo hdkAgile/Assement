@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../Utils/constants.dart';
 import '../Utils/enum_all.dart';
@@ -40,27 +41,31 @@ class _WelComeViewState extends State<WelComeView> {
               visible: Platform.isIOS,
               child: Container(
                 margin: EdgeInsets.only(left: 23, right: 23),
+                width: double.infinity,
                 height: 46.0.h,
                 decoration: BoxDecoration(
                     color: AppColors.themeBlack,
                     borderRadius: BorderRadius.circular(23.0.r)),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.apple,
-                        color: Colors.white,
-                      ),
-                      Expanded(
-                        child: Center(
-                          child: Text(AppText.signWithApple,
-                              textAlign: TextAlign.center,
-                              style: AppTextStyle.openSans_bold_white_16),
+                  padding: EdgeInsets.symmetric(horizontal: 8.sp),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.apple,
+                          color: Colors.white,
                         ),
-                      )
-                    ],
+                        Expanded(
+                          child: Center(
+                            child: Text(AppText.signWithApple,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyle.openSans_bold_white_16),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
