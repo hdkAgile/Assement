@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:assement/Models/DataModels/app_user.dart';
 import 'package:assement/Models/DataModels/tickets_purchase_list.dart';
 import 'package:assement/Utils/extensions.dart';
