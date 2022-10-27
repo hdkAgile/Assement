@@ -1,5 +1,6 @@
 import 'package:assement/Bindings/product_detail_binding.dart';
 import 'package:assement/Controllers/favourite_controller.dart';
+import 'package:assement/Controllers/search_controller.dart';
 import 'package:assement/Utils/enum_all.dart';
 import 'package:assement/Utils/extensions.dart';
 import 'package:assement/Views/profile_view.dart';
@@ -21,6 +22,7 @@ class ProductListCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FavoriteController controller = Get.put(FavoriteController());
+    SearchController searchController = Get.find<SearchController>();
     return GestureDetector(
         onTap: () {
           Get.toNamed(ScreenRoutesConstant.productDetail, arguments: {

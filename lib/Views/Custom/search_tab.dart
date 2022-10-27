@@ -159,51 +159,60 @@ class _SearchState extends State<Search> {
       body: SafeArea(
           top: true,
           bottom: true,
-          child: Obx(() => searchController.isLoading.value
-              ? Center(
-                  child: CircularProgressIndicator(color: AppColors.themeGreen))
-              : SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      widget.selectedIndex == 0
-                          ? GridView.builder(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: searchController.items.length,
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 144.w / 208.h,
-                                crossAxisSpacing: 25.w,
-                                crossAxisCount: 2,
-                              ),
-                              itemBuilder: (context, index) {
-                                return Center(
-                                    child: Container(
-                                  margin: EdgeInsets.only(
-                                      top: 8, left: 8, bottom: 8, right: 8),
-                                  padding: EdgeInsets.only(top: 8, bottom: 8),
-                                  child: ProductGridCell(
-                                      raffale: searchController.items[index]),
-                                ));
-                              })
-                          : Container(
-                              padding: EdgeInsets.all(8.0),
-                              child: ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: searchController.items.length,
-                                itemBuilder: (context, index) {
-                                  return ProductListCell(
-                                      raffale: searchController.items[index]);
-                                },
-                              ),
-                            )
-                    ],
-                  ),
-                ))),
+          child: RefreshIndicator(
+              color: AppColors.themeGreen,
+              onRefresh: () async {
+                searchController.fetchRaffleList();
+              },
+              child: Obx(() => searchController.isLoading.value
+                  ? Center(
+                      child: CircularProgressIndicator(
+                          color: AppColors.themeGreen))
+                  : SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          widget.selectedIndex == 0
+                              ? GridView.builder(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.w),
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: searchController.items.length,
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 144.w / 208.h,
+                                    crossAxisSpacing: 25.w,
+                                    crossAxisCount: 2,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return Center(
+                                        child: Container(
+                                      margin: EdgeInsets.only(
+                                          top: 8, left: 8, bottom: 8, right: 8),
+                                      padding:
+                                          EdgeInsets.only(top: 8, bottom: 8),
+                                      child: ProductGridCell(
+                                          raffale:
+                                              searchController.items[index]),
+                                    ));
+                                  })
+                              : Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: searchController.items.length,
+                                    itemBuilder: (context, index) {
+                                      return ProductListCell(
+                                          raffale:
+                                              searchController.items[index]);
+                                    },
+                                  ),
+                                )
+                        ],
+                      ))))),
     );
   }
 }
