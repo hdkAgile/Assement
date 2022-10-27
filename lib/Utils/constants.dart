@@ -502,7 +502,7 @@ class PreferenceKeys {
 
 class AppConfig {
   static URLHost host = URLHost.local;
-  static String apiVersion = '/v7/';
+  static String apiVersion = '/v2/';
 }
 
 class AppConstant {
